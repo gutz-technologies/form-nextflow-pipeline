@@ -13,6 +13,10 @@ import sys
 import os
 
 
+class NoData(ValueError):
+    """The table has no rows to convert; written as an empty BIOM table."""
+
+
 def filter_duplicates(df):
     """Filter out duplicate rows based on columns [2:], keeping the most complete row."""
     if len(df) == 0:
@@ -86,7 +90,7 @@ def create_food_abundance_biom(df):
     print(f"After cleaning invalid rows: {len(df)}")
 
     if len(df) == 0:
-        raise ValueError("No valid food abundance data found after filtering")
+        raise NoData("No valid food abundance data found after filtering")
 
     # Get unique sample and observation IDs
     sample_ids = sorted(df['sample_id'].unique())
@@ -189,6 +193,11 @@ def create_nutrient_biom(df):
     nutrient_df = df[df['source_type'] == 'Nutrient'].copy()
     print(f"Processing {len(nutrient_df)} nutrient rows")
 
+    # The same nutrient can appear in several units; keep one row, as for compounds
+    if len(nutrient_df) > 0:
+        nutrient_df = filter_compound_duplicates(nutrient_df)
+        print(f"After nutrient duplicate filtering: {len(nutrient_df)}")
+
     # Filter out rows with missing, NaN, or empty critical data
     valid_mask = (
         nutrient_df['compound_id'].notna() &
@@ -200,7 +209,7 @@ def create_nutrient_biom(df):
     print(f"After cleaning invalid nutrient rows: {len(nutrient_df)}")
 
     if len(nutrient_df) == 0:
-        raise ValueError("No valid nutrient data found after filtering")
+        raise NoData("No valid nutrient data found after filtering")
 
     # Get unique sample and observation IDs
     sample_ids = sorted(nutrient_df['sample_id'].unique())
@@ -282,7 +291,7 @@ def create_compound_biom(df):
 
     # Handle empty compound data
     if len(compound_df) == 0:
-        raise ValueError("No compound data found in input")
+        raise NoData("No compound data found in input")
 
     # Filter compound duplicates (preferring mg/100g)
     compound_df = filter_compound_duplicates(compound_df)
@@ -299,7 +308,7 @@ def create_compound_biom(df):
     print(f"After cleaning invalid compound rows: {len(compound_df)}")
 
     if len(compound_df) == 0:
-        raise ValueError("No valid compound data found after filtering")
+        raise NoData("No valid compound data found after filtering")
 
     # Get unique sample and observation IDs
     sample_ids = sorted(compound_df['sample_id'].unique())
@@ -389,6 +398,18 @@ def create_compound_biom(df):
     return biom_table
 
 
+def build(create, df, table_id):
+    """Run a create_* function; with no rows to convert, return an empty table
+    so the run still publishes all three BIOM files."""
+    try:
+        if df.empty:
+            raise NoData("Input CSV has no rows")
+        return create(df)
+    except NoData as e:
+        print(f"Warning: {e}; writing an empty BIOM table")
+        return Table(np.zeros((0, 0)), [], [], table_id=table_id, type='OTU table')
+
+
 def main():
     parser = argparse.ArgumentParser(description='Convert MEDI CSV files to BIOM format')
     parser.add_argument('input_csv', help='Input CSV file (food_abundance.csv or food_content.csv)')
@@ -404,15 +425,18 @@ def main():
         sys.exit(1)
 
     try:
-        # Read CSV file
+        # Read CSV file; a study with no food hits can leave it empty
         print(f"Reading CSV file: {args.input_csv}")
-        df = pd.read_csv(args.input_csv)
+        try:
+            df = pd.read_csv(args.input_csv)
+        except pd.errors.EmptyDataError:
+            df = pd.DataFrame()
         print(f"Loaded {len(df)} rows with columns: {list(df.columns)}")
 
         # Convert based on type
         if args.type == 'abundance':
             print("Converting food abundance data to BIOM format...")
-            biom_table = create_food_abundance_biom(df)
+            biom_table = build(create_food_abundance_biom, df, 'MEDI Food Abundance')
 
             # Write BIOM file
             print(f"Writing BIOM file: {args.output_biom}")
@@ -425,7 +449,7 @@ def main():
             print("Converting food content data to BIOM format...")
 
             # Create nutrient BIOM
-            nutrient_biom = create_nutrient_biom(df)
+            nutrient_biom = build(create_nutrient_biom, df, 'MEDI Food Content - Nutrients')
             nutrient_output = args.output_biom.replace('.biom', '_nutrients.biom')
             print(f"Writing nutrient BIOM file: {nutrient_output}")
             with biom_open(nutrient_output, 'w') as f:
@@ -433,7 +457,7 @@ def main():
             print(f"Successfully created nutrient BIOM file with {nutrient_biom.shape[0]} observations and {nutrient_biom.shape[1]} samples")
 
             # Create compound BIOM
-            compound_biom = create_compound_biom(df)
+            compound_biom = build(create_compound_biom, df, 'MEDI Food Content - Compounds')
             compound_output = args.output_biom.replace('.biom', '_compounds.biom')
             print(f"Writing compound BIOM file: {compound_output}")
             with biom_open(compound_output, 'w') as f:
