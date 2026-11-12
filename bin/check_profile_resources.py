@@ -1,0 +1,1 @@
+../biobakery/bin/check_profile_resources.py

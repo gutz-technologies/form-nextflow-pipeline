@@ -1,0 +1,1 @@
+../biobakery/bin/check_fastq_inputs.py
