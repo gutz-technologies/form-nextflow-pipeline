@@ -1,0 +1,55 @@
+name: CI
+
+# MGX needs KneadData, MetaPhlAn, HUMAnN and their databases, so it cannot run
+# here. CI checks what can go wrong without them: config, wiring, the symlinks
+# into biobakery/, the parameter guards, and a stub run of MEDI.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - uses: nf-core/setup-nextflow@v2
+        with:
+          version: '24.10.4'
+
+      - name: Symlinks into biobakery/ are complete
+        run: tests/check_links.sh
+
+      - name: Every profile parses
+        run: |
+          for profile in local harvard_rc tufts_hpc amazon; do
+            echo "== -profile $profile"
+            nextflow config -profile "$profile" > /dev/null
+          done
+
+      - name: MGX + MEDI wiring (-preview, both MEDI inputs)
+        run: |
+          common="--readsdir biobakery/tests/data/rawfastq --outdir preview \
+            --host_genome /x --metaphlan_db /x --humann_nucleotide_db /x --humann_protein_db /x \
+            --medi_db /x --medi_food_matches /x --medi_food_contents /x"
+          nextflow run . -preview $common --medi_input humann
+          nextflow run . -preview $common --medi_input kneaddata
+          nextflow run . -preview $common --run_medi false
+
+      - name: Input check only (real tasks, needs python only)
+        run: nextflow run . --readsdir biobakery/tests/data/rawfastq --check_inputs_only true --run_medi false --outdir check
+
+      - name: Parameter guards
+        run: tests/run_guards.sh
+
+      - name: MEDI stub run
+        run: nextflow run tests/medi_stub.nf -stub-run -c tests/stub.config --outdir stub
