@@ -46,7 +46,7 @@ jobs:
           nextflow run . -preview $common --run_medi false
 
       - name: Input check only (real tasks, needs python only)
-        run: nextflow run . --readsdir biobakery/tests/data/rawfastq --check_inputs_only true --outdir check
+        run: nextflow run . --readsdir biobakery/tests/data/rawfastq --check_inputs_only true --run_medi false --outdir check
 
       - name: Parameter guards
         run: tests/run_guards.sh
