@@ -1,0 +1,3 @@
+[submodule "biobakery"]
+	path = biobakery
+	url = https://github.com/biobakery/biobakery-nextflow.git

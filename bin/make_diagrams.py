@@ -1,0 +1,1 @@
+../biobakery/bin/make_diagrams.py
