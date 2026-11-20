@@ -6,7 +6,7 @@ The site uses [Zensical](https://zensical.org/), pinned to **0.1.2** in
 
 ## Preview locally
 
-Use Python 3.11 or newer. From the repository root:
+Use Python 3.12, the version the documentation CI uses. From the repository root:
 
 ```bash
 ./.zensical-serve.sh
