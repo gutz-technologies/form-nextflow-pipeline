@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "https://github.com/gutz-technologies/form-nextflow-pipeline/nextflow_schema.json",
+  "title": "FORM Nextflow pipeline",
+  "description": "Supply the reads folder and use DNAnexus's built-in nextflow_params_file input for the run YAML. All other settings come from that YAML or bundled defaults.",
+  "type": "object",
+  "definitions": {
+    "input_options": {
+      "title": "Read inputs",
+      "type": "object",
+      "properties": {
+        "readsdir": {
+          "type": "string",
+          "format": "directory-path",
+          "minLength": 1,
+          "description": "Folder containing the FASTQ reads, for example dx://project-id:/inputs/reads."
+        }
+      },
+      "required": ["readsdir"]
+    }
+  },
+  "allOf": [
+    { "$ref": "#/definitions/input_options" }
+  ]
+}
