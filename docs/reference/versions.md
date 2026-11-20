@@ -5,13 +5,21 @@ FORM settings, neighboring container recipes, and direct inspection of locally
 available candidate images. It is not yet a release lockfile for a validated
 FORM applet.
 
+**Selection precedence:** use the versions supplied in the Hugemiler container
+set when a generic bioBakery default or site profile differs. Commit
+`a8d779ba245722b9806bc9431391b1c59141f279` is the tracked recipe baseline;
+immutable image digests identify the supplied local DNAnexus variants. In particular, FORM uses MetaPhlAn **4.2.5**
+with **`mpa_vOct22_CHOCOPhlAnSGB_202403`**. It does not use the generic vJun23
+index. The machine-readable [FORM version lock](form-version-lock.json) records
+this decision and the immutable image references.
+
 ## Flagship software
 
 | Order | Component | Version / identity | Evidence level |
 | --- | --- | --- | --- |
 | 1 | [Samplesheet building](../stages/01-samplesheet.md) | Helper source snapshot `5d4f71cb…f6f8a411` | Source file hashed; FORM wrapper pending |
 | 2 | [KneadData](../stages/02-kneaddata.md) | **0.12.1** Conda package; CLI **v0.12.0** | Both package and executable observations recorded |
-| 3 | [MetaPhlAn](../stages/03-metaphlan.md) | **4.2.5** | Installed distribution and Conda metadata agree |
+| 3 | [MetaPhlAn](../stages/03-metaphlan.md) | **4.2.5** with **`mpa_vOct22_CHOCOPhlAnSGB_202403`** | Hugemiler recipe, installed distribution, Conda metadata, and selected database agree |
 | 4 | [HUMAnN](../stages/04-humann.md) | **4.0.0a2**, source `9cb1a8253e11a0a8ed8f58f85f53e04a690e40a6` in recipe | Installed distribution; source recipe pin |
 | 5 | [BAQLaVa](../stages/05-baqlava.md) | **1.2.0.dev0**, source `629c744a553eb534be457050ca8b7b33f177e0da` in recipe | Installed distribution; source recipe pin |
 | 6 | [StrainPhlAn](../stages/06-strainphlan.md) | **4.2.5** | `strainphlan --version` in MetaPhlAn image |

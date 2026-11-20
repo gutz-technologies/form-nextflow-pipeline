@@ -6,7 +6,7 @@ The site uses [Zensical](https://zensical.org/), pinned to **0.1.2** in
 
 ## Preview locally
 
-Use Python 3.11 or newer. From the repository root:
+Use Python 3.12, the version the documentation CI uses. From the repository root:
 
 ```bash
 ./.zensical-serve.sh
@@ -80,11 +80,9 @@ publishes. A protected Pages environment may require its normal repository
 review before a deployment runs.
 
 CI reads the Pages base URL and current repository/default-branch metadata, so
-custom domains and forks receive matching canonical/source links. The checked-in
-URL is the expected default:
-[FORM documentation](https://gutz-technologies.github.io/form-nextflow-pipeline/).
-That link becomes live after the workflow is merged, Pages is configured, and
-the first deployment succeeds.
+custom domains and forks receive matching canonical/source links. Do not publish
+a documentation-site link before the first Pages deployment succeeds; it returns
+404 until Pages is configured and the workflow runs on the default branch.
 
 See [Zensical publishing](https://zensical.org/docs/publish-your-site/) and
 [GitHub's Pages workflow documentation](https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages).

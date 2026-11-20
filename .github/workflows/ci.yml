@@ -29,9 +29,12 @@ jobs:
       - name: Symlinks into biobakery/ are complete
         run: tests/check_links.sh
 
+      - name: FORM versions match the approved lock
+        run: python3 tests/check_form_version_lock.py
+
       - name: Every profile parses
         run: |
-          for profile in local harvard_rc tufts_hpc amazon; do
+          for profile in local harvard_rc tufts_hpc amazon local,form_docker; do
             echo "== -profile $profile"
             nextflow config -profile "$profile" > /dev/null
           done
@@ -39,7 +42,7 @@ jobs:
       - name: MGX + MEDI wiring (-preview, both MEDI inputs)
         run: |
           common="--readsdir biobakery/tests/data/rawfastq --outdir preview \
-            --host_genome /x --metaphlan_db /x --humann_nucleotide_db /x --humann_protein_db /x \
+            --host_genome /x --form_host_check false --metaphlan_db /x --humann_nucleotide_db /x --humann_protein_db /x \
             --medi_db /x --medi_food_matches /x --medi_food_contents /x"
           nextflow run . -preview $common --medi_input humann
           nextflow run . -preview $common --medi_input kneaddata

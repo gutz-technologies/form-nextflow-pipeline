@@ -68,13 +68,15 @@ discrepancy when comparing logs; the image tag alone does not resolve it.
 | Assembly | **GCA_009914755.4 / T2T-CHM13v2.0** |
 | Prebuilt index | **Homo_sapiens_hg39_T2T_Bowtie2_v0.2.tar.gz** |
 | Index prefix | `GCA_009914755.4_T2T` |
-| Integrity record | Six user-provided SHA256 checksums for extracted `.bt2` files |
+| Integrity record | Six program-supplied SHA256 values, independently matched against the extracted `.bt2` files on 2026-11-20 |
+| Archive | 3,882,451,903 bytes; SHA256 `183b4a28a1fe87b1f93f9fdd8c4b9381e89b8c928e6c610c8c295fb818d93b63`; distributor MD5 `b0323c21fa64d8c56eb390155b3987f1` |
 
 The [host-reference page](../reference/kneaddata-host.md) contains the download
-and NCBI source links, complete checksum table, downloadable `sha256sum` manifest,
-and verification instructions. The compressed archive checksum and the original
-index-builder version remain unrecorded. The **runtime** Bowtie2 version above
-does not establish which Bowtie2 release built the downloaded index.
+and NCBI source links, the complete checksum table, a downloadable `sha256sum`
+manifest, and verification instructions. The original index-builder version
+cannot be recorded: a Bowtie2 index does not store it. The **runtime** Bowtie2
+version above does not establish which Bowtie2 release built the downloaded
+index.
 
 ## Runtime flags and precedence
 
@@ -98,24 +100,28 @@ allocation instead of accidentally overriding them in that string.
 | Paired-end input | `-i1 <R1> -i2 <R2>` | Mate files from the sample channel |
 | Host input | `--reference-db <directory>` | One flag per configured reference; FORM MGX selects its host reference |
 | Output | `--output ./ --output-prefix <sample>_kneaddata` | Writes into the task working directory |
-| Task threads | `--threads ${task.cpus}` | Uses the allocated CPU count for both library layouts |
-| Internal processes | `--processes 1` | Serializes internal file/database jobs while each job can use the thread allocation |
+| Task threads, single-end | `--threads ${task.cpus}` | Nested tools use the allocated CPU count; `--processes` keeps KneadData's default of 1 |
+| Task threads, paired-end | `--processes ${task.cpus}`, no `--threads` | Nested tools use KneadData's default of **1 thread**. The `form_docker` profile appends `--threads 8 --processes 1` to use the task allocation without multiplying it |
 | `kneaddata_bypass_trim` | `false` | `--bypass-trim` is omitted; trimming runs |
 | `kneaddata_remove_intermediate_files` | `true` | Adds `--remove-intermediate-output` |
 | `kneaddata_options` | Empty string | No additional tool options unless supplied in the YAML/site config |
-| Reference identity label | Explicit `kneaddata_database_identity`, otherwise image reference | Written to logs; it does not validate database contents |
+| Host reference check | `form_host_check: true` | FORM stops the run before any task if a local `host_genome` lacks `GCA_009914755.4_T2T.*.bt2` |
+| Minimum versions | `form_min_kneaddata: 0.12`, `form_min_bowtie2: 2.5.5` | FORM stops the run after the first KneadData task reports an older version |
 
-The paired-end command is equivalent to this template before task-specific
-values are substituted:
+The paired-end command that bioBakery generates is equivalent to this template
+before task-specific values are substituted:
 
 ```bash
 kneaddata \
   -i1 SAMPLE_R1.fastq.gz -i2 SAMPLE_R2.fastq.gz \
   --reference-db HOST_INDEX_DIRECTORY \
   --output ./ --output-prefix SAMPLE_kneaddata \
-  --threads ALLOCATED_CPUS --processes 1 \
+  --processes ALLOCATED_CPUS \
   --remove-intermediate-output
 ```
+
+With `-profile local,form_docker`, `--threads 8 --processes 1` is appended after
+these arguments, because `kneaddata_options` is added last.
 
 After KneadData, the wrapper compresses FASTQ outputs using
 `pigz -p ${task.cpus}`. For paired input it concatenates the two cleaned mate
@@ -175,9 +181,9 @@ default repeat-filtering stage. Trimmomatic's `--bypass-trim` is a separate swit
 
 The TRF option sequence is `2 7 7 80 10 50 500 -h -ngs`. KneadData converts
 inputs to FASTA and invokes its `kneaddata_trf_parallel` helper with
-`--nproc <threads>`. Its outer file-job concurrency uses `--processes`, which
-the Nextflow wrapper supplies as `1`. This keeps the thread budget usable
-without multiplying it across simultaneous internal jobs.
+`--nproc <threads>`. The base paired-end wrapper requests one process per task
+CPU and one nested-tool thread. The `form_docker` override instead uses one
+process and eight nested-tool threads.
 
 ### Bowtie2 and paired-read decontamination defaults
 
@@ -189,8 +195,8 @@ Bowtie2 remains the host-search engine unless `--run-bmtagger` is explicitly set
 For paired input, `--decontaminate-pairs` defaults to **`strict`**: if either mate
 aligns to the host, the pair is removed. `lenient` removes a pair only when both
 mates align; `unpaired` treats mates independently. Single-end input uses the
-unpaired mode. `--reorder` is not enabled by default. With the wrapper's one
-internal process, multiple reference searches are serial by default.
+unpaired mode. `--reorder` is not enabled by default. Multiple reference
+searches are serial under the `form_docker` profile's one-process override.
 
 An explicit `--bowtie2-options` value replaces the default preset list; include
 the intended preset if retaining it. FastQC at the beginning/end and
@@ -199,19 +205,20 @@ TRF filtering, and Bowtie2 host depletion run without those FastQC flags.
 
 ### DNAnexus site resources and reference placement
 
-FORM will use one **`dnanexus`** profile. The inspected neighboring site settings
-supply the following execution values; the final FORM site configuration must
-carry the approved hg39T2T reference.
+The repository does not yet contain a `dnanexus` profile. The following values
+come from an inspected neighboring deployment and are planning evidence only.
+A future FORM profile must carry the approved hg39T2T reference and the locked
+Hugemiler tool versions.
 
 | Setting | Generic bioBakery default | Inspected DNAnexus site setting |
 | --- | --- | --- |
-| CPUs for each QC task | `8 × task.attempt`, capped by `max_cpus` | **8**, fixed; command receives `--threads 8` |
+| CPUs for each QC task | `8 × task.attempt`, capped by `max_cpus` | **8**, fixed; that neighboring site also supplies its own `--threads 8` override |
 | Memory | `16 GB × task.attempt`, capped by `max_memory` | **28 GB**, fixed |
 | Time | `8 h × task.attempt`, capped by `max_time` | Inherited from the generic QC selector |
 | Worker instance | Executor-dependent | `mem3_ssd2_v3_x16` |
 | Queue limit | Executor-dependent | `executor.queueSize = 50` across tasks |
 | Docker UID/GID | Site-dependent | `-u $(id -u):$(id -g)` |
-| Reference mode | `kneaddata_db_location: host` stages normal inputs | `container` uses an already visible in-task directory |
+| Reference placement | `host_genome` must be visible to the task | Neighboring deployment binds an in-task database directory; this is not a current FORM parameter |
 | Additional KneadData options | Empty | No tool-option override in the inspected site configs |
 
 The generic caps are `max_cpus: 32`, `max_memory: 128.GB`, and
@@ -245,12 +252,32 @@ Choose an adapter setting appropriate to the actual library if it differs from
 the configured default. These controls belong in the YAML; they do not add
 fields to FORM's reads-folder-only pipeline schema.
 
+## Running outside DNAnexus
+
+Use the `form_docker` profile with a site profile, for example
+`-profile local,form_docker`. The [README](https://github.com/gutz-technologies/form-nextflow-pipeline#quick-start-download-hg39t2t-and-run-kneaddata)
+gives the complete steps: image and database sources, download, checksum,
+run, and log check.
+
+The image (like the pinned MetaPhlAn and HUMAnN images) starts with a dxfuse entrypoint (`/usr/local/bin/dx-reference-entrypoint.sh`)
+that mounts DNAnexus references. Off DNAnexus, set `DXFUSE_ENABLED=false` in the
+container environment; `form_docker` does this. Without it, every task fails with
+`DNAnexus references: set DX_REFERENCE_PROJECT or forward DX_PROJECT_CONTEXT_ID`.
+The image's default user is `mambauser` (UID 57439), so `form_docker` also runs
+containers as the launching user.
+
+A 2026-11-20 test run with `-profile local,form_docker` used 2,000 read pairs
+simulated from T2T chromosome 8 and 2,000 random pairs. KneadData removed all
+2,000 human pairs and kept all 2,000 random pairs. The task reported
+KneadData `0.12.0` and Bowtie2 `2.5.5`.
+
 ## Sources and verification
 
 - [Huttenhower hg39T2T v0.2 index](https://huttenhower.sph.harvard.edu/kneadData_databases/Homo_sapiens_hg39_T2T_Bowtie2_v0.2.tar.gz)
   and [NCBI source assembly](https://www.ncbi.nlm.nih.gov/datasets/genome/GCA_009914755.4/).
-- [Expected host checksum manifest](../reference/checksums/kneaddata-hg39-t2t-v0.2.sha256),
-  supplied by the program owner; deployment-byte verification remains to be run.
+- [Host checksum manifest](../reference/checksums/kneaddata-hg39-t2t-v0.2.sha256),
+  supplied by the program owner and matched against the extracted archive on
+  2026-11-20. Rerun it for each production staging location.
 - [Installed-image defaults and workflow source hashes](../reference/kneaddata-runtime.json).
 - [Full software/image inventory](../reference/software-inventory.json).
 

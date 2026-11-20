@@ -20,6 +20,28 @@ workflow {
     if (params.check_inputs_only && !params.check_inputs)
         error "ERROR: --check_inputs_only true needs --check_inputs true."
 
+    // ── KneadData host reference: FORM requires hg39T2T ───────────────────
+    // Checked only for a local directory; remote URIs (s3://, dx://) are
+    // staged later and must be verified where they are built.
+    if (params.run_qc && !params.check_inputs_only && params.form_host_check && params.host_genome) {
+        def hosts = params.host_genome.toString().split(',')*.trim()
+        def local = hosts.findAll { !(it =~ /^[a-zA-Z][a-zA-Z0-9+.-]*:\/\//) }
+        def suffixes = ['1.bt2', '2.bt2', '3.bt2', '4.bt2', 'rev.1.bt2', 'rev.2.bt2']
+        def found = local.any { dir ->
+            suffixes.every { file("${dir}/${params.form_host_prefix}.${it}").exists() }
+        }
+        if (local && !found)
+            error "ERROR: host_genome must be the hg39T2T Bowtie2 index (${params.form_host_prefix}.*.bt2); " +
+                  "none found in ${local.join(', ')}. See docs/reference/kneaddata-host.md, " +
+                  "or set --form_host_check false for a non-human host."
+    }
+
+    // ── MetaPhlAn reference: FORM uses the Hugemiler-supplied Oct22 build ──
+    if (params.run_taxonomic_profiling && params.form_metaphlan_index_check &&
+        params.metaphlan_index != params.form_metaphlan_index)
+        error "ERROR: FORM requires MetaPhlAn index ${params.form_metaphlan_index}; " +
+              "got ${params.metaphlan_index}. Do not use the generic vJun23 default."
+
     // ── MEDI ──────────────────────────────────────────────────────────────
     if (params.run_medi) {
         if (!(params.medi_input in ['humann', 'kneaddata']))

@@ -26,19 +26,24 @@ See its registry digest and package build identifiers in the
 
 ## Databases and sources
 
-| Reference | Selected identity | SHA256 |
-| --- | --- | --- |
-| Marker/index bundle | `mpa_vOct22_CHOCOPhlAnSGB_202403`, packaged under `mpa_vOct22_202403` | **Pending** — `metaphlan-markers` in the [database catalog](../reference/databases.md#metaphlan) |
+| Reference | Selected identity | Download | SHA256 |
+| --- | --- | --- | --- |
+| Marker metadata | `mpa_vOct22_CHOCOPhlAnSGB_202403.tar` — contains the `.pkl` and marker FASTA | [Archive](https://cmprod1.cibio.unitn.it/biobakery4/metaphlan_databases/mpa_vOct22_CHOCOPhlAnSGB_202403.tar) · [MD5](https://cmprod1.cibio.unitn.it/biobakery4/metaphlan_databases/mpa_vOct22_CHOCOPhlAnSGB_202403.md5) | **Pending SHA256**; distributor MD5 `91d57912faab6bfd3526a49d9e83da8c` |
+| Bowtie2 index | `mpa_vOct22_CHOCOPhlAnSGB_202403_bt2.tar` — contains the `.bt2l` files | [Archive](https://cmprod1.cibio.unitn.it/biobakery4/metaphlan_databases/bowtie2_indexes/mpa_vOct22_CHOCOPhlAnSGB_202403_bt2.tar) · [MD5](https://cmprod1.cibio.unitn.it/biobakery4/metaphlan_databases/bowtie2_indexes/mpa_vOct22_CHOCOPhlAnSGB_202403_bt2.md5) | **Pending SHA256**; distributor MD5 `6618ecfbed7f2964b9185b0c6f090020` |
 
-The neighboring deployment uses corrected extracted indexes in its project
-reference folder. A checksum for an older archive would not verify those
-corrected files. Capture a manifest of the actual index files and the associated
-`.pkl`, or package that exact directory and hash the new archive.
+One MetaPhlAn index needs **both** archives, extracted into the same directory:
+the marker `.tar` provides the `.pkl`, and `bowtie2_indexes/..._bt2.tar` provides
+the `.bt2l` index. These are the URLs the MetaPhlAn database installer uses. All
+four public URLs returned successful ranged downloads on 2026-11-20. The
+neighboring deployment uses corrected extracted indexes in its project reference
+folder; the public MD5 files do not verify that project copy. Capture a manifest
+of the files actually used by the run.
 
 MetaPhlAn's software version, its database release, and the workflow's
-`metaphlan_version` CLI compatibility setting are different identifiers. Record
-all three when validating a run. If multiple databases are selected, each needs
-its own provenance and checksum entries.
+`metaphlan_version` CLI compatibility setting are different identifiers. FORM
+locks them to MetaPhlAn 4.2.5, `mpa_vOct22_CHOCOPhlAnSGB_202403`, and
+`metaphlan_v4`. The run refuses another MetaPhlAn index unless the explicit FORM
+index check is disabled. Record all three when validating a run.
 
 ## Sources
 

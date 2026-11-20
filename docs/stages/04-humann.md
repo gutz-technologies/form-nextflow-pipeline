@@ -29,17 +29,18 @@ Python distribution metadata records the replacement as `4.0.0a2`. The
 
 ## Databases and sources
 
-| Reference | Identity or source | SHA256 |
+| Reference | Selected portable source | SHA256 |
 | --- | --- | --- |
-| Deployment bundle | Locally packaged `chocophlan-v4-201901.tar.gz` | **Pending** — `humann-bundle` |
-| ChocoPhlAn nucleotide database | Bundle member `chocophlan/`; exact upstream artifact selection still needs confirmation | **Pending** — `humann-chocophlan` |
-| UniRef90 annotated DIAMOND database | Bundle member `uniref90_annotated/`; exact upstream release still needs confirmation | **Pending** — `humann-uniref90` |
-| Utility mappings | Bundle member `full_mapping/` | **Pending** — `humann-mappings` |
+| Neighboring deployment bundle | Locally packaged `chocophlan-v4-201901.tar.gz` | **Pending** — `humann-bundle` |
+| ChocoPhlAn nucleotide database | [v4-alpha archive](https://huttenhower.sph.harvard.edu/humann_data/chocophlan/chocophlan.v4_alpha.tar.gz) from the pinned Hugemiler/HUMAnN downloader | **Pending** — `humann-chocophlan` |
+| UniRef90 annotated DIAMOND database | [v4-alpha EC-filtered archive](https://huttenhower.sph.harvard.edu/humann_data/uniprot/uniref_ec_filtered/uniref90_annotated_v4_alpha_ec_filtered.tar.gz) | **Pending** — `humann-uniref90` |
+| Utility mappings | [v4-alpha full-mapping archive](https://huttenhower.sph.harvard.edu/humann_data/full_mapping_v4_alpha.tar.gz) | **Pending** — `humann-mappings` |
 
 See the full [HUMAnN database catalog](../reference/databases.md#humann).
-The pinned upstream downloader lists v4 alpha ChocoPhlAn, EC-filtered UniRef90,
-and full-mapping URLs. These are discovery leads; they have not been proven to
-be the exact inputs used to construct the local deployment bundle.
+The portable README route selects the three archives listed by the pinned
+HUMAnN downloader. All three URLs supported ranged downloads on 2026-11-20.
+The upstream server does not publish checksum sidecars for them. They have not
+been proven byte-identical to the neighboring local deployment bundle.
 
 The selected mapping set also needs byte-level provenance, especially
 `map_ko_uniref90.txt.gz` for GBMs. The neighboring configuration additionally uses

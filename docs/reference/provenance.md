@@ -13,16 +13,17 @@ needs all four.
 | Neighboring source files | SHA256 of helper and container recipe snapshots | Some recipes are local/untracked work; the checkout HEAD alone does not identify them |
 | BAQLaVa annotations | SHA256 of installed `utility_files/` assets in the inspected image | Full nucleotide/protein search references still need hashes |
 | GBM reference | Downloaded payloads matched to pinned Git LFS SHA256 and size | Production representation has not yet been selected |
-| hg39T2T host reference | Program selection, assembly accession, download URL, and six owner-provided expected file SHA256 values | File sizes, archive SHA256, index-builder version, and deployment-byte verification remain unrecorded |
+| hg39T2T host reference | Program selection, assembly accession, download URL, archive bytes and SHA256, and six owner-provided expected file SHA256 values | The six files were rehashed against the extracted archive on 2026-11-20. The index-builder Bowtie2 version is not recorded in the index, and each production staging location still needs its own verification run |
 | omixer-rpm JAR | Downloaded 1.1 release matched the image's JAR | No registry digest was available for the local image tag |
 
 Download the [software inventory](software-inventory.json) and
 [database inventory](database-inventory.json) to inspect the complete evidence.
 `null` checksums and **Pending** entries are deliberate gaps, not verified values.
 The status `user-provided` records an expected checksum supplied by the program
-owner, separately from `measured` checksums obtained during inspection. It does
-not assert that the deployment files have passed verification. The
-[hg39T2T record](kneaddata-host.md) and its downloadable manifest use this status.
+owner; `measured` means the value was obtained during inspection or download.
+Neither status asserts that a particular production deployment has passed
+verification. The [hg39T2T record](kneaddata-host.md) supplies both: owner-provided
+expected values, and measured values from the 2026-11-20 archive download.
 
 ## Record source and image identity
 

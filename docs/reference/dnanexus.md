@@ -1,8 +1,12 @@
 # DNAnexus interface
 
-FORM will use **one `dnanexus` profile** for the entire pipeline, extending the
-existing bioBakery deployment settings with the resources, containers, and
-reference access required by FORM-owned modules.
+**Planned, not present.** FORM intends to use **one `dnanexus` profile** for the
+entire pipeline, extending the existing bioBakery deployment settings with the
+resources, containers, and reference access required by FORM-owned modules. The
+repository does not contain that profile yet, so `-profile dnanexus` does not
+work today. Until it lands, run with `-profile local,form_docker` or a site
+profile as the [README](https://github.com/gutz-technologies/form-nextflow-pipeline#quick-start-download-hg39t2t-and-run-kneaddata)
+describes.
 
 ## Launch inputs
 
@@ -42,9 +46,9 @@ FORM reference. Changing the documentation alone does not update an applet.
 
 ## Current state
 
-The minimal schema is present. The single-profile FORM configuration, packaging,
-samplesheet module, updated bioBakery pin, and combined deployment validation
-remain implementation work. The [version inventory](versions.md) and
+The minimal schema is present. The `dnanexus` profile, packaging, samplesheet
+module, updated bioBakery pin, and combined deployment validation remain
+implementation work. The [version inventory](versions.md) and
 [database catalog](databases.md) document available evidence and gaps while that
 work proceeds; they do not claim a successful platform execution.
 
