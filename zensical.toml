@@ -1,0 +1,77 @@
+[project]
+site_name = "FORM pipeline"
+site_description = "Software, dependencies, reference databases, and reproducibility for the FORM metagenomics pipeline."
+site_url = "https://gutz-technologies.github.io/form-nextflow-pipeline/"
+repo_url = "https://github.com/gutz-technologies/form-nextflow-pipeline"
+repo_name = "gutz-technologies/form-nextflow-pipeline"
+edit_uri = "edit/main/docs/"
+docs_dir = "docs"
+site_dir = "site"
+exclude_docs = "/requirements.txt\n"
+
+nav = [
+  { "Overview" = "index.md" },
+  { "Pipeline stages" = [
+    { "1. Samplesheet building" = "stages/01-samplesheet.md" },
+    { "2. KneadData" = "stages/02-kneaddata.md" },
+    { "3. MetaPhlAn" = "stages/03-metaphlan.md" },
+    { "4. HUMAnN" = "stages/04-humann.md" },
+    { "5. BAQLaVa" = "stages/05-baqlava.md" },
+    { "6. StrainPhlAn" = "stages/06-strainphlan.md" },
+    { "7. MEDI" = "stages/07-medi.md" },
+    { "8. omixer-rpm (Gut-Brain Modules)" = "stages/08-omixer-rpm.md" },
+  ] },
+  { "Reference" = [
+    { "Software versions" = "reference/versions.md" },
+    { "Databases and checksums" = "reference/databases.md" },
+    { "KneadData hg39T2T reference" = "reference/kneaddata-host.md" },
+    { "Provenance and verification" = "reference/provenance.md" },
+    { "DNAnexus interface" = "reference/dnanexus.md" },
+  ] },
+  { "Development" = [
+    { "Writing and publishing docs" = "development/documentation.md" },
+    { "Design history" = "specs/index.md" },
+    { "0001: bioBakery dependency and MEDI" = "specs/0001-biobakery-dependency-and-medi.md" },
+  ] },
+]
+
+[project.theme]
+language = "en"
+features = [
+  "navigation.instant",
+  "navigation.instant.progress",
+  "navigation.sections",
+  "navigation.top",
+  "search.highlight",
+  "content.code.copy",
+  "content.action.edit",
+]
+
+[[project.theme.palette]]
+scheme = "default"
+primary = "teal"
+accent = "teal"
+toggle.icon = "material/brightness-7"
+toggle.name = "Switch to dark mode"
+
+[[project.theme.palette]]
+scheme = "slate"
+primary = "teal"
+accent = "teal"
+toggle.icon = "material/brightness-4"
+toggle.name = "Switch to light mode"
+
+[project.markdown_extensions]
+admonition = {}
+attr_list = {}
+tables = {}
+toc.permalink = true
+pymdownx.details = {}
+pymdownx.highlight.anchor_linenums = true
+pymdownx.superfences.custom_fences = [
+  { name = "mermaid", class = "mermaid", format = "pymdownx.superfences.fence_code_format" },
+]
+
+[project.validation]
+invalid_links = true
+invalid_link_anchors = true

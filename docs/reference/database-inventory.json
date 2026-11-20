@@ -1,0 +1,542 @@
+{
+  "schema_version": 1,
+  "recorded_on": "2026-11-20",
+  "scope": "Documentation baseline and candidate deployment references; not a complete FORM release manifest.",
+  "artifacts": [
+    {
+      "id": "kneaddata-host",
+      "stages": [
+        "kneaddata"
+      ],
+      "name": "Program-selected hg39T2T host Bowtie2 archive",
+      "version": "hg39T2T; GCA_009914755.4 / T2T-CHM13v2.0; index bundle v0.2",
+      "source": "https://huttenhower.sph.harvard.edu/kneadData_databases/Homo_sapiens_hg39_T2T_Bowtie2_v0.2.tar.gz",
+      "deployed_path": "Site-specific dedicated hg39T2T index directory; deployment selection still pending",
+      "sha256": "183b4a28a1fe87b1f93f9fdd8c4b9381e89b8c928e6c610c8c295fb818d93b63",
+      "bytes": 3882451903,
+      "checksum_status": "measured",
+      "verification": "Program owner supplied six per-file SHA256 values on 2026-11-19. On 2026-11-20 the archive was downloaded from the Huttenhower link and hashed (sha256, bytes above), and all six extracted files matched the supplied per-file SHA256 values. The index-builder Bowtie2 version is not recorded in the index and remains unknown.",
+      "assembly_accession": "GCA_009914755.4",
+      "assembly_name": "T2T-CHM13v2.0",
+      "original_assembly_source": "https://www.ncbi.nlm.nih.gov/datasets/genome/GCA_009914755.4/",
+      "archive_filename": "Homo_sapiens_hg39_T2T_Bowtie2_v0.2.tar.gz",
+      "index_prefix": "GCA_009914755.4_T2T",
+      "index_builder_version": null,
+      "checksum_manifest": "checksums/kneaddata-hg39-t2t-v0.2.sha256",
+      "checksum_manifest_sha256": "2e2c9854cc34686a34ccd8a1d9fcdf7adc1c444b88b4b17fbd1167ec264ab2eb",
+      "expected_files": [
+        "GCA_009914755.4_T2T.1.bt2",
+        "GCA_009914755.4_T2T.2.bt2",
+        "GCA_009914755.4_T2T.3.bt2",
+        "GCA_009914755.4_T2T.4.bt2",
+        "GCA_009914755.4_T2T.rev.1.bt2",
+        "GCA_009914755.4_T2T.rev.2.bt2"
+      ]
+    },
+    {
+      "id": "kneaddata-host-1-bt2",
+      "stages": [
+        "kneaddata"
+      ],
+      "name": "GCA_009914755.4_T2T.1.bt2",
+      "version": "hg39T2T; GCA_009914755.4; index bundle v0.2",
+      "source": "https://huttenhower.sph.harvard.edu/kneadData_databases/Homo_sapiens_hg39_T2T_Bowtie2_v0.2.tar.gz",
+      "original_assembly_source": "https://www.ncbi.nlm.nih.gov/datasets/genome/GCA_009914755.4/",
+      "archive_member": "GCA_009914755.4_T2T.1.bt2",
+      "parent_artifact": "kneaddata-host",
+      "deployed_path": "Member of the site-selected dedicated hg39T2T directory",
+      "sha256": "31e72a1d368f8bbc29a0cc1359db2e62d2b624a9371d7b1e75fc8d72dbb295af",
+      "bytes": null,
+      "checksum_status": "measured",
+      "verification": "Expected SHA256 supplied by the program owner on 2026-11-19; the file extracted from the distributor archive was rehashed on 2026-11-20 and matched."
+    },
+    {
+      "id": "kneaddata-host-2-bt2",
+      "stages": [
+        "kneaddata"
+      ],
+      "name": "GCA_009914755.4_T2T.2.bt2",
+      "version": "hg39T2T; GCA_009914755.4; index bundle v0.2",
+      "source": "https://huttenhower.sph.harvard.edu/kneadData_databases/Homo_sapiens_hg39_T2T_Bowtie2_v0.2.tar.gz",
+      "original_assembly_source": "https://www.ncbi.nlm.nih.gov/datasets/genome/GCA_009914755.4/",
+      "archive_member": "GCA_009914755.4_T2T.2.bt2",
+      "parent_artifact": "kneaddata-host",
+      "deployed_path": "Member of the site-selected dedicated hg39T2T directory",
+      "sha256": "d3962bc9e65a7a80fd3af9f883914cb2bad804192bb1a0e448bae218cbfa00d3",
+      "bytes": null,
+      "checksum_status": "measured",
+      "verification": "Expected SHA256 supplied by the program owner on 2026-11-19; the file extracted from the distributor archive was rehashed on 2026-11-20 and matched."
+    },
+    {
+      "id": "kneaddata-host-3-bt2",
+      "stages": [
+        "kneaddata"
+      ],
+      "name": "GCA_009914755.4_T2T.3.bt2",
+      "version": "hg39T2T; GCA_009914755.4; index bundle v0.2",
+      "source": "https://huttenhower.sph.harvard.edu/kneadData_databases/Homo_sapiens_hg39_T2T_Bowtie2_v0.2.tar.gz",
+      "original_assembly_source": "https://www.ncbi.nlm.nih.gov/datasets/genome/GCA_009914755.4/",
+      "archive_member": "GCA_009914755.4_T2T.3.bt2",
+      "parent_artifact": "kneaddata-host",
+      "deployed_path": "Member of the site-selected dedicated hg39T2T directory",
+      "sha256": "5cf938e8402a908b5cd5be380c7a3850a5630ee5a3f33d0a50abbf6793e3bc30",
+      "bytes": null,
+      "checksum_status": "measured",
+      "verification": "Expected SHA256 supplied by the program owner on 2026-11-19; the file extracted from the distributor archive was rehashed on 2026-11-20 and matched."
+    },
+    {
+      "id": "kneaddata-host-4-bt2",
+      "stages": [
+        "kneaddata"
+      ],
+      "name": "GCA_009914755.4_T2T.4.bt2",
+      "version": "hg39T2T; GCA_009914755.4; index bundle v0.2",
+      "source": "https://huttenhower.sph.harvard.edu/kneadData_databases/Homo_sapiens_hg39_T2T_Bowtie2_v0.2.tar.gz",
+      "original_assembly_source": "https://www.ncbi.nlm.nih.gov/datasets/genome/GCA_009914755.4/",
+      "archive_member": "GCA_009914755.4_T2T.4.bt2",
+      "parent_artifact": "kneaddata-host",
+      "deployed_path": "Member of the site-selected dedicated hg39T2T directory",
+      "sha256": "aeaba4a2c9cf171e152e5e21e9679f931ffab6a110bffd85fffd396b18cd03e6",
+      "bytes": null,
+      "checksum_status": "measured",
+      "verification": "Expected SHA256 supplied by the program owner on 2026-11-19; the file extracted from the distributor archive was rehashed on 2026-11-20 and matched."
+    },
+    {
+      "id": "kneaddata-host-rev-1-bt2",
+      "stages": [
+        "kneaddata"
+      ],
+      "name": "GCA_009914755.4_T2T.rev.1.bt2",
+      "version": "hg39T2T; GCA_009914755.4; index bundle v0.2",
+      "source": "https://huttenhower.sph.harvard.edu/kneadData_databases/Homo_sapiens_hg39_T2T_Bowtie2_v0.2.tar.gz",
+      "original_assembly_source": "https://www.ncbi.nlm.nih.gov/datasets/genome/GCA_009914755.4/",
+      "archive_member": "GCA_009914755.4_T2T.rev.1.bt2",
+      "parent_artifact": "kneaddata-host",
+      "deployed_path": "Member of the site-selected dedicated hg39T2T directory",
+      "sha256": "789f9666a2934a141ea2ea631a543c6572a25528b6e1cc159c13c665c7ac59d6",
+      "bytes": null,
+      "checksum_status": "measured",
+      "verification": "Expected SHA256 supplied by the program owner on 2026-11-19; the file extracted from the distributor archive was rehashed on 2026-11-20 and matched."
+    },
+    {
+      "id": "kneaddata-host-rev-2-bt2",
+      "stages": [
+        "kneaddata"
+      ],
+      "name": "GCA_009914755.4_T2T.rev.2.bt2",
+      "version": "hg39T2T; GCA_009914755.4; index bundle v0.2",
+      "source": "https://huttenhower.sph.harvard.edu/kneadData_databases/Homo_sapiens_hg39_T2T_Bowtie2_v0.2.tar.gz",
+      "original_assembly_source": "https://www.ncbi.nlm.nih.gov/datasets/genome/GCA_009914755.4/",
+      "archive_member": "GCA_009914755.4_T2T.rev.2.bt2",
+      "parent_artifact": "kneaddata-host",
+      "deployed_path": "Member of the site-selected dedicated hg39T2T directory",
+      "sha256": "d531e13fa16aa719884513f71b660f99788d40fb3c0040d74e55fa27910291b5",
+      "bytes": null,
+      "checksum_status": "measured",
+      "verification": "Expected SHA256 supplied by the program owner on 2026-11-19; the file extracted from the distributor archive was rehashed on 2026-11-20 and matched."
+    },
+    {
+      "id": "metaphlan-markers",
+      "stages": [
+        "metaphlan"
+      ],
+      "name": "MetaPhlAn marker/index bundle",
+      "version": "mpa_vOct22_CHOCOPhlAnSGB_202403",
+      "source": "https://cmprod1.cibio.unitn.it/biobakery4/metaphlan_databases/mpa_vOct22_CHOCOPhlAnSGB_202403.tar",
+      "deployed_path": "/Databases/metaphlan/mpa_vOct22_202403/mpa_vOct22_202403_default",
+      "sha256": null,
+      "bytes": 2835056640,
+      "checksum_status": "pending",
+      "verification": "Both public archives (marker metadata .tar and bowtie2_indexes/..._bt2.tar) supported ranged downloads on 2026-11-20, and their distributor MD5 files were retrieved. The .tar holds <index>.pkl; the _bt2.tar holds <index>.1.bt2l. SHA256 and equality to the corrected neighboring deployment remain pending.",
+      "source_md5_url": "https://cmprod1.cibio.unitn.it/biobakery4/metaphlan_databases/mpa_vOct22_CHOCOPhlAnSGB_202403.md5",
+      "md5": "91d57912faab6bfd3526a49d9e83da8c",
+      "bowtie2_index_source": "https://cmprod1.cibio.unitn.it/biobakery4/metaphlan_databases/bowtie2_indexes/mpa_vOct22_CHOCOPhlAnSGB_202403_bt2.tar",
+      "bowtie2_index_md5_url": "https://cmprod1.cibio.unitn.it/biobakery4/metaphlan_databases/bowtie2_indexes/mpa_vOct22_CHOCOPhlAnSGB_202403_bt2.md5",
+      "bowtie2_index_md5": "6618ecfbed7f2964b9185b0c6f090020",
+      "bowtie2_index_bytes": 19670732800
+    },
+    {
+      "id": "humann-bundle",
+      "stages": [
+        "humann",
+        "baqlava"
+      ],
+      "name": "Packaged HUMAnN reference bundle",
+      "version": "chocophlan-v4-201901 packaging label",
+      "source": "Local packaging; original input URLs and releases need confirmation",
+      "deployed_path": "tarballs/chocophlan-v4-201901.tar.gz",
+      "sha256": null,
+      "bytes": null,
+      "checksum_status": "pending",
+      "verification": "Archive bytes and checksum sidecar are not available in this checkout; DNAnexus authentication expired during inventory."
+    },
+    {
+      "id": "humann-chocophlan",
+      "stages": [
+        "humann",
+        "baqlava"
+      ],
+      "name": "ChocoPhlAn nucleotide tree",
+      "version": "v4 alpha; selected portable archive",
+      "source": "https://huttenhower.sph.harvard.edu/humann_data/chocophlan/chocophlan.v4_alpha.tar.gz",
+      "deployed_path": "/Databases/humann/chocophlan-v4-201901/chocophlan",
+      "sha256": null,
+      "bytes": null,
+      "checksum_status": "pending",
+      "verification": "Public source from the pinned HUMAnN downloader supported ranged download on 2026-11-20. No checksum sidecar is published; equality to the neighboring local bundle remains pending."
+    },
+    {
+      "id": "humann-uniref90",
+      "stages": [
+        "humann",
+        "baqlava"
+      ],
+      "name": "Annotated UniRef90 DIAMOND tree",
+      "version": "v4 alpha EC-filtered; selected portable archive",
+      "source": "https://huttenhower.sph.harvard.edu/humann_data/uniprot/uniref_ec_filtered/uniref90_annotated_v4_alpha_ec_filtered.tar.gz",
+      "deployed_path": "/Databases/humann/chocophlan-v4-201901/uniref90_annotated",
+      "sha256": null,
+      "bytes": null,
+      "checksum_status": "pending",
+      "verification": "Public source from the pinned HUMAnN downloader supported ranged download on 2026-11-20. No checksum sidecar is published; equality to the neighboring local bundle remains pending."
+    },
+    {
+      "id": "humann-mappings",
+      "stages": [
+        "humann",
+        "baqlava",
+        "omixer-rpm"
+      ],
+      "name": "HUMAnN utility mappings including UniRef90-to-KO",
+      "version": "v4 alpha full mapping; selected portable archive",
+      "source": "https://huttenhower.sph.harvard.edu/humann_data/full_mapping_v4_alpha.tar.gz",
+      "deployed_path": "/Databases/humann/chocophlan-v4-201901/full_mapping",
+      "sha256": null,
+      "bytes": null,
+      "checksum_status": "pending",
+      "verification": "Public source from the pinned HUMAnN downloader supported ranged download on 2026-11-20. No checksum sidecar is published; verify the full tree including EC/KO/Pfam tables."
+    },
+    {
+      "id": "baqlava-nucleotide",
+      "stages": [
+        "baqlava"
+      ],
+      "name": "BAQLaVa nucleotide search database",
+      "version": "V0.5",
+      "source": "https://huttenhower.sph.harvard.edu/baqlava-db/databases.V0.5.tar.gz",
+      "deployed_path": "/Databases/baqlava/BAQLaVa_v05/BAQLaVa.V0.5.nucleotide",
+      "sha256": null,
+      "bytes": null,
+      "checksum_status": "pending",
+      "verification": "Source URL comes from pinned BAQLaVa setup.py; the exact project copy has not been hashed."
+    },
+    {
+      "id": "baqlava-protein",
+      "stages": [
+        "baqlava"
+      ],
+      "name": "BAQLaVa protein search database",
+      "version": "V0.5",
+      "source": "https://huttenhower.sph.harvard.edu/baqlava-db/databases.V0.5.tar.gz",
+      "deployed_path": "/Databases/baqlava/BAQLaVa_v05/BAQLaVa.V0.5.protein",
+      "sha256": null,
+      "bytes": null,
+      "checksum_status": "pending",
+      "verification": "Hash the archive plus extracted payloads, or an exact deployed directory manifest."
+    },
+    {
+      "id": "strainphlan-markers",
+      "stages": [
+        "strainphlan"
+      ],
+      "name": "StrainPhlAn marker metadata .pkl",
+      "version": "mpa_vOct22_CHOCOPhlAnSGB_202403",
+      "source": "https://cmprod1.cibio.unitn.it/biobakery4/metaphlan_databases/mpa_vOct22_CHOCOPhlAnSGB_202403.tar",
+      "deployed_path": "Matching .pkl in the deployed MetaPhlAn bundle",
+      "sha256": null,
+      "bytes": null,
+      "checksum_status": "pending",
+      "verification": "Use the .pkl from the selected mpa_vOct22_CHOCOPhlAnSGB_202403 archive. Record it separately or cover it with the same complete deployed-file manifest."
+    },
+    {
+      "id": "medi-kraken",
+      "stages": [
+        "medi"
+      ],
+      "name": "MEDI Kraken2/Bracken reference with taxonomy",
+      "version": "Exact snapshot/build unresolved",
+      "source": "https://github.com/Gibbons-Lab/medi/tree/c1166dc491e221dc3f182adecc16e2b1239affa7",
+      "deployed_path": "params.medi_db",
+      "sha256": null,
+      "bytes": null,
+      "checksum_status": "pending",
+      "verification": "Record source snapshot, decoy selection, taxonomy release, 150 bp Bracken distributions, and full deployed checksum."
+    },
+    {
+      "id": "medi-food-matches",
+      "stages": [
+        "medi"
+      ],
+      "name": "MEDI food-to-taxon matches CSV",
+      "version": "Exact snapshot unresolved",
+      "source": "https://github.com/Gibbons-Lab/medi/tree/c1166dc491e221dc3f182adecc16e2b1239affa7",
+      "deployed_path": "params.medi_food_matches",
+      "sha256": null,
+      "bytes": null,
+      "checksum_status": "pending",
+      "verification": "The actual run-selected food matches file is required to compute its checksum."
+    },
+    {
+      "id": "medi-food-contents",
+      "stages": [
+        "medi"
+      ],
+      "name": "MEDI food contents CSV",
+      "version": "Exact snapshot unresolved",
+      "source": "https://github.com/Gibbons-Lab/medi/tree/c1166dc491e221dc3f182adecc16e2b1239affa7",
+      "deployed_path": "params.medi_food_contents",
+      "sha256": null,
+      "bytes": null,
+      "checksum_status": "pending",
+      "verification": "The actual run-selected nutrient/compound contents file is required to compute its checksum."
+    },
+    {
+      "id": "baqlava-baqlava-metadata-orfs",
+      "stages": [
+        "baqlava"
+      ],
+      "name": "BAQLaVa_metadata_ORFs.txt.gz",
+      "version": "629c744a553eb534be457050ca8b7b33f177e0da",
+      "source": "https://raw.githubusercontent.com/biobakery/baqlava/629c744a553eb534be457050ca8b7b33f177e0da/baqlava/utility_files/BAQLaVa_metadata_ORFs.txt.gz",
+      "deployed_path": "baqlava/utility_files/BAQLaVa_metadata_ORFs.txt.gz",
+      "sha256": "96d079ba765281493c640d74cc08e1f8be963bfd4367b934a2587a464281dc73",
+      "bytes": 52505059,
+      "checksum_status": "measured",
+      "verification": "Measured from the installed file in image public.ecr.aws/j5i5h1i5/baqlava@sha256:6070af8e5635b44a6aa8e63aee70858004db3e12b68d8d6336ec82bfce555c97; upstream source link identifies the candidate source, not an independent byte comparison."
+    },
+    {
+      "id": "baqlava-baqlava-metadata-genomes",
+      "stages": [
+        "baqlava"
+      ],
+      "name": "BAQLaVa_metadata_genomes.txt.gz",
+      "version": "629c744a553eb534be457050ca8b7b33f177e0da",
+      "source": "https://raw.githubusercontent.com/biobakery/baqlava/629c744a553eb534be457050ca8b7b33f177e0da/baqlava/utility_files/BAQLaVa_metadata_genomes.txt.gz",
+      "deployed_path": "baqlava/utility_files/BAQLaVa_metadata_genomes.txt.gz",
+      "sha256": "ba7d54f467b5213cfbe86f4a889834d11eb3e3624102bfc8d16a86b87e934570",
+      "bytes": 7092689,
+      "checksum_status": "measured",
+      "verification": "Measured from the installed file in image public.ecr.aws/j5i5h1i5/baqlava@sha256:6070af8e5635b44a6aa8e63aee70858004db3e12b68d8d6336ec82bfce555c97; upstream source link identifies the candidate source, not an independent byte comparison."
+    },
+    {
+      "id": "baqlava-mgx-plasmid-vgbs",
+      "stages": [
+        "baqlava"
+      ],
+      "name": "MGX_plasmid_VGBs.txt",
+      "version": "629c744a553eb534be457050ca8b7b33f177e0da",
+      "source": "https://raw.githubusercontent.com/biobakery/baqlava/629c744a553eb534be457050ca8b7b33f177e0da/baqlava/utility_files/MGX_plasmid_VGBs.txt",
+      "deployed_path": "baqlava/utility_files/MGX_plasmid_VGBs.txt",
+      "sha256": "4e83492235aeaf83047ae5df2f2567eef6e9480647e68763cf269495fe9ddba6",
+      "bytes": 3791,
+      "checksum_status": "measured",
+      "verification": "Measured from the installed file in image public.ecr.aws/j5i5h1i5/baqlava@sha256:6070af8e5635b44a6aa8e63aee70858004db3e12b68d8d6336ec82bfce555c97; upstream source link identifies the candidate source, not an independent byte comparison."
+    },
+    {
+      "id": "baqlava-mtx-plasmid-vgbs",
+      "stages": [
+        "baqlava"
+      ],
+      "name": "MTX_plasmid_VGBs.txt",
+      "version": "629c744a553eb534be457050ca8b7b33f177e0da",
+      "source": "https://raw.githubusercontent.com/biobakery/baqlava/629c744a553eb534be457050ca8b7b33f177e0da/baqlava/utility_files/MTX_plasmid_VGBs.txt",
+      "deployed_path": "baqlava/utility_files/MTX_plasmid_VGBs.txt",
+      "sha256": "6b2b2bd5733a94ede10d25c2eb2fa89b5fd7d1f36d76c1c3b2b546d28164d32d",
+      "bytes": 3068,
+      "checksum_status": "measured",
+      "verification": "Measured from the installed file in image public.ecr.aws/j5i5h1i5/baqlava@sha256:6070af8e5635b44a6aa8e63aee70858004db3e12b68d8d6336ec82bfce555c97; upstream source link identifies the candidate source, not an independent byte comparison."
+    },
+    {
+      "id": "baqlava-vgb-taxonomy",
+      "stages": [
+        "baqlava"
+      ],
+      "name": "VGB_taxonomy.txt",
+      "version": "629c744a553eb534be457050ca8b7b33f177e0da",
+      "source": "https://raw.githubusercontent.com/biobakery/baqlava/629c744a553eb534be457050ca8b7b33f177e0da/baqlava/utility_files/VGB_taxonomy.txt",
+      "deployed_path": "baqlava/utility_files/VGB_taxonomy.txt",
+      "sha256": "e29f6d2b3fb3af9040bff4b5308a1d6d348db076734fab566e2db3baf83c68fc",
+      "bytes": 24510049,
+      "checksum_status": "measured",
+      "verification": "Measured from the installed file in image public.ecr.aws/j5i5h1i5/baqlava@sha256:6070af8e5635b44a6aa8e63aee70858004db3e12b68d8d6336ec82bfce555c97; upstream source link identifies the candidate source, not an independent byte comparison."
+    },
+    {
+      "id": "baqlava-idmap-nucleotide-conservative",
+      "stages": [
+        "baqlava"
+      ],
+      "name": "idmap_nucleotide_conservative.txt",
+      "version": "629c744a553eb534be457050ca8b7b33f177e0da",
+      "source": "https://raw.githubusercontent.com/biobakery/baqlava/629c744a553eb534be457050ca8b7b33f177e0da/baqlava/utility_files/idmap_nucleotide_conservative.txt",
+      "deployed_path": "baqlava/utility_files/idmap_nucleotide_conservative.txt",
+      "sha256": "3618f936b9260a1dfcf8a558483b1df30c24efa2ef6b31f8fd501d0d33f40b80",
+      "bytes": 24165716,
+      "checksum_status": "measured",
+      "verification": "Measured from the installed file in image public.ecr.aws/j5i5h1i5/baqlava@sha256:6070af8e5635b44a6aa8e63aee70858004db3e12b68d8d6336ec82bfce555c97; upstream source link identifies the candidate source, not an independent byte comparison."
+    },
+    {
+      "id": "baqlava-idmap-nucleotide-default",
+      "stages": [
+        "baqlava"
+      ],
+      "name": "idmap_nucleotide_default.txt",
+      "version": "629c744a553eb534be457050ca8b7b33f177e0da",
+      "source": "https://raw.githubusercontent.com/biobakery/baqlava/629c744a553eb534be457050ca8b7b33f177e0da/baqlava/utility_files/idmap_nucleotide_default.txt",
+      "deployed_path": "baqlava/utility_files/idmap_nucleotide_default.txt",
+      "sha256": "075c226a1d012cd8b6512892ab33618432436c004efa0aad928c74b1ce6a6479",
+      "bytes": 24387050,
+      "checksum_status": "measured",
+      "verification": "Measured from the installed file in image public.ecr.aws/j5i5h1i5/baqlava@sha256:6070af8e5635b44a6aa8e63aee70858004db3e12b68d8d6336ec82bfce555c97; upstream source link identifies the candidate source, not an independent byte comparison."
+    },
+    {
+      "id": "baqlava-idmap-nucleotide-nofilter",
+      "stages": [
+        "baqlava"
+      ],
+      "name": "idmap_nucleotide_nofilter.txt",
+      "version": "629c744a553eb534be457050ca8b7b33f177e0da",
+      "source": "https://raw.githubusercontent.com/biobakery/baqlava/629c744a553eb534be457050ca8b7b33f177e0da/baqlava/utility_files/idmap_nucleotide_nofilter.txt",
+      "deployed_path": "baqlava/utility_files/idmap_nucleotide_nofilter.txt",
+      "sha256": "f9a84cc3d179111f0a004cb7467ed7e45e17ea2ff8def5cd1e42ea2d7c6900f8",
+      "bytes": 24526717,
+      "checksum_status": "measured",
+      "verification": "Measured from the installed file in image public.ecr.aws/j5i5h1i5/baqlava@sha256:6070af8e5635b44a6aa8e63aee70858004db3e12b68d8d6336ec82bfce555c97; upstream source link identifies the candidate source, not an independent byte comparison."
+    },
+    {
+      "id": "baqlava-idmap-protein-conservative",
+      "stages": [
+        "baqlava"
+      ],
+      "name": "idmap_protein_conservative.txt",
+      "version": "629c744a553eb534be457050ca8b7b33f177e0da",
+      "source": "https://raw.githubusercontent.com/biobakery/baqlava/629c744a553eb534be457050ca8b7b33f177e0da/baqlava/utility_files/idmap_protein_conservative.txt",
+      "deployed_path": "baqlava/utility_files/idmap_protein_conservative.txt",
+      "sha256": "4d4b7bd3cfc112d426adc014b84b510a5dac67384e57de6763e28ad68b30a6ad",
+      "bytes": 93233081,
+      "checksum_status": "measured",
+      "verification": "Measured from the installed file in image public.ecr.aws/j5i5h1i5/baqlava@sha256:6070af8e5635b44a6aa8e63aee70858004db3e12b68d8d6336ec82bfce555c97; upstream source link identifies the candidate source, not an independent byte comparison."
+    },
+    {
+      "id": "baqlava-idmap-protein-default",
+      "stages": [
+        "baqlava"
+      ],
+      "name": "idmap_protein_default.txt",
+      "version": "629c744a553eb534be457050ca8b7b33f177e0da",
+      "source": "https://raw.githubusercontent.com/biobakery/baqlava/629c744a553eb534be457050ca8b7b33f177e0da/baqlava/utility_files/idmap_protein_default.txt",
+      "deployed_path": "baqlava/utility_files/idmap_protein_default.txt",
+      "sha256": "027f0dc03b4758d65a1ddad470cb00768f73960e36babfca0f6b3971a7c957ff",
+      "bytes": 94626189,
+      "checksum_status": "measured",
+      "verification": "Measured from the installed file in image public.ecr.aws/j5i5h1i5/baqlava@sha256:6070af8e5635b44a6aa8e63aee70858004db3e12b68d8d6336ec82bfce555c97; upstream source link identifies the candidate source, not an independent byte comparison."
+    },
+    {
+      "id": "baqlava-idmap-protein-nofilter",
+      "stages": [
+        "baqlava"
+      ],
+      "name": "idmap_protein_nofilter.txt",
+      "version": "629c744a553eb534be457050ca8b7b33f177e0da",
+      "source": "https://raw.githubusercontent.com/biobakery/baqlava/629c744a553eb534be457050ca8b7b33f177e0da/baqlava/utility_files/idmap_protein_nofilter.txt",
+      "deployed_path": "baqlava/utility_files/idmap_protein_nofilter.txt",
+      "sha256": "12cdb9a45c3df8d03bc442cb52f83cf2822bc2347ac20eb81a850e89f40dc1ac",
+      "bytes": 95143161,
+      "checksum_status": "measured",
+      "verification": "Measured from the installed file in image public.ecr.aws/j5i5h1i5/baqlava@sha256:6070af8e5635b44a6aa8e63aee70858004db3e12b68d8d6336ec82bfce555c97; upstream source link identifies the candidate source, not an independent byte comparison."
+    },
+    {
+      "id": "baqlava-nucleotide-marker-reference",
+      "stages": [
+        "baqlava"
+      ],
+      "name": "nucleotide_marker_reference.txt",
+      "version": "629c744a553eb534be457050ca8b7b33f177e0da",
+      "source": "https://raw.githubusercontent.com/biobakery/baqlava/629c744a553eb534be457050ca8b7b33f177e0da/baqlava/utility_files/nucleotide_marker_reference.txt",
+      "deployed_path": "baqlava/utility_files/nucleotide_marker_reference.txt",
+      "sha256": "259f3c81e01a994b09f0e6c2e94c7312bb4c8f00e1d540d0f71876d1ad2616a8",
+      "bytes": 36178784,
+      "checksum_status": "measured",
+      "verification": "Measured from the installed file in image public.ecr.aws/j5i5h1i5/baqlava@sha256:6070af8e5635b44a6aa8e63aee70858004db3e12b68d8d6336ec82bfce555c97; upstream source link identifies the candidate source, not an independent byte comparison."
+    },
+    {
+      "id": "baqlava-translated-protein-reference",
+      "stages": [
+        "baqlava"
+      ],
+      "name": "translated_protein_reference.txt",
+      "version": "629c744a553eb534be457050ca8b7b33f177e0da",
+      "source": "https://raw.githubusercontent.com/biobakery/baqlava/629c744a553eb534be457050ca8b7b33f177e0da/baqlava/utility_files/translated_protein_reference.txt",
+      "deployed_path": "baqlava/utility_files/translated_protein_reference.txt",
+      "sha256": "0611d16db6cca8a2c2bb04aa8ccfb5937c51092ce65f251fe266a818f4bd47b1",
+      "bytes": 50575598,
+      "checksum_status": "measured",
+      "verification": "Measured from the installed file in image public.ecr.aws/j5i5h1i5/baqlava@sha256:6070af8e5635b44a6aa8e63aee70858004db3e12b68d8d6336ec82bfce555c97; upstream source link identifies the candidate source, not an independent byte comparison."
+    },
+    {
+      "id": "gbm-archive",
+      "stages": [
+        "omixer-rpm"
+      ],
+      "name": "GBMs.zip",
+      "version": "21a2875d39a1b85338b9b10b5fe21eefa634fc55",
+      "source": "https://media.githubusercontent.com/media/raeslab/GBMs/21a2875d39a1b85338b9b10b5fe21eefa634fc55/supplementary/GBMs.zip",
+      "deployed_path": "Candidate reference; FORM integration pending",
+      "sha256": "d6af41d68fced6a1f3ec3fd0dd712612bcf0bf841d26801e4fe9f0d90c33091a",
+      "bytes": 6005,
+      "checksum_status": "measured",
+      "verification": "Downloaded actual LFS payload; SHA256 and byte count matched upstream Git LFS pointer metadata."
+    },
+    {
+      "id": "gbm-modules",
+      "stages": [
+        "omixer-rpm"
+      ],
+      "name": "GBM.inputfile.txt",
+      "version": "21a2875d39a1b85338b9b10b5fe21eefa634fc55",
+      "source": "https://media.githubusercontent.com/media/raeslab/GBMs/21a2875d39a1b85338b9b10b5fe21eefa634fc55/supplementary/GBMs/GBM.inputfile.txt",
+      "deployed_path": "Candidate reference; FORM integration pending",
+      "sha256": "50f808a781326c706a622e3e9a1da79bc6485a65f422bee171bc7743080fd232",
+      "bytes": 4685,
+      "checksum_status": "measured",
+      "verification": "Downloaded actual LFS payload; SHA256 and byte count matched upstream Git LFS pointer metadata."
+    },
+    {
+      "id": "gbm-supplement",
+      "stages": [
+        "omixer-rpm"
+      ],
+      "name": "Supplementary.Data.S1.txt",
+      "version": "21a2875d39a1b85338b9b10b5fe21eefa634fc55",
+      "source": "https://media.githubusercontent.com/media/raeslab/GBMs/21a2875d39a1b85338b9b10b5fe21eefa634fc55/supplementary/GBMs/Supplementary.Data.S1.txt",
+      "deployed_path": "Candidate reference; FORM integration pending",
+      "sha256": "4c80595ebe1cda28cc25e26e94a913d4a1d317d130cd87f0e7fac4df3baab92e",
+      "bytes": 11375,
+      "checksum_status": "measured",
+      "verification": "Downloaded actual LFS payload; SHA256 and byte count matched upstream Git LFS pointer metadata."
+    },
+    {
+      "id": "gbm-local-crlf",
+      "stages": [
+        "omixer-rpm"
+      ],
+      "name": "GBM.inputfile.txt (local CRLF copy)",
+      "version": "Local snapshot 2026-11-19",
+      "source": "Local copy; identical to pinned upstream after CRLF-to-LF normalization",
+      "deployed_path": "/Databases/omixer-rpm/GBM.inputfile.txt",
+      "sha256": "a73637f95df556af0322be5b32b549b2304e82120ebbbd5751cae58df71eb082",
+      "bytes": 4914,
+      "checksum_status": "measured",
+      "verification": "Hashed local bytes; production must choose and identify either this representation or the upstream LF representation."
+    }
+  ]
+}
