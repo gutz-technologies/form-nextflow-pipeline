@@ -1,0 +1,396 @@
+{
+  "images": {
+    "baqlava": {
+      "conda_packages": {
+        "anadama2": {
+          "build": "pyhdfd78af_0",
+          "version": "0.10.0"
+        },
+        "biopython": {
+          "build": "py312h5cc1888_1",
+          "version": "1.88"
+        },
+        "blast": {
+          "build": "hb02a186_1",
+          "version": "2.17.0"
+        },
+        "bowtie2": {
+          "build": "h63e9258_2",
+          "version": "2.5.5"
+        },
+        "bzip2": {
+          "build": "hda65f42_10",
+          "version": "1.0.8"
+        },
+        "diamond": {
+          "build": "he361c42_0",
+          "version": "2.2.8"
+        },
+        "glpk": {
+          "build": "h445213a_0",
+          "version": "5.0"
+        },
+        "humann": {
+          "build": "py312_0",
+          "version": "4.0.0a1"
+        },
+        "metaphlan": {
+          "build": "pyhdfd78af_0",
+          "version": "4.2.5"
+        },
+        "muscle": {
+          "build": "h9948957_3",
+          "version": "5.3"
+        },
+        "numpy": {
+          "build": "py312he827f4e_0",
+          "version": "2.5.4"
+        },
+        "pandas": {
+          "build": "np2py312h91ec553_0",
+          "version": "3.1.0"
+        },
+        "phylophlan": {
+          "build": "pyhdfd78af_1",
+          "version": "3.2.1"
+        },
+        "pigz": {
+          "build": "h421ea60_2",
+          "version": "2.8"
+        },
+        "python": {
+          "build": "h5f976f7_0_cpython",
+          "version": "3.12.16"
+        },
+        "raxml": {
+          "build": "h7b50bb2_3",
+          "version": "8.2.13"
+        },
+        "samtools": {
+          "build": "h9dcdb79_0",
+          "version": "1.25"
+        },
+        "scipy": {
+          "build": "py312h106c528_2",
+          "version": "1.18.1"
+        }
+      },
+      "image": "public.ecr.aws/j5i5h1i5/baqlava:4.0.0-r1",
+      "image_id": "sha256:bc1b65fd302645ad77d275303d10fe3738f38951e21f479da190cf6e929be132",
+      "platform": "linux/amd64",
+      "python_distributions": {
+        "anadama2": "0.10.0",
+        "baqlava": "1.2.0.dev0",
+        "humann": "4.0.0a1",
+        "metaphlan": "4.2.5"
+      },
+      "repo_digests": [
+        "public.ecr.aws/j5i5h1i5/baqlava@sha256:6070af8e5635b44a6aa8e63aee70858004db3e12b68d8d6336ec82bfce555c97"
+      ],
+      "source_recipe_commit": "629c744a553eb534be457050ca8b7b33f177e0da"
+    },
+    "humann": {
+      "conda_packages": {
+        "biopython": {
+          "build": "py312h5cc1888_1",
+          "version": "1.88"
+        },
+        "blast": {
+          "build": "hb02a186_1",
+          "version": "2.17.0"
+        },
+        "bowtie2": {
+          "build": "h63e9258_2",
+          "version": "2.5.5"
+        },
+        "bzip2": {
+          "build": "hda65f42_10",
+          "version": "1.0.8"
+        },
+        "diamond": {
+          "build": "he361c42_0",
+          "version": "2.2.8"
+        },
+        "glpk": {
+          "build": "_0",
+          "version": "4.57"
+        },
+        "humann": {
+          "build": "py312_0",
+          "version": "4.0.0a1"
+        },
+        "metaphlan": {
+          "build": "pyhca03a8a_0",
+          "version": "4.0.6"
+        },
+        "muscle": {
+          "build": "h9948957_3",
+          "version": "5.3"
+        },
+        "numpy": {
+          "build": "py312he827f4e_0",
+          "version": "2.5.4"
+        },
+        "pandas": {
+          "build": "np2py312h91ec553_0",
+          "version": "3.1.0"
+        },
+        "phylophlan": {
+          "build": "pyhdfd78af_1",
+          "version": "3.2.1"
+        },
+        "pigz": {
+          "build": "h421ea60_2",
+          "version": "2.8"
+        },
+        "python": {
+          "build": "h5f976f7_0_cpython",
+          "version": "3.12.16"
+        },
+        "raxml": {
+          "build": "h7b50bb2_3",
+          "version": "8.2.13"
+        },
+        "samtools": {
+          "build": "h9dcdb79_0",
+          "version": "1.25"
+        },
+        "scipy": {
+          "build": "py312h106c528_2",
+          "version": "1.18.1"
+        }
+      },
+      "image": "public.ecr.aws/j5i5h1i5/humann:4.0.0-experimental-nodb-dnanexus-r1",
+      "image_id": "sha256:b7cd47f4fe0636651b1cb6bf284f7161fedc00901346bc402bbc3c0497f6c4cf",
+      "platform": "linux/amd64",
+      "python_distributions": {
+        "humann": "4.0.0a2",
+        "metaphlan": "4.0.6"
+      },
+      "repo_digests": [
+        "public.ecr.aws/j5i5h1i5/humann@sha256:3d245ae23c5b5015e6ca2a16b5963c0d178fd5f0786890e7eb57fa8cf7fe2acd"
+      ],
+      "source_recipe_commit": "9cb1a8253e11a0a8ed8f58f85f53e04a690e40a6"
+    },
+    "kneaddata": {
+      "conda_packages": {
+        "blast": {
+          "build": "hb02a186_1",
+          "version": "2.17.0"
+        },
+        "bowtie2": {
+          "build": "h63e9258_2",
+          "version": "2.5.5"
+        },
+        "bzip2": {
+          "build": "hda65f42_10",
+          "version": "1.0.8"
+        },
+        "fastqc": {
+          "build": "hdfd78af_0",
+          "version": "0.13.0"
+        },
+        "kneaddata": {
+          "build": "pyhdfd78af_0",
+          "version": "0.12.1"
+        },
+        "openjdk": {
+          "build": "h516909a_1016",
+          "version": "11.0.1"
+        },
+        "pigz": {
+          "build": "h421ea60_2",
+          "version": "2.8"
+        },
+        "python": {
+          "build": "h4a871b0_2_cpython",
+          "version": "3.8.20"
+        },
+        "samtools": {
+          "build": "h9dcdb79_1",
+          "version": "1.24"
+        },
+        "trf": {
+          "build": "h7b50bb2_0",
+          "version": "4.10.0rc2"
+        },
+        "trimmomatic": {
+          "build": "hdfd78af_0",
+          "version": "0.40"
+        }
+      },
+      "image": "public.ecr.aws/j5i5h1i5/kneaddata:0.12.1-nodb-dnanexus-r1",
+      "image_id": "sha256:3d2767f82ada151669640197b3eb0ff5f222508b906811bc6eb304f8de13b92d",
+      "immutable_image_reference": "public.ecr.aws/j5i5h1i5/kneaddata@sha256:87f9fe73578cffa73d30e08c90099e1fdf69831c42778d3b2a7cd7791f8ae4b3",
+      "platform": "linux/amd64",
+      "program_versions": {
+        "bowtie2": {
+          "command": [
+            "/opt/conda/bin/bowtie2",
+            "--version"
+          ],
+          "stdout": "/opt/conda/bin/bowtie2-align-s-v256 version 2.5.5"
+        },
+        "kneaddata": {
+          "command": [
+            "/opt/conda/bin/kneaddata",
+            "--version"
+          ],
+          "stdout": "kneaddata v0.12.0"
+        },
+        "trimmomatic": {
+          "command": [
+            "/opt/conda/bin/java",
+            "-jar",
+            "/opt/conda/bin/trimmomatic",
+            "-version"
+          ],
+          "stdout": "0.40"
+        }
+      },
+      "python_distributions": {},
+      "registry_digest_sha256": "87f9fe73578cffa73d30e08c90099e1fdf69831c42778d3b2a7cd7791f8ae4b3",
+      "repo_digests": [
+        "public.ecr.aws/j5i5h1i5/kneaddata@sha256:87f9fe73578cffa73d30e08c90099e1fdf69831c42778d3b2a7cd7791f8ae4b3"
+      ],
+      "version_discrepancy": {
+        "cli_reported_version": "v0.12.0",
+        "conda_package_version": "0.12.1",
+        "decision": "Record both observations; do not change the software, patch the version string, or rebuild the image to reconcile this discrepancy.",
+        "decision_source": "Program owner instruction, 2026-11-19",
+        "disposition": "document_only"
+      }
+    },
+    "metaphlan": {
+      "conda_packages": {
+        "biopython": {
+          "build": "py38h01eb140_0",
+          "version": "1.83"
+        },
+        "blast": {
+          "build": "hb02a186_1",
+          "version": "2.17.0"
+        },
+        "bowtie2": {
+          "build": "h63e9258_2",
+          "version": "2.5.5"
+        },
+        "bzip2": {
+          "build": "hda65f42_10",
+          "version": "1.0.8"
+        },
+        "diamond": {
+          "build": "he361c42_0",
+          "version": "2.2.8"
+        },
+        "glpk": {
+          "build": "h445213a_0",
+          "version": "5.0"
+        },
+        "metaphlan": {
+          "build": "pyhdfd78af_0",
+          "version": "4.2.5"
+        },
+        "muscle": {
+          "build": "h9948957_3",
+          "version": "5.3"
+        },
+        "numpy": {
+          "build": "py38h59b608b_0",
+          "version": "1.24.4"
+        },
+        "pandas": {
+          "build": "py38h01efb38_1",
+          "version": "2.0.3"
+        },
+        "phylophlan": {
+          "build": "pyhdfd78af_0",
+          "version": "3.1.1"
+        },
+        "pigz": {
+          "build": "h421ea60_2",
+          "version": "2.8"
+        },
+        "python": {
+          "build": "h4a871b0_2_cpython",
+          "version": "3.8.20"
+        },
+        "raxml": {
+          "build": "h7b50bb2_3",
+          "version": "8.2.13"
+        },
+        "samtools": {
+          "build": "h9dcdb79_0",
+          "version": "1.25"
+        },
+        "scipy": {
+          "build": "py38h59b608b_3",
+          "version": "1.10.1"
+        }
+      },
+      "image": "public.ecr.aws/j5i5h1i5/metaphlan:4.2.5-nodb-dnanexus-r1",
+      "image_id": "sha256:2e494f40f623c7bcc89433d6c3d2a1f9b28cb1aeca8bf00c3aef6faec0f82ed6",
+      "platform": "linux/amd64",
+      "python_distributions": {
+        "metaphlan": "4.2.5"
+      },
+      "repo_digests": [
+        "public.ecr.aws/j5i5h1i5/metaphlan@sha256:bcbba3807ce7bbfda6526dd8598232025c9cc9a3f7689b9ad639dab9d8c81787"
+      ],
+      "strainphlan_version_output": "StrainPhlAn version 4.2.5 (13 Jul 2026)"
+    },
+    "omixer-rpm": {
+      "image": "omixer-rpm:1.1-r1",
+      "image_id": "sha256:10256a3d732931e21d9f761c235536282982b7257ff6acdca261a08b045292e2",
+      "java_and_jar": [
+        "openjdk version \"21.0.13\" 2026-10-20 LTS",
+        "OpenJDK Runtime Environment Temurin-21.0.13+9 (build 21.0.13+9-LTS)",
+        "OpenJDK 64-Bit Server VM Temurin-21.0.13+9 (build 21.0.13+9-LTS, mixed mode, sharing)",
+        "7a1355e34d7f982003971228de2a7014b2161b8ee9413d9ee5933c02c30dd39f  /opt/omixer/omixer-rpm.jar"
+      ],
+      "platform": "linux/amd64",
+      "release_jar_sha256": "7a1355e34d7f982003971228de2a7014b2161b8ee9413d9ee5933c02c30dd39f",
+      "release_jar_source": "https://github.com/raeslab/omixer-rpm/releases/download/1.1/omixer-rpm-1.1.jar",
+      "repo_digests": []
+    }
+  },
+  "method": "Offline read-only containers, no image pulls. Conda metadata and Python distribution metadata were queried independently; pip-installed distributions can replace Conda packages.",
+  "recorded_on": "2026-11-19",
+  "scope": "Locally inspected candidate images for the FORM DNAnexus deployment; not a deployed FORM release lockfile.",
+  "source_context": {
+    "biobakery-containers": {
+      "head": "a8d779ba245722b9806bc9431391b1c59141f279",
+      "note": "Neighboring checkout; DNAnexus and BAQLaVa recipes include local/untracked work. Image inspection is the authority for installed package versions.",
+      "repository": "https://github.com/Hugemiler/biobakery-containers"
+    },
+    "biobakery-nextflow": {
+      "head": "88144cda85ce4a191681299b37bbfa07dcb3282d",
+      "note": "Neighboring checkout; some files are locally modified or untracked. Snapshot file hashes identify inspected content.",
+      "repository": "https://github.com/Hugemiler/biobakery-nextflow"
+    }
+  },
+  "source_file_sha256": {
+    "biobakery-containers/packages/baqlava/1.2.0-dev/nodb/Dockerfile": "ebfc650e271b22ea48c1e2bcd79eafb4c8dd203c22a2344d52c21ea797f94135",
+    "biobakery-containers/packages/baqlava/1.2.0-dev/nodb/environment.yaml": "7c9909a6094643859a1b3e8474f13c2d110d64a38763cbbea8e3696f1c3a8101",
+    "biobakery-containers/packages/humann/4.0.0a-dev/chocophlan-v4-201901/Dockerfile": "67c1a85d3ddc899002762f53012b073194250f40885b81d16be8b9bb0af4a5d8",
+    "biobakery-containers/packages/humann/4.0.0a-dev/chocophlan-v4-201901/environment.yaml": "c234f4d25b4c72110f318a329912e8d8e36642c27bb245a727a1a40caa7f6684",
+    "biobakery-containers/packages/humann/4.0.0a-dev/nodb-dnanexus/Dockerfile": "cd20c960255fbd9cfc0d5578bc65fb40e3b67b8e63d1a321ae11edcbb2fc563d",
+    "biobakery-containers/packages/humann/4.0.0a-dev/nodb-dnanexus/environment.yaml": "c234f4d25b4c72110f318a329912e8d8e36642c27bb245a727a1a40caa7f6684",
+    "biobakery-containers/packages/humann/4.0.0a-dev/nodb/Dockerfile": "eceec21aefb3038624f26b40b51c4ca050f304cd5f9158ea1c554eb236489792",
+    "biobakery-containers/packages/humann/4.0.0a-dev/nodb/environment.yaml": "e5b1fd49542bb236235bf99890d69e749305433bce3456e4e81b0fa20a50842d",
+    "biobakery-containers/packages/kneaddata/0.12.1/hg37dec/Dockerfile": "8bb8f89745d91f0392017816ecabe41cfb56121198161d8fc45312893873ab1d",
+    "biobakery-containers/packages/kneaddata/0.12.1/hg37dec/environment.yaml": "131ee5008da13b2004a918f0725524ddc115680042cdb050084e0fd1208af79a",
+    "biobakery-containers/packages/kneaddata/0.12.1/nodb-dnanexus/Dockerfile": "ea5af6885b492b150cd5425664c2806f086036bc4cac4a9bb8189cf9790bc597",
+    "biobakery-containers/packages/kneaddata/0.12.1/nodb-dnanexus/environment.yaml": "131ee5008da13b2004a918f0725524ddc115680042cdb050084e0fd1208af79a",
+    "biobakery-containers/packages/kneaddata/0.12.1/nodb/Dockerfile": "05095d97aac80af7a7e23edaceef31bf25b798dad130aaf932e006e031f47d2c",
+    "biobakery-containers/packages/kneaddata/0.12.1/nodb/environment.yaml": "131ee5008da13b2004a918f0725524ddc115680042cdb050084e0fd1208af79a",
+    "biobakery-containers/packages/metaphlan/4.2.5/mpa_vOct22_202403/Dockerfile": "9cee9e2677fe54ae010b52a9d9c9f71ab70c590c0bcea0d01bb45aaaa1f2da43",
+    "biobakery-containers/packages/metaphlan/4.2.5/mpa_vOct22_202403/environment.yaml": "f7f3e877095e5bddbf6e81d1ff94e110d1e206a2f36f73d71203f2201e95cb20",
+    "biobakery-containers/packages/metaphlan/4.2.5/nodb-dnanexus/Dockerfile": "e74578c727489ccb8ca50ea7dec283f2c33cc3e44483e1c4b74f55aca8057848",
+    "biobakery-containers/packages/metaphlan/4.2.5/nodb-dnanexus/environment.yaml": "6fe62f534c427705b189a72939b82d8b3d434e531a0be9a360f71915e7878cdc",
+    "biobakery-containers/packages/metaphlan/4.2.5/nodb/Dockerfile": "59162239e1937b3ae5594bfcfff47e4dc7a32991e7de633ade7805cc2970a27d",
+    "biobakery-containers/packages/metaphlan/4.2.5/nodb/environment.yaml": "f7f3e877095e5bddbf6e81d1ff94e110d1e206a2f36f73d71203f2201e95cb20",
+    "biobakery-containers/packages/omixer_rpm/nodb/Dockerfile": "0281f360f26716461fbe78fd0447c28860ea2a828c92e568557958d722ab298f",
+    "biobakery-nextflow/bin/build_samplesheet.py": "5d4f71cb8555ad27f87399c249b2028353d0997fff23ffffa4adb1f5d6f8a411"
+  }
+}

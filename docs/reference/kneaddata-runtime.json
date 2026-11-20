@@ -1,0 +1,114 @@
+{
+  "dnanexus_site_defaults": {
+    "cpus": 8,
+    "executor_queue_size": 50,
+    "kneaddata_options_override": null,
+    "machine_type": "mem3_ssd2_v3_x16",
+    "memory": "28.GB",
+    "note": "CPU/memory are fixed site requests, not Trimmomatic heap or tool flags. Reference settings must be updated to the program-approved hg39T2T index.",
+    "time": "min(8h * task.attempt, params.max_time), inherited from base"
+  },
+  "image": "public.ecr.aws/j5i5h1i5/kneaddata:0.12.1-nodb-dnanexus-r1",
+  "immutable_image_reference": "public.ecr.aws/j5i5h1i5/kneaddata@sha256:87f9fe73578cffa73d30e08c90099e1fdf69831c42778d3b2a7cd7791f8ae4b3",
+  "installed_source_sha256": {
+    "config.py": "73481bcaa2836effc27a9eecd308b58b1d8e2d2c5c2d09e69edf2dc28e9a7c94",
+    "knead_data.py": "bb630f6dbb4b31593679f0ef414678323f2073233ed5523988bd695b3512953f",
+    "run.py": "bfaa1756094a0899409891b353f27c51d80f9545385ab99db966765e26064b77",
+    "utilities.py": "c1bf14815c8da61fcbe74f458c54703e59b1d89e7c20159bfeaa5ee4b5731230"
+  },
+  "kneaddata_config_defaults": {
+    "bowtie2_options": [
+      "--very-sensitive-local"
+    ],
+    "min_init_read_length": 60,
+    "processes": 1,
+    "quality_scores": "phred33",
+    "threads": 1,
+    "trf_delta": 7,
+    "trf_match": 2,
+    "trf_match_probability": 80,
+    "trf_maxperiod": 500,
+    "trf_minscore": 50,
+    "trf_mismatch": 7,
+    "trf_pi": 10,
+    "trimmomatic_memory": "500m",
+    "trimmomatic_min_len_percent": 50,
+    "trimmomatic_provided_sequencer_default": "NexteraPE"
+  },
+  "program_versions": {
+    "bowtie2": {
+      "command": [
+        "/opt/conda/bin/bowtie2",
+        "--version"
+      ],
+      "stdout": "/opt/conda/bin/bowtie2-align-s-v256 version 2.5.5"
+    },
+    "kneaddata": {
+      "command": [
+        "/opt/conda/bin/kneaddata",
+        "--version"
+      ],
+      "stdout": "kneaddata v0.12.0"
+    },
+    "trimmomatic": {
+      "command": [
+        "/opt/conda/bin/java",
+        "-jar",
+        "/opt/conda/bin/trimmomatic",
+        "-version"
+      ],
+      "stdout": "0.40"
+    }
+  },
+  "recorded_on": "2026-11-19",
+  "registry_digest_sha256": "87f9fe73578cffa73d30e08c90099e1fdf69831c42778d3b2a7cd7791f8ae4b3",
+  "registry_digests": [
+    "public.ecr.aws/j5i5h1i5/kneaddata@sha256:87f9fe73578cffa73d30e08c90099e1fdf69831c42778d3b2a7cd7791f8ae4b3"
+  ],
+  "scope": "Installed image defaults and neighboring workflow snapshot; these runtime settings have not yet been deployed by FORM.",
+  "trf_package": {
+    "build": "h7b50bb2_0",
+    "version": "4.10.0rc2"
+  },
+  "trimmomatic_example_150bp": {
+    "PE": [
+      "MINLEN:60",
+      "ILLUMINACLIP:/opt/conda/lib/python3.8/site-packages/kneaddata/adapters/NexteraPE-PE.fa:2:30:10:8:TRUE",
+      "SLIDINGWINDOW:4:20",
+      "MINLEN:75"
+    ],
+    "SE": [
+      "MINLEN:60",
+      "ILLUMINACLIP:/opt/conda/lib/python3.8/site-packages/kneaddata/adapters/NexteraPE-PE.fa:2:30:10",
+      "SLIDINGWINDOW:4:20",
+      "MINLEN:75"
+    ]
+  },
+  "version_discrepancy": {
+    "cli_reported_version": "v0.12.0",
+    "conda_package_version": "0.12.1",
+    "decision": "Record both observations; do not change the software, patch the version string, or rebuild the image to reconcile this discrepancy.",
+    "decision_source": "Program owner instruction, 2026-11-19",
+    "disposition": "document_only"
+  },
+  "workflow_source_sha256": {
+    "conf/base.config": "6f0ab18fc4368ea496b3acd615ef488fa51acec3cca28cfcc9ced19ce2a2040c",
+    "conf/params.config": "eb3ebd3c031b6c2e4227882e15e82766f033260b4bbe68a2a0c4c144490a4a8b",
+    "conf/profiles/dnanexus.config": "7806c18bdb503b542ca7c9de762dc08403b1e467720526be939711b8aab39ed4",
+    "conf/profiles/dnanexus_download.config": "6ba3a4e73e87aa0283d5724eb642791670ef07d87af520a104661b0f26d640ec",
+    "modules/kneaddata/main.nf": "18793dfbea1a3029d16038ac85df681fdcfb4b2ea99575e2aadbb2931ba2c44f",
+    "subworkflows/quality_control.nf": "97b3aaf9ade45d036fa2dc3fe4db52e0d38a52cbc62897caf558f4a225307d5a"
+  },
+  "wrapper_defaults": {
+    "kneaddata_bypass_trim": false,
+    "kneaddata_options": "",
+    "kneaddata_remove_intermediate_files": true,
+    "output": "./",
+    "output_prefix": "<sample>_kneaddata",
+    "postprocessing": "pigz -p task.cpus on FASTQ outputs; concatenate paired and unmatched output members for downstream profiling",
+    "processes": 1,
+    "reference_db": "one --reference-db per configured directory",
+    "run_qc": true,
+    "threads": "task.cpus"
+  }
+}
