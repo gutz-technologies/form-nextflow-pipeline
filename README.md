@@ -7,6 +7,16 @@ MGX workflow (KneadData → MetaPhlAn → HUMAnN 4), followed by
 bioBakery is a git submodule (`biobakery/`) pinned to an upstream commit and
 used unmodified. Design and rationale: [docs/specs/0001-biobakery-dependency-and-medi.md](docs/specs/0001-biobakery-dependency-and-medi.md).
 
+The [documentation](docs/index.md) follows the eight FORM stages, with
+[software versions](docs/reference/versions.md),
+[database sources and SHA256 checksums](docs/reference/databases.md), and
+[Zensical preview and publishing instructions](docs/development/documentation.md).
+
+FORM's program-selected KneadData host reference is
+[hg39T2T / GCA_009914755.4](docs/reference/kneaddata-host.md), using the
+Huttenhower Lab Bowtie2 v0.2 bundle. Its six expected index checksums and
+verification instructions are documented alongside the software/runtime settings.
+
 ## Getting it
 
 ```bash
@@ -19,6 +29,13 @@ git submodule update --init
 too (`manifest.recurseSubmodules`).
 
 ## Running
+
+The DNAnexus launch interface is limited to the reads folder (`readsdir`)
+and a run YAML supplied through the platform's built-in `nextflow_params_file`
+file input. `nextflow_schema.json` exposes only `readsdir`; the YAML input is
+provided by DNAnexus itself. Tool switches, database paths, containers, resource
+limits and other pipeline settings belong in the YAML or bundled defaults,
+with no separate samplesheet input.
 
 Everything bioBakery's MGX workflow takes works the same way (see
 `biobakery/README.md`): profiles, `--readsdir`, database params, `-params-file`.
