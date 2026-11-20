@@ -31,7 +31,29 @@ too (`manifest.recurseSubmodules`).
 ## Quick start: download hg39T2T and run KneadData
 
 This is the shortest working path. Run each command from the repository root.
-Use a Linux compute system with Nextflow, Java, and KneadData installed.
+Use a Linux x86-64 system with Java 17+, Nextflow 24.04+, and either Docker
+(any workstation) or the Harvard FASRC modules.
+
+FORM requires KneadData 0.12 or later, Bowtie2 2.5.5 or later, and the
+hg39T2T host index. The run stops if `host_genome` lacks the
+`GCA_009914755.4_T2T.*.bt2` files, or if a KneadData task reports an older
+KneadData or Bowtie2.
+
+### Where the images and databases come from
+
+| Item | Pinned source | Pipeline parameter |
+| --- | --- | --- |
+| KneadData image | `public.ecr.aws/j5i5h1i5/kneaddata@sha256:87f9fe73578cffa73d30e08c90099e1fdf69831c42778d3b2a7cd7791f8ae4b3` (KneadData 0.12.1, Bowtie2 2.5.5) | set by `-profile form_docker` |
+| MetaPhlAn image | `public.ecr.aws/j5i5h1i5/metaphlan@sha256:bcbba3807ce7bbfda6526dd8598232025c9cc9a3f7689b9ad639dab9d8c81787` (MetaPhlAn 4.2.5) | set by `-profile form_docker` |
+| HUMAnN image | `public.ecr.aws/j5i5h1i5/humann@sha256:3d245ae23c5b5015e6ca2a16b5963c0d178fd5f0786890e7eb57fa8cf7fe2acd` (HUMAnN 4.0.0a2) | set by `-profile form_docker` |
+| Host index (hg39T2T) | [Homo_sapiens_hg39_T2T_Bowtie2_v0.2.tar.gz](https://huttenhower.sph.harvard.edu/kneadData_databases/Homo_sapiens_hg39_T2T_Bowtie2_v0.2.tar.gz), 3.9 GB, step 1 below | `--host_genome` |
+| MetaPhlAn database | `mpa_vJun23_CHOCOPhlAnSGB_202307`, see [MGX databases](#download-the-mgx-databases) | `--metaphlan_db` |
+| HUMAnN 4 databases | ChocoPhlAn, UniRef90, utility mapping v4 alpha, see [MGX databases](#download-the-mgx-databases) | `--humann_db` |
+
+The images are bioBakery's builds in its public ECR registry, the same registry
+bioBakery's `amazon` profile uses. The Docker Hub `biobakery/*` images are older
+(KneadData 0.10.0) and do not meet the minimums. Docker pulls the images on the
+first run. To pull one ahead of time, run `docker pull` with the reference above.
 
 ### 1. Download the FORM host reference
 
@@ -78,6 +100,24 @@ mkdir -p fastqs
 
 ### 3. Run KneadData
 
+On a workstation with Docker, copy and run this command. It uses the pinned
+KneadData image:
+
+```bash
+nextflow run . -profile local,form_docker \
+  --readsdir "$PWD/fastqs" \
+  --outdir "$PWD/kneaddata-results" \
+  --host_genome "$PWD/databases/kneaddata/hg39T2T" \
+  --run_qc true \
+  --run_taxonomic_profiling false \
+  --run_functional_profiling false \
+  --run_viral_profiling false \
+  --run_strain_profiling false \
+  --run_medi false \
+  --run_vis false \
+  --run_stats false
+```
+
 On Harvard FASRC, copy and run this command:
 
 ```bash
@@ -95,8 +135,76 @@ nextflow run . -profile harvard_rc \
   --run_stats false
 ```
 
-Use `-profile local` instead on a workstation that already has the required
-tools. Find the cleaned reads in `kneaddata-results/kneaddata/`.
+Find the cleaned reads in `kneaddata-results/kneaddata/` and the read counts in
+`kneaddata-results/kneaddata/merged/kneaddata_read_count_table.tsv`. The log
+must show these two lines:
+
+```text
+Version check: kneaddata 0.12.0 >= 0.12 (...)
+Version check: bowtie2 2.5.5 >= 2.5.5 (...)
+```
+
+`harvard_rc` loads the `kneaddata/0.12.0-devel` module. `tufts_hpc` and `local`
+without `form_docker` use the KneadData on `PATH`. For those profiles, the
+version check is the only version control. Do not use `-profile amazon` for
+KneadData: its image `public.ecr.aws/j5i5h1i5/kneaddata-nodb:mamba-v0.10` is no
+longer in the registry.
+
+#### What `form_docker` sets
+
+- It pins the KneadData, MetaPhlAn, and HUMAnN images by digest.
+- It sets `DXFUSE_ENABLED=false`. The images try to mount DNAnexus storage
+  when they start. Without this setting, every task fails with
+  `DNAnexus references: set DX_REFERENCE_PROJECT or forward DX_PROJECT_CONTEXT_ID`.
+- It runs each container as your user (`-u $(id -u):$(id -g)`).
+- It gives each KneadData task 8 CPUs and sets `kneaddata_options` to
+  `--threads 8`. The bioBakery paired-end command does not pass `--threads`,
+  so Bowtie2 and Trimmomatic otherwise use one thread. If you set
+  `kneaddata_options`, include `--threads 8` in it.
+
+`form_docker` does not supply the visualization report tools. Add
+`--run_vis false`, or supply those tools through the site profile.
+
+## Download the MGX databases
+
+Skip this section on Harvard FASRC. The `harvard_rc` profile already supplies
+these databases. The commands use the pinned images, so you do not need to
+install MetaPhlAn or HUMAnN. Run them from the repository root. They need about
+100 GB of free disk space.
+
+```bash
+set -euo pipefail
+DB="$(pwd -P)/databases"
+mkdir -p "$DB/metaphlan" "$DB/humann"
+RUN="docker run --rm -u $(id -u):$(id -g) -e DXFUSE_ENABLED=false -v $DB:$DB"
+MPA=public.ecr.aws/j5i5h1i5/metaphlan@sha256:bcbba3807ce7bbfda6526dd8598232025c9cc9a3f7689b9ad639dab9d8c81787
+HUMANN=public.ecr.aws/j5i5h1i5/humann@sha256:3d245ae23c5b5015e6ca2a16b5963c0d178fd5f0786890e7eb57fa8cf7fe2acd
+
+# MetaPhlAn: one index per directory
+$RUN $MPA metaphlan --install --index mpa_vJun23_CHOCOPhlAnSGB_202307 --db_dir "$DB/metaphlan"
+
+# HUMAnN 4: the pipeline reads chocophlan/, uniref/ and utility_mapping/ under --humann_db
+$RUN $HUMANN humann_databases --download chocophlan full "$DB/humann/chocophlan" --update-config no
+$RUN $HUMANN humann_databases --download uniref uniref90_ec_filtered_diamond "$DB/humann/uniref" --update-config no
+$RUN $HUMANN humann_databases --download utility_mapping full "$DB/humann/utility_mapping" --update-config no
+```
+
+The HUMAnN downloads come from `huttenhower.sph.harvard.edu/humann_data/`
+(ChocoPhlAn 44.8 GB, UniRef90 0.9 GB, utility mapping 2.8 GB). The pinned
+HUMAnN 4 image offers only the EC-filtered UniRef90 DIAMOND database, so the
+`uniref90_diamond` name in the bioBakery README does not work with it.
+
+Then run the MGX pipeline with Docker:
+
+```bash
+nextflow run . -profile local,form_docker \
+  --readsdir "$PWD/fastqs" \
+  --outdir "$PWD/results" \
+  --host_genome "$PWD/databases/kneaddata/hg39T2T" \
+  --metaphlan_db "$PWD/databases/metaphlan" \
+  --humann_db "$PWD/databases/humann" \
+  --run_medi false --run_vis false
+```
 
 ## Run the MGX pipeline on Harvard FASRC
 

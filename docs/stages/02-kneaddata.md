@@ -98,24 +98,28 @@ allocation instead of accidentally overriding them in that string.
 | Paired-end input | `-i1 <R1> -i2 <R2>` | Mate files from the sample channel |
 | Host input | `--reference-db <directory>` | One flag per configured reference; FORM MGX selects its host reference |
 | Output | `--output ./ --output-prefix <sample>_kneaddata` | Writes into the task working directory |
-| Task threads | `--threads ${task.cpus}` | Uses the allocated CPU count for both library layouts |
-| Internal processes | `--processes 1` | Serializes internal file/database jobs while each job can use the thread allocation |
+| Task threads, single-end | `--threads ${task.cpus}` | Nested tools use the allocated CPU count; `--processes` keeps KneadData's default of 1 |
+| Task threads, paired-end | `--processes ${task.cpus}`, no `--threads` | Nested tools (Trimmomatic, Bowtie2) use KneadData's default of **1 thread**. Verified in a 2026-11-20 run: `bowtie2 ... --threads 1`. The `form_docker` profile adds `--threads 8` through `kneaddata_options` |
 | `kneaddata_bypass_trim` | `false` | `--bypass-trim` is omitted; trimming runs |
 | `kneaddata_remove_intermediate_files` | `true` | Adds `--remove-intermediate-output` |
 | `kneaddata_options` | Empty string | No additional tool options unless supplied in the YAML/site config |
-| Reference identity label | Explicit `kneaddata_database_identity`, otherwise image reference | Written to logs; it does not validate database contents |
+| Host reference check | `form_host_check: true` | FORM stops the run before any task if a local `host_genome` lacks `GCA_009914755.4_T2T.*.bt2` |
+| Minimum versions | `form_min_kneaddata: 0.12`, `form_min_bowtie2: 2.5.5` | FORM stops the run after the first KneadData task reports an older version |
 
-The paired-end command is equivalent to this template before task-specific
-values are substituted:
+The paired-end command that bioBakery generates is equivalent to this template
+before task-specific values are substituted:
 
 ```bash
 kneaddata \
   -i1 SAMPLE_R1.fastq.gz -i2 SAMPLE_R2.fastq.gz \
   --reference-db HOST_INDEX_DIRECTORY \
   --output ./ --output-prefix SAMPLE_kneaddata \
-  --threads ALLOCATED_CPUS --processes 1 \
+  --processes ALLOCATED_CPUS \
   --remove-intermediate-output
 ```
+
+With `-profile <site>,form_docker`, `--threads 8` is appended after these
+arguments, because `kneaddata_options` is added last.
 
 After KneadData, the wrapper compresses FASTQ outputs using
 `pigz -p ${task.cpus}`. For paired input it concatenates the two cleaned mate
@@ -244,6 +248,25 @@ This leaves adaptive Trimmomatic settings and default TRF parameters intact.
 Choose an adapter setting appropriate to the actual library if it differs from
 the configured default. These controls belong in the YAML; they do not add
 fields to FORM's reads-folder-only pipeline schema.
+
+## Running outside DNAnexus
+
+Use the `form_docker` profile with a site profile, for example
+`-profile local,form_docker`. The [README](https://github.com/gutz-technologies/form-nextflow-pipeline#quick-start-download-hg39t2t-and-run-kneaddata)
+gives the complete steps: image and database sources, download, checksum,
+run, and log check.
+
+The image (like the pinned MetaPhlAn and HUMAnN images) starts with a dxfuse entrypoint (`/usr/local/bin/dx-reference-entrypoint.sh`)
+that mounts DNAnexus references. Off DNAnexus, set `DXFUSE_ENABLED=false` in the
+container environment; `form_docker` does this. Without it, every task fails with
+`DNAnexus references: set DX_REFERENCE_PROJECT or forward DX_PROJECT_CONTEXT_ID`.
+The image's default user is `mambauser` (UID 57439), so `form_docker` also runs
+containers as the launching user.
+
+A 2026-11-20 test run with `-profile local,form_docker` used 2,000 read pairs
+simulated from T2T chromosome 8 and 2,000 random pairs. KneadData removed all
+2,000 human pairs and kept all 2,000 random pairs. The task reported
+KneadData `0.12.0` and Bowtie2 `2.5.5`.
 
 ## Sources and verification
 

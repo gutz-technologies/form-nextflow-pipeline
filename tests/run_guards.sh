@@ -35,4 +35,7 @@ expect "remove --remove-temp-output"              "${base[@]}" --humann_options=
 expect "drop the nucleotide-search bypass"        "${base[@]}" --humann_bypass_nucleotide_search true
 expect "drop the nucleotide-search bypass"        "${base[@]}" --humann_options=--bypass-nucleotide-search
 
+fake_host="$work/not_t2t"; mkdir -p "$fake_host"
+expect "host_genome must be the hg39T2T Bowtie2 index" "${base[@]}" --host_genome "$fake_host"
+
 exit $status

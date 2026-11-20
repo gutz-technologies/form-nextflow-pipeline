@@ -32,9 +32,19 @@ so a later software upgrade does not silently redefine the host reference.
 ## SHA256 manifest
 
 These six expected checksums were **provided by the program owner on
-2026-11-19**. They identify extracted index members. They have not been
-independently checked against the deployment files during this documentation
-update. An SHA256 for the compressed archive was not supplied.
+2026-11-19**. They identify extracted index members. On **2026-11-20** the
+archive was downloaded from the link above. It matched the distributor's MD5
+(`b0323c21fa64d8c56eb390155b3987f1`), and all six extracted files matched
+(`OK`). The archive is 3,882,451,903 bytes with SHA256:
+
+```text
+183b4a28a1fe87b1f93f9fdd8c4b9381e89b8c928e6c610c8c295fb818d93b63  Homo_sapiens_hg39_T2T_Bowtie2_v0.2.tar.gz
+```
+
+`bowtie2-inspect -n` lists 25 sequences: `CP068255.2`–`CP068277.2`
+(chromosomes 1–22 and X), `CP086569.2` (Y) and `CP068254.1` (mitochondrion).
+These are the T2T-CHM13v2.0 sequences of GCA_009914755.4. A Bowtie2 index does
+not record the Bowtie2 release that built it.
 
 Download the ready-to-use
 [SHA256 manifest](checksums/kneaddata-hg39-t2t-v0.2.sha256).
@@ -101,6 +111,9 @@ Older neighboring deployment recipes and the current `harvard_rc` default still
 select hg38. They do not define the FORM program reference. Always override that
 default with the hg39T2T path.
 
-The workflow does not run the SHA256 manifest automatically. See
+FORM stops the run before any task if a local `--host_genome` does not contain
+the six `GCA_009914755.4_T2T.*.bt2` files (`form_host_check`). This is a
+file-name check; it does not run the SHA256 manifest, so run the block above
+when you stage the index. See
 [KneadData runtime flags](../stages/02-kneaddata.md#runtime-flags-and-precedence)
 for the command-line and tool defaults.

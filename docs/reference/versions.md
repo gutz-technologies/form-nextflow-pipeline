@@ -46,7 +46,7 @@ reference are recorded under [Public runtime image and checksum](../stages/02-kn
 | DNAnexus Nextflow build | `25.10` release line in the neighboring build helper | Candidate setting; exact engine build must be recorded from the FORM applet/head log |
 | DNAnexus dx-toolkit | Not recorded | Capture the build client and worker CLI versions during deployment |
 | Zensical | **0.1.2** | Exact documentation dependency in `docs/requirements.txt` |
-| Documentation Python | **3.12** series | GitHub Actions runtime; distinct from tool-image Python versions |
+| Documentation Python | **3.11** series | GitHub Actions runtime; distinct from tool-image Python versions |
 
 ## Interpreting version evidence
 

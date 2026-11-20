@@ -38,7 +38,10 @@ prefix, runtime placement, and verification instructions.
 
 The following are **user-provided expected SHA256 values for extracted files**,
 not a checksum of the compressed archive or a claim of independent verification.
-The archive SHA256 and index-builder software version remain unrecorded.
+On 2026-11-20 the downloaded archive had SHA256
+`183b4a28a1fe87b1f93f9fdd8c4b9381e89b8c928e6c610c8c295fb818d93b63`, and all
+six extracted files matched the manifest. The index-builder software version
+remains unrecorded; a Bowtie2 index does not store it.
 
 | Extracted file | Expected SHA256 |
 | --- | --- |
