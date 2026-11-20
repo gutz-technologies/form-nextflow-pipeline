@@ -63,7 +63,8 @@ recipes are legacy configuration, not the FORM reference.
 
 | Artifact ID | Reference / version | Source | SHA256 |
 | --- | --- | --- | --- |
-| `metaphlan-markers` | MetaPhlAn marker/index bundle — `mpa_vOct22_CHOCOPhlAnSGB_202403` | [Direct archive](https://cmprod1.cibio.unitn.it/biobakery4/metaphlan_databases/mpa_vOct22_CHOCOPhlAnSGB_202403.tar) · [MD5](https://cmprod1.cibio.unitn.it/biobakery4/metaphlan_databases/mpa_vOct22_CHOCOPhlAnSGB_202403.md5) | **Pending SHA256**; distributor MD5 is `91d57912faab6bfd3526a49d9e83da8c` |
+| `metaphlan-markers` | MetaPhlAn marker metadata — `mpa_vOct22_CHOCOPhlAnSGB_202403.tar` (contains the `.pkl`) | [Download](https://cmprod1.cibio.unitn.it/biobakery4/metaphlan_databases/mpa_vOct22_CHOCOPhlAnSGB_202403.tar) · [MD5](https://cmprod1.cibio.unitn.it/biobakery4/metaphlan_databases/mpa_vOct22_CHOCOPhlAnSGB_202403.md5) | **Pending SHA256**; distributor MD5 `91d57912faab6bfd3526a49d9e83da8c` |
+| `metaphlan-bowtie2-index` | MetaPhlAn Bowtie2 index — `mpa_vOct22_CHOCOPhlAnSGB_202403_bt2.tar` (contains `.1.bt2l`) | [Download](https://cmprod1.cibio.unitn.it/biobakery4/metaphlan_databases/bowtie2_indexes/mpa_vOct22_CHOCOPhlAnSGB_202403_bt2.tar) · [MD5](https://cmprod1.cibio.unitn.it/biobakery4/metaphlan_databases/bowtie2_indexes/mpa_vOct22_CHOCOPhlAnSGB_202403_bt2.md5) | **Pending SHA256**; distributor MD5 `6618ecfbed7f2964b9185b0c6f090020` |
 
 ## HUMAnN
 
@@ -106,7 +107,7 @@ depletion also consumes them; their checksums must agree across consumers.
 
 | Artifact ID | Reference / version | Source | SHA256 |
 | --- | --- | --- | --- |
-| `strainphlan-markers` | StrainPhlAn marker metadata `.pkl` — `mpa_vOct22_CHOCOPhlAnSGB_202403` | Same [direct archive](https://cmprod1.cibio.unitn.it/biobakery4/metaphlan_databases/mpa_vOct22_CHOCOPhlAnSGB_202403.tar) as MetaPhlAn | **Pending SHA256** |
+| `strainphlan-markers` | StrainPhlAn marker metadata `.pkl` — `mpa_vOct22_CHOCOPhlAnSGB_202403` | Same [marker archive](https://cmprod1.cibio.unitn.it/biobakery4/metaphlan_databases/mpa_vOct22_CHOCOPhlAnSGB_202403.tar) as MetaPhlAn | **Pending SHA256** |
 
 ## MEDI
 

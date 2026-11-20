@@ -18,7 +18,10 @@
     "cli_mode": "metaphlan_v4",
     "image": "public.ecr.aws/j5i5h1i5/metaphlan@sha256:bcbba3807ce7bbfda6526dd8598232025c9cc9a3f7689b9ad639dab9d8c81787",
     "archive": "https://cmprod1.cibio.unitn.it/biobakery4/metaphlan_databases/mpa_vOct22_CHOCOPhlAnSGB_202403.tar",
-    "archive_md5": "91d57912faab6bfd3526a49d9e83da8c"
+    "archive_md5": "91d57912faab6bfd3526a49d9e83da8c",
+    "index_archive_md5": "91d57912faab6bfd3526a49d9e83da8c",
+    "bowtie2_index_archive": "https://cmprod1.cibio.unitn.it/biobakery4/metaphlan_databases/bowtie2_indexes/mpa_vOct22_CHOCOPhlAnSGB_202403_bt2.tar",
+    "bowtie2_index_archive_md5": "6618ecfbed7f2964b9185b0c6f090020"
   },
   "humann": {
     "python_distribution": "4.0.0a2",

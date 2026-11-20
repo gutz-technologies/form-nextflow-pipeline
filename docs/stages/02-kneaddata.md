@@ -69,12 +69,14 @@ discrepancy when comparing logs; the image tag alone does not resolve it.
 | Prebuilt index | **Homo_sapiens_hg39_T2T_Bowtie2_v0.2.tar.gz** |
 | Index prefix | `GCA_009914755.4_T2T` |
 | Integrity record | Six program-supplied SHA256 values, independently matched against the extracted `.bt2` files on 2026-11-20 |
+| Archive | 3,882,451,903 bytes; SHA256 `183b4a28a1fe87b1f93f9fdd8c4b9381e89b8c928e6c610c8c295fb818d93b63`; distributor MD5 `b0323c21fa64d8c56eb390155b3987f1` |
 
 The [host-reference page](../reference/kneaddata-host.md) contains the download
-and NCBI source links, complete checksum table, downloadable `sha256sum` manifest,
-and verification instructions. The compressed archive checksum and the original
-index-builder version remain unrecorded. The **runtime** Bowtie2 version above
-does not establish which Bowtie2 release built the downloaded index.
+and NCBI source links, the complete checksum table, a downloadable `sha256sum`
+manifest, and verification instructions. The original index-builder version
+cannot be recorded: a Bowtie2 index does not store it. The **runtime** Bowtie2
+version above does not establish which Bowtie2 release built the downloaded
+index.
 
 ## Runtime flags and precedence
 

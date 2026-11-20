@@ -71,6 +71,14 @@ expect(metaphlan_db["version"] == LOCK["metaphlan"]["index"], "MetaPhlAn index d
 expect(metaphlan_db["source"] == LOCK["metaphlan"]["archive"], "MetaPhlAn URL drifted")
 expect(metaphlan_db["md5"] == LOCK["metaphlan"]["archive_md5"], "MetaPhlAn MD5 drifted")
 expect(
+    metaphlan_db["bowtie2_index_source"] == LOCK["metaphlan"]["bowtie2_index_archive"],
+    "MetaPhlAn Bowtie2 index URL drifted",
+)
+expect(
+    metaphlan_db["bowtie2_index_md5"] == LOCK["metaphlan"]["bowtie2_index_archive_md5"],
+    "MetaPhlAn Bowtie2 index MD5 drifted",
+)
+expect(
     artifacts["strainphlan-markers"]["version"] == LOCK["strainphlan"]["index"],
     "StrainPhlAn marker index drifted",
 )
@@ -89,6 +97,15 @@ for path in (
     "docs/stages/06-strainphlan.md",
 ):
     contains(path, LOCK["metaphlan"]["index"])
+
+contains("docs/reference/databases.md", LOCK["metaphlan"]["bowtie2_index_archive"])
+contains("docs/stages/03-metaphlan.md", LOCK["metaphlan"]["bowtie2_index_archive"])
+for path in ("docs/reference/databases.md", "docs/stages/03-metaphlan.md"):
+    contains(path, LOCK["metaphlan"]["bowtie2_index_archive_md5"])
+    contains(path, LOCK["metaphlan"]["archive_md5"])
+# The README builds the URL from a base variable, so require its path and file.
+for fragment in ("metaphlan_databases", "bowtie2_indexes", "_bt2.tar", "_bt2.md5"):
+    contains("README.md", fragment)
 
 for path in [ROOT / "README.md", *ROOT.joinpath("docs").rglob("*.md")]:
     expect(

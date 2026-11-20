@@ -161,32 +161,37 @@ MPA="mpa_vOct22_CHOCOPhlAnSGB_202403"
 mkdir -p "$DOWNLOADS" "$DB/metaphlan" \
   "$DB/humann/chocophlan" "$DB/humann/uniref" "$DB/humann/utility_mapping"
 
+MPA_URL="https://cmprod1.cibio.unitn.it/biobakery4/metaphlan_databases"
+
 wget -c -P "$DOWNLOADS" \
-  "https://cmprod1.cibio.unitn.it/biobakery4/metaphlan_databases/$MPA.tar" \
-  "https://cmprod1.cibio.unitn.it/biobakery4/metaphlan_databases/$MPA.md5" \
+  "$MPA_URL/$MPA.tar" "$MPA_URL/$MPA.md5" \
+  "$MPA_URL/bowtie2_indexes/${MPA}_bt2.tar" "$MPA_URL/bowtie2_indexes/${MPA}_bt2.md5" \
   "https://huttenhower.sph.harvard.edu/humann_data/chocophlan/chocophlan.v4_alpha.tar.gz" \
   "https://huttenhower.sph.harvard.edu/humann_data/uniprot/uniref_ec_filtered/uniref90_annotated_v4_alpha_ec_filtered.tar.gz" \
   "https://huttenhower.sph.harvard.edu/humann_data/full_mapping_v4_alpha.tar.gz"
 
-(cd "$DOWNLOADS" && md5sum --check "$MPA.md5")
+(cd "$DOWNLOADS" && md5sum --check "$MPA.md5" && md5sum --check "${MPA}_bt2.md5")
 gzip -t "$DOWNLOADS/chocophlan.v4_alpha.tar.gz"
 gzip -t "$DOWNLOADS/uniref90_annotated_v4_alpha_ec_filtered.tar.gz"
 gzip -t "$DOWNLOADS/full_mapping_v4_alpha.tar.gz"
 
 tar -xf "$DOWNLOADS/$MPA.tar" -C "$DB/metaphlan"
+tar -xf "$DOWNLOADS/${MPA}_bt2.tar" -C "$DB/metaphlan"
 tar -xzf "$DOWNLOADS/chocophlan.v4_alpha.tar.gz" -C "$DB/humann/chocophlan"
 tar -xzf "$DOWNLOADS/uniref90_annotated_v4_alpha_ec_filtered.tar.gz" -C "$DB/humann/uniref"
 tar -xzf "$DOWNLOADS/full_mapping_v4_alpha.tar.gz" -C "$DB/humann/utility_mapping"
 
 test -f "$DB/metaphlan/$MPA.pkl"
-find "$DB/metaphlan" -name "$MPA*.bt2*" -print -quit | grep -q .
+test -n "$(find "$DB/metaphlan" -name "${MPA}*.bt2l" -print -quit)"
 ```
 
-The MetaPhlAn archive and MD5 file are the public sources for the selected
-`mpa_vOct22_CHOCOPhlAnSGB_202403` release. The HUMAnN source server does not
-publish checksum sidecars for the three v4-alpha archives. The `gzip -t` checks
-detect incomplete or corrupt downloads, but they do not establish provenance.
-The [database inventory](docs/reference/databases.md) keeps their SHA256 status
+MetaPhlAn needs **two** archives for one index: the `.tar` holds the marker
+metadata (`.pkl`, marker FASTA) and `bowtie2_indexes/..._bt2.tar` holds the
+Bowtie2 index. Both have a distributor MD5 file. These are the same URLs the
+MetaPhlAn database installer uses. The HUMAnN source server does not publish
+checksum sidecars for the three v4-alpha archives; `gzip -t` detects incomplete
+downloads but does not establish provenance. The
+[database inventory](docs/reference/databases.md) keeps their SHA256 status
 pending until verified hashes are available.
 
 Run the locked MGX pipeline with Docker:
