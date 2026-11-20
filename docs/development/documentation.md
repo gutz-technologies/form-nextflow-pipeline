@@ -12,8 +12,19 @@ Use Python 3.12, the version the documentation CI uses. From the repository root
 ./.zensical-serve.sh
 ```
 
-The helper creates this repository's own `.venv-docs` and installs the pinned
-documentation dependencies if Zensical is missing. It serves FORM on
+The helper uses `$PYTHON` if set. Otherwise it tries `python3.12`, `python3.13`,
+`python3.11`, then `python3`, and uses the first that is 3.11 or later and can
+create a virtual environment (on Debian/Ubuntu, install `python3.12-venv`).
+Zensical 0.1.2 requires Python 3.11 or later. If no candidate works, the helper
+stops with a message. It creates this repository's own `.venv-docs` and installs the pinned
+documentation dependencies, and rebuilds `.venv-docs` if Zensical is missing or
+the environment uses an older Python. For example:
+
+```bash
+PYTHON=/path/to/python3.12 ./.zensical-serve.sh
+```
+
+The helper serves FORM on
 [http://127.0.0.1:8001/](http://127.0.0.1:8001/) so another preview can use
 port 8000. Stop it with **Ctrl+C**. To choose a different address:
 

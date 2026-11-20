@@ -12,9 +12,9 @@ for each component.
 | 1 | [Samplesheet building](stages/01-samplesheet.md) | Discover reads and construct a validated sample manifest | FORM module planned |
 | 2 | [KneadData](stages/02-kneaddata.md) | Read quality control and host depletion | Imported through bioBakery |
 | 3 | [MetaPhlAn](stages/03-metaphlan.md) | Microbial taxonomic profiles and marker alignments | Imported through bioBakery |
-| 4 | [HUMAnN](stages/04-humann.md) | Functional profiles and nucleotide-unaligned reads | Imported through bioBakery; export interface being updated |
-| 5 | [BAQLaVa](stages/05-baqlava.md) | Viral profiling | DNAnexus integration pending the bioBakery re-pin |
-| 6 | [StrainPhlAn](stages/06-strainphlan.md) | Cohort strain phylogenies | DNAnexus integration pending the bioBakery re-pin |
+| 4 | [HUMAnN](stages/04-humann.md) | Functional profiles and nucleotide-unaligned reads | Imported through bioBakery; unaligned-read export present in the pinned submodule (`48a1eaa`, `4466d89`); deployment validation pending |
+| 5 | [BAQLaVa](stages/05-baqlava.md) | Viral profiling | Present in the pinned bioBakery submodule (optional branch); DNAnexus validation pending |
+| 6 | [StrainPhlAn](stages/06-strainphlan.md) | Cohort strain phylogenies | Present in the pinned bioBakery submodule (optional branch); DNAnexus validation pending |
 | 7 | [MEDI](stages/07-medi.md) | Food DNA and nutrient estimates | FORM modules present; DNAnexus validation pending |
 | 8 | [omixer-rpm](stages/08-omixer-rpm.md) | Gut-Brain Module abundance and coverage | FORM module planned |
 
