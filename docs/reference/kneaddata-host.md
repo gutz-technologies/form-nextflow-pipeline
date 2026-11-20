@@ -20,6 +20,8 @@ host depletion. The selected prebuilt Bowtie2 index is the Huttenhower Lab
 | Runtime Bowtie2 in inspected image | **2.5.5** |
 
 Download the [prebuilt Bowtie2 index archive](https://huttenhower.sph.harvard.edu/kneadData_databases/Homo_sapiens_hg39_T2T_Bowtie2_v0.2.tar.gz).
+The distributor also publishes an
+[MD5 file for the archive](https://huttenhower.sph.harvard.edu/kneadData_databases/Homo_sapiens_hg39_T2T_Bowtie2_v0.2.tar.gz.md5).
 The original genome source is the
 [NCBI GenBank assembly GCA_009914755.4](https://www.ncbi.nlm.nih.gov/datasets/genome/GCA_009914755.4/).
 Assembly identity was also checked using the
@@ -60,27 +62,45 @@ verification result alongside the DNAnexus reference artifact and run provenance
 
 ## Runtime placement
 
-The site configuration supplies the directory containing the verified index.
-For example, a dedicated container-visible path could be:
+Run this block from the root of a FORM pipeline checkout. It creates one known
+location for the index:
 
-```yaml
-host_genome: /Databases/kneaddata/hg39T2T
-kneaddata_db_location: container
-kneaddata_database_identity: hg39T2T / GCA_009914755.4 / Bowtie2 v0.2 bundle
+```bash
+set -euo pipefail
+
+FORM_ROOT="$(pwd -P)"
+HOST_DIR="$FORM_ROOT/databases/kneaddata/hg39T2T"
+ARCHIVE="Homo_sapiens_hg39_T2T_Bowtie2_v0.2.tar.gz"
+URL="https://huttenhower.sph.harvard.edu/kneadData_databases/$ARCHIVE"
+
+mkdir -p "$HOST_DIR"
+cd "$HOST_DIR"
+wget -c "$URL"
+wget -O "$ARCHIVE.md5" "$URL.md5"
+md5sum --check "$ARCHIVE.md5"
+tar -xzf "$ARCHIVE"
+sha256sum --check \
+  "$FORM_ROOT/docs/reference/checksums/kneaddata-hg39-t2t-v0.2.sha256"
+cd "$FORM_ROOT"
 ```
 
-This path is illustrative; the production site must stage the selected bundle
-at its configured path. With `kneaddata_db_location: host`, Nextflow instead
-stages the configured directory as a normal process input. `container` means
-the path is already visible inside the task, whether supplied by a read-only
-worker bind or included in an image.
+The MD5 check verifies the downloaded archive against the distributor's MD5
+file. All six SHA256 checks must also report `OK`.
 
-Older neighboring deployment recipes/configurations still mention `hg37dec`.
-Those are legacy settings and do not define the FORM program reference. Updating
-this documentation does not replace their data or reconfigure an existing applet.
-The FORM site configuration must select hg39T2T when the deployment is completed.
+Use this directory as the pipeline parameter:
 
-The inspected workflow checks reference-path availability but does not yet run
-this SHA256 manifest automatically. `kneaddata_database_identity` is a log label,
-not an integrity check. See [KneadData runtime flags](../stages/02-kneaddata.md#runtime-flags-and-precedence)
-for the actual command-line and tool defaults.
+```bash
+--host_genome "$PWD/databases/kneaddata/hg39T2T"
+```
+
+Pass the directory that directly contains the six `.bt2` files. Do not pass the
+`.tar.gz` archive or one index file. Every worker must see this absolute path.
+A cluster installation should put the same verified directory on shared storage.
+
+Older neighboring deployment recipes and the current `harvard_rc` default still
+select hg38. They do not define the FORM program reference. Always override that
+default with the hg39T2T path.
+
+The workflow does not run the SHA256 manifest automatically. See
+[KneadData runtime flags](../stages/02-kneaddata.md#runtime-flags-and-precedence)
+for the command-line and tool defaults.

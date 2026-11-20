@@ -28,59 +28,63 @@ git submodule update --init
 `nextflow run gutz-technologies/form-nextflow-pipeline` fetches the submodule
 too (`manifest.recurseSubmodules`).
 
-## Quick start
+## Quick start: download hg39T2T and run KneadData
 
-Use these commands only on a configured compute system. The system must have
-Nextflow, Java, the required tools, and the required databases.
+This is the shortest working path. Run each command from the repository root.
+Use a Linux compute system with Nextflow, Java, and KneadData installed.
 
-Select one available profile: `local`, `harvard_rc`, `tufts_hpc`, or `amazon`.
-Replace `PROFILE` in each command with that profile name.
+### 1. Download the FORM host reference
 
-**Use the FORM host reference.** The `harvard_rc` profile selects hg38 by
-default. FORM requires hg39T2T. Always set `host_genome` to the verified
-hg39T2T index directory.
-
-### Run the standard pipeline
-
-First, create a file named `run.yaml`. Add the paths for the configured system:
-
-```yaml
-host_genome: /path/to/hg39T2T
-metaphlan_db: /path/to/metaphlan-database
-humann_db: /path/to/humann-database
-medi_db: /path/to/medi-database
-medi_food_matches: /path/to/food_matches.csv
-medi_food_contents: /path/to/food_contents.csv
-max_memory: 450.GB
-```
-
-Then run the standard pipeline with one command:
+Copy and run this complete block. It downloads the 3.9 GB prebuilt Bowtie2
+index, checks the downloaded archive, extracts it, and checks all six index
+files. Keep at least 9 GB of disk space free.
 
 ```bash
-nextflow run . -profile PROFILE -params-file run.yaml \
-  --readsdir /path/to/fastqs --outdir results
+set -euo pipefail
+
+FORM_ROOT="$(pwd -P)"
+HOST_DIR="$FORM_ROOT/databases/kneaddata/hg39T2T"
+ARCHIVE="Homo_sapiens_hg39_T2T_Bowtie2_v0.2.tar.gz"
+URL="https://huttenhower.sph.harvard.edu/kneadData_databases/$ARCHIVE"
+
+mkdir -p "$HOST_DIR"
+cd "$HOST_DIR"
+wget -c "$URL"
+wget -O "$ARCHIVE.md5" "$URL.md5"
+md5sum --check "$ARCHIVE.md5"
+tar -xzf "$ARCHIVE"
+sha256sum --check \
+  "$FORM_ROOT/docs/reference/checksums/kneaddata-hg39-t2t-v0.2.sha256"
+cd "$FORM_ROOT"
 ```
 
-This command runs the input check, KneadData, MetaPhlAn, HUMAnN, MEDI, and the
-visualization report. The command does not run BAQLaVa or StrainPhlAn.
-Set `run_viral_profiling: true` and `run_strain_profiling: true` in `run.yaml`
-to run these optional branches.
+All six SHA256 checks must report `OK`. The pipeline host-reference path is now:
 
-The default MEDI images use ARM. For x86 workers, set `medi_container` and
-`medi_biom_container` to compatible images in `run.yaml`.
+```text
+<repository-root>/databases/kneaddata/hg39T2T
+```
 
-The command cannot run the planned samplesheet and omixer-rpm modules.
-These modules are not implemented.
+Pass the directory to `--host_genome`. Do not pass the archive or one `.bt2`
+file.
 
-### Run only KneadData
+### 2. Add the reads
 
-Use this one command:
+Create `fastqs/` in the repository root. Put the compressed FASTQ files in that
+directory. Use names such as `sample_R1.fastq.gz` and `sample_R2.fastq.gz`.
 
 ```bash
-nextflow run . -profile PROFILE \
-  --readsdir /path/to/fastqs \
-  --outdir kneaddata-results \
-  --host_genome /path/to/hg39T2T \
+mkdir -p fastqs
+```
+
+### 3. Run KneadData
+
+On Harvard FASRC, copy and run this command:
+
+```bash
+nextflow run . -profile harvard_rc \
+  --readsdir "$PWD/fastqs" \
+  --outdir "$PWD/kneaddata-results" \
+  --host_genome "$PWD/databases/kneaddata/hg39T2T" \
   --run_qc true \
   --run_taxonomic_profiling false \
   --run_functional_profiling false \
@@ -91,16 +95,61 @@ nextflow run . -profile PROFILE \
   --run_stats false
 ```
 
-This command runs the input check and KneadData. It does not run a later
-analysis stage or a visualization report. Find the output in
-`kneaddata-results/kneaddata/`.
+Use `-profile local` instead on a workstation that already has the required
+tools. Find the cleaned reads in `kneaddata-results/kneaddata/`.
+
+## Run the MGX pipeline on Harvard FASRC
+
+The Harvard profile already supplies the MetaPhlAn and HUMAnN databases. This
+command runs the input check, KneadData, MetaPhlAn, HUMAnN, and the visualization
+report:
+
+```bash
+nextflow run . -profile harvard_rc \
+  --readsdir "$PWD/fastqs" \
+  --outdir "$PWD/results" \
+  --host_genome "$PWD/databases/kneaddata/hg39T2T" \
+  --run_medi false
+```
+
+## Full FORM pipeline with MEDI
+
+The full command also needs a MEDI database and two MEDI food tables. Put their
+absolute paths in `run.yaml`:
+
+```yaml
+medi_db: /absolute/path/to/medi-database
+medi_food_matches: /absolute/path/to/food_matches.csv
+medi_food_contents: /absolute/path/to/food_contents.csv
+max_memory: 450.GB
+```
+
+Then run this command. It uses the hg39T2T directory created above:
+
+```bash
+nextflow run . -profile harvard_rc -params-file run.yaml \
+  --readsdir "$PWD/fastqs" \
+  --outdir "$PWD/results" \
+  --host_genome "$PWD/databases/kneaddata/hg39T2T"
+```
+
+This command also runs MEDI. It does not run BAQLaVa or StrainPhlAn. Set
+`run_viral_profiling: true` and `run_strain_profiling: true` in `run.yaml` to
+run those optional branches.
+
+The repository does not yet provide a download-and-run MEDI reference bundle.
+The default MEDI images also use ARM. An x86 site must supply compatible
+`medi_container` and `medi_biom_container` images. Therefore, only the
+KneadData and MGX routes above are currently copy-and-run on Harvard FASRC.
+
+The planned samplesheet and omixer-rpm modules are not implemented.
 
 ### DNAnexus launch
 
 The DNAnexus interface has two launch inputs: `readsdir` and
-`nextflow_params_file`. Put all other settings in the run YAML.
-Do not use `-profile dnanexus` yet. The repository does not contain that profile.
-See the [DNAnexus interface](docs/reference/dnanexus.md) for the deployment state.
+`nextflow_params_file`. Put all other settings in the run YAML. Do not use
+`-profile dnanexus` yet. The repository does not contain that profile. See the
+[DNAnexus interface](docs/reference/dnanexus.md) for the deployment state.
 
 ## Parameters and limits
 
