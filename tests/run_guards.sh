@@ -37,5 +37,7 @@ expect "drop the nucleotide-search bypass"        "${base[@]}" --humann_options=
 
 fake_host="$work/not_t2t"; mkdir -p "$fake_host"
 expect "host_genome must be the hg39T2T Bowtie2 index" "${base[@]}" --host_genome "$fake_host"
+expect "FORM requires MetaPhlAn index mpa_vOct22_CHOCOPhlAnSGB_202403" \
+  "${base[@]}" --metaphlan_index mpa_vJun23_CHOCOPhlAnSGB_202307
 
 exit $status

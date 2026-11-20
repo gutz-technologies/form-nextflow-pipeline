@@ -107,15 +107,15 @@
     "output_prefix": "<sample>_kneaddata",
     "postprocessing": "pigz -p task.cpus on FASTQ outputs; concatenate paired and unmatched output members for downstream profiling",
     "processes": {
-      "paired_end": "task.cpus",
+      "paired_end": "task.cpus in the base wrapper; form_docker appends --processes 1",
       "single_end": "KneadData default (1)"
     },
     "reference_db": "one --reference-db per configured directory",
     "run_qc": true,
     "threads": {
-      "paired_end": "not passed; KneadData default (1). form_docker adds --threads 8 via kneaddata_options",
+      "paired_end": "not passed; KneadData default (1). form_docker appends --threads 8",
       "single_end": "task.cpus"
     },
-    "verified_run": "2026-11-20, -profile local,form_docker: paired-end log shows threads = 8, processes = 8; without form_docker the log shows threads = 1, processes = 8"
+    "verified_run": "2026-11-20 base behavior observed with paired-end input: threads = 1, processes = 8. The locked form_docker profile now overrides this to threads = 8, processes = 1."
   }
 }

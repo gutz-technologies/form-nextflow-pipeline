@@ -43,17 +43,18 @@ KneadData or Bowtie2.
 
 | Item | Pinned source | Pipeline parameter |
 | --- | --- | --- |
-| KneadData image | `public.ecr.aws/j5i5h1i5/kneaddata@sha256:87f9fe73578cffa73d30e08c90099e1fdf69831c42778d3b2a7cd7791f8ae4b3` (KneadData 0.12.1, Bowtie2 2.5.5) | set by `-profile form_docker` |
-| MetaPhlAn image | `public.ecr.aws/j5i5h1i5/metaphlan@sha256:bcbba3807ce7bbfda6526dd8598232025c9cc9a3f7689b9ad639dab9d8c81787` (MetaPhlAn 4.2.5) | set by `-profile form_docker` |
-| HUMAnN image | `public.ecr.aws/j5i5h1i5/humann@sha256:3d245ae23c5b5015e6ca2a16b5963c0d178fd5f0786890e7eb57fa8cf7fe2acd` (HUMAnN 4.0.0a2) | set by `-profile form_docker` |
+| KneadData image | [ECR repository](https://gallery.ecr.aws/j5i5h1i5/kneaddata): `public.ecr.aws/j5i5h1i5/kneaddata@sha256:87f9fe73578cffa73d30e08c90099e1fdf69831c42778d3b2a7cd7791f8ae4b3` (package 0.12.1; CLI 0.12.0; Bowtie2 2.5.5) | set by `-profile form_docker` |
+| MetaPhlAn image | [ECR repository](https://gallery.ecr.aws/j5i5h1i5/metaphlan): `public.ecr.aws/j5i5h1i5/metaphlan@sha256:bcbba3807ce7bbfda6526dd8598232025c9cc9a3f7689b9ad639dab9d8c81787` (MetaPhlAn 4.2.5) | set by `-profile form_docker` |
+| HUMAnN image | [ECR repository](https://gallery.ecr.aws/j5i5h1i5/humann): `public.ecr.aws/j5i5h1i5/humann@sha256:3d245ae23c5b5015e6ca2a16b5963c0d178fd5f0786890e7eb57fa8cf7fe2acd` (HUMAnN 4.0.0a2) | set by `-profile form_docker` |
 | Host index (hg39T2T) | [Homo_sapiens_hg39_T2T_Bowtie2_v0.2.tar.gz](https://huttenhower.sph.harvard.edu/kneadData_databases/Homo_sapiens_hg39_T2T_Bowtie2_v0.2.tar.gz), 3.9 GB, step 1 below | `--host_genome` |
-| MetaPhlAn database | `mpa_vJun23_CHOCOPhlAnSGB_202307`, see [MGX databases](#download-the-mgx-databases) | `--metaphlan_db` |
-| HUMAnN 4 databases | ChocoPhlAn, UniRef90, utility mapping v4 alpha, see [MGX databases](#download-the-mgx-databases) | `--humann_db` |
+| MetaPhlAn database | [`mpa_vOct22_CHOCOPhlAnSGB_202403.tar`](https://cmprod1.cibio.unitn.it/biobakery4/metaphlan_databases/mpa_vOct22_CHOCOPhlAnSGB_202403.tar) and its [MD5 file](https://cmprod1.cibio.unitn.it/biobakery4/metaphlan_databases/mpa_vOct22_CHOCOPhlAnSGB_202403.md5) | `--metaphlan_db` |
+| HUMAnN 4 databases | Direct v4-alpha ChocoPhlAn, EC-filtered UniRef90, and utility-mapping archives in [MGX databases](#download-the-mgx-databases) | `--humann_db` |
 
-The images are bioBakery's builds in its public ECR registry, the same registry
-bioBakery's `amazon` profile uses. The Docker Hub `biobakery/*` images are older
-(KneadData 0.10.0) and do not meet the minimums. Docker pulls the images on the
-first run. To pull one ahead of time, run `docker pull` with the reference above.
+The image versions come from the Hugemiler container set recorded in the
+[software inventory](docs/reference/software-inventory.json). They take priority
+over generic bioBakery defaults and site-module versions. Docker pulls each
+image on its first run. The Docker Hub `biobakery/*` images are older and are
+not FORM runtime images.
 
 ### 1. Download the FORM host reference
 
@@ -118,23 +119,6 @@ nextflow run . -profile local,form_docker \
   --run_stats false
 ```
 
-On Harvard FASRC, copy and run this command:
-
-```bash
-nextflow run . -profile harvard_rc \
-  --readsdir "$PWD/fastqs" \
-  --outdir "$PWD/kneaddata-results" \
-  --host_genome "$PWD/databases/kneaddata/hg39T2T" \
-  --run_qc true \
-  --run_taxonomic_profiling false \
-  --run_functional_profiling false \
-  --run_viral_profiling false \
-  --run_strain_profiling false \
-  --run_medi false \
-  --run_vis false \
-  --run_stats false
-```
-
 Find the cleaned reads in `kneaddata-results/kneaddata/` and the read counts in
 `kneaddata-results/kneaddata/merged/kneaddata_read_count_table.tsv`. The log
 must show these two lines:
@@ -144,11 +128,9 @@ Version check: kneaddata 0.12.0 >= 0.12 (...)
 Version check: bowtie2 2.5.5 >= 2.5.5 (...)
 ```
 
-`harvard_rc` loads the `kneaddata/0.12.0-devel` module. `tufts_hpc` and `local`
-without `form_docker` use the KneadData on `PATH`. For those profiles, the
-version check is the only version control. Do not use `-profile amazon` for
-KneadData: its image `public.ecr.aws/j5i5h1i5/kneaddata-nodb:mamba-v0.10` is no
-longer in the registry.
+Use `local,form_docker` for the locked FORM versions. The `harvard_rc`,
+`tufts_hpc`, and `amazon` profiles are inherited bioBakery site profiles. They
+select different tools or databases and are not the canonical FORM runtime.
 
 #### What `form_docker` sets
 
@@ -158,43 +140,56 @@ longer in the registry.
   `DNAnexus references: set DX_REFERENCE_PROJECT or forward DX_PROJECT_CONTEXT_ID`.
 - It runs each container as your user (`-u $(id -u):$(id -g)`).
 - It gives each KneadData task 8 CPUs and sets `kneaddata_options` to
-  `--threads 8`. The bioBakery paired-end command does not pass `--threads`,
-  so Bowtie2 and Trimmomatic otherwise use one thread. If you set
-  `kneaddata_options`, include `--threads 8` in it.
+  `--threads 8 --processes 1`. This gives Bowtie2 and Trimmomatic the task's
+  threads without multiplying the allocation across eight internal processes.
 
 `form_docker` does not supply the visualization report tools. Add
 `--run_vis false`, or supply those tools through the site profile.
 
 ## Download the MGX databases
 
-Skip this section on Harvard FASRC. The `harvard_rc` profile already supplies
-these databases. The commands use the pinned images, so you do not need to
-install MetaPhlAn or HUMAnN. Run them from the repository root. They need about
-100 GB of free disk space.
+Run this block from the repository root. It uses direct, range-tested download
+URLs instead of the tool installers. Keep at least 220 GB of disk space free for
+the archives and extracted databases.
 
 ```bash
 set -euo pipefail
+
 DB="$(pwd -P)/databases"
-mkdir -p "$DB/metaphlan" "$DB/humann"
-RUN="docker run --rm -u $(id -u):$(id -g) -e DXFUSE_ENABLED=false -v $DB:$DB"
-MPA=public.ecr.aws/j5i5h1i5/metaphlan@sha256:bcbba3807ce7bbfda6526dd8598232025c9cc9a3f7689b9ad639dab9d8c81787
-HUMANN=public.ecr.aws/j5i5h1i5/humann@sha256:3d245ae23c5b5015e6ca2a16b5963c0d178fd5f0786890e7eb57fa8cf7fe2acd
+DOWNLOADS="$DB/downloads"
+MPA="mpa_vOct22_CHOCOPhlAnSGB_202403"
+mkdir -p "$DOWNLOADS" "$DB/metaphlan" \
+  "$DB/humann/chocophlan" "$DB/humann/uniref" "$DB/humann/utility_mapping"
 
-# MetaPhlAn: one index per directory
-$RUN $MPA metaphlan --install --index mpa_vJun23_CHOCOPhlAnSGB_202307 --db_dir "$DB/metaphlan"
+wget -c -P "$DOWNLOADS" \
+  "https://cmprod1.cibio.unitn.it/biobakery4/metaphlan_databases/$MPA.tar" \
+  "https://cmprod1.cibio.unitn.it/biobakery4/metaphlan_databases/$MPA.md5" \
+  "https://huttenhower.sph.harvard.edu/humann_data/chocophlan/chocophlan.v4_alpha.tar.gz" \
+  "https://huttenhower.sph.harvard.edu/humann_data/uniprot/uniref_ec_filtered/uniref90_annotated_v4_alpha_ec_filtered.tar.gz" \
+  "https://huttenhower.sph.harvard.edu/humann_data/full_mapping_v4_alpha.tar.gz"
 
-# HUMAnN 4: the pipeline reads chocophlan/, uniref/ and utility_mapping/ under --humann_db
-$RUN $HUMANN humann_databases --download chocophlan full "$DB/humann/chocophlan" --update-config no
-$RUN $HUMANN humann_databases --download uniref uniref90_ec_filtered_diamond "$DB/humann/uniref" --update-config no
-$RUN $HUMANN humann_databases --download utility_mapping full "$DB/humann/utility_mapping" --update-config no
+(cd "$DOWNLOADS" && md5sum --check "$MPA.md5")
+gzip -t "$DOWNLOADS/chocophlan.v4_alpha.tar.gz"
+gzip -t "$DOWNLOADS/uniref90_annotated_v4_alpha_ec_filtered.tar.gz"
+gzip -t "$DOWNLOADS/full_mapping_v4_alpha.tar.gz"
+
+tar -xf "$DOWNLOADS/$MPA.tar" -C "$DB/metaphlan"
+tar -xzf "$DOWNLOADS/chocophlan.v4_alpha.tar.gz" -C "$DB/humann/chocophlan"
+tar -xzf "$DOWNLOADS/uniref90_annotated_v4_alpha_ec_filtered.tar.gz" -C "$DB/humann/uniref"
+tar -xzf "$DOWNLOADS/full_mapping_v4_alpha.tar.gz" -C "$DB/humann/utility_mapping"
+
+test -f "$DB/metaphlan/$MPA.pkl"
+find "$DB/metaphlan" -name "$MPA*.bt2*" -print -quit | grep -q .
 ```
 
-The HUMAnN downloads come from `huttenhower.sph.harvard.edu/humann_data/`
-(ChocoPhlAn 44.8 GB, UniRef90 0.9 GB, utility mapping 2.8 GB). The pinned
-HUMAnN 4 image offers only the EC-filtered UniRef90 DIAMOND database, so the
-`uniref90_diamond` name in the bioBakery README does not work with it.
+The MetaPhlAn archive and MD5 file are the public sources for the selected
+`mpa_vOct22_CHOCOPhlAnSGB_202403` release. The HUMAnN source server does not
+publish checksum sidecars for the three v4-alpha archives. The `gzip -t` checks
+detect incomplete or corrupt downloads, but they do not establish provenance.
+The [database inventory](docs/reference/databases.md) keeps their SHA256 status
+pending until verified hashes are available.
 
-Then run the MGX pipeline with Docker:
+Run the locked MGX pipeline with Docker:
 
 ```bash
 nextflow run . -profile local,form_docker \
@@ -206,49 +201,15 @@ nextflow run . -profile local,form_docker \
   --run_medi false --run_vis false
 ```
 
-## Run the MGX pipeline on Harvard FASRC
-
-The Harvard profile already supplies the MetaPhlAn and HUMAnN databases. This
-command runs the input check, KneadData, MetaPhlAn, HUMAnN, and the visualization
-report:
-
-```bash
-nextflow run . -profile harvard_rc \
-  --readsdir "$PWD/fastqs" \
-  --outdir "$PWD/results" \
-  --host_genome "$PWD/databases/kneaddata/hg39T2T" \
-  --run_medi false
-```
+This route uses MetaPhlAn 4.2.5 with
+`mpa_vOct22_CHOCOPhlAnSGB_202403` and HUMAnN 4.0.0a2.
 
 ## Full FORM pipeline with MEDI
 
-The full command also needs a MEDI database and two MEDI food tables. Put their
-absolute paths in `run.yaml`:
-
-```yaml
-medi_db: /absolute/path/to/medi-database
-medi_food_matches: /absolute/path/to/food_matches.csv
-medi_food_contents: /absolute/path/to/food_contents.csv
-max_memory: 450.GB
-```
-
-Then run this command. It uses the hg39T2T directory created above:
-
-```bash
-nextflow run . -profile harvard_rc -params-file run.yaml \
-  --readsdir "$PWD/fastqs" \
-  --outdir "$PWD/results" \
-  --host_genome "$PWD/databases/kneaddata/hg39T2T"
-```
-
-This command also runs MEDI. It does not run BAQLaVa or StrainPhlAn. Set
-`run_viral_profiling: true` and `run_strain_profiling: true` in `run.yaml` to
-run those optional branches.
-
-The repository does not yet provide a download-and-run MEDI reference bundle.
-The default MEDI images also use ARM. An x86 site must supply compatible
-`medi_container` and `medi_biom_container` images. Therefore, only the
-KneadData and MGX routes above are currently copy-and-run on Harvard FASRC.
+The repository does not yet provide an accessible, versioned MEDI database
+bundle or both tested x86 MEDI images. The current default MEDI images are ARM.
+Do not present the MEDI branch as copy-and-run on an x86 workstation or Harvard
+FASRC until those artifacts are published and verified.
 
 The planned samplesheet and omixer-rpm modules are not implemented.
 
@@ -272,9 +233,10 @@ The DNAnexus interface has two launch inputs: `readsdir` and
 | `--medi_biom_container` | `colinbrislawn/metaphlan:4.2.4` | Python BIOM converter dependencies |
 | `--medi_multiqc_container` | `ghcr.io/multiqc/multiqc:v1.22.3` | MultiQC |
 
-FORM also changes two bioBakery defaults: `--workflow mgx` (the only one FORM
-runs) and `--humann_version humann_v4a`. The `tufts_hpc` profile sets
-`humann_v37`, so use `--medi_input kneaddata` there.
+FORM changes the generic bioBakery defaults to `--workflow mgx`,
+`--humann_version humann_v4a`, and MetaPhlAn index
+`mpa_vOct22_CHOCOPhlAnSGB_202403`. The inherited `tufts_hpc` profile selects
+HUMAnN 3.7 and a different MetaPhlAn index, so it is not a FORM-locked profile.
 
 With `--medi_input humann`, don't pass `--remove-temp-output` in
 `--humann_options` or bypass the nucleotide search: MEDI consumes
@@ -312,8 +274,9 @@ tests/check_links.sh --fix
 ## Tests
 
 ```bash
-tests/check_links.sh     # links into biobakery/ complete, none dangling
-tests/run_guards.sh      # every bad parameter combination stops the run
+tests/check_links.sh                   # bioBakery links are complete
+python3 tests/check_form_version_lock.py # config and docs match the FORM lock
+tests/run_guards.sh                    # bad parameter combinations stop the run
 nextflow run tests/medi_stub.nf -stub-run -c tests/stub.config --outdir /tmp/medi-stub
 ```
 

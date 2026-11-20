@@ -29,6 +29,9 @@ jobs:
       - name: Symlinks into biobakery/ are complete
         run: tests/check_links.sh
 
+      - name: FORM versions match the approved lock
+        run: python3 tests/check_form_version_lock.py
+
       - name: Every profile parses
         run: |
           for profile in local harvard_rc tufts_hpc amazon local,form_docker; do

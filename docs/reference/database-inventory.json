@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "recorded_on": "2026-11-19",
+  "recorded_on": "2026-11-20",
   "scope": "Documentation baseline and candidate deployment references; not a complete FORM release manifest.",
   "artifacts": [
     {
@@ -47,8 +47,8 @@
       "deployed_path": "Member of the site-selected dedicated hg39T2T directory",
       "sha256": "31e72a1d368f8bbc29a0cc1359db2e62d2b624a9371d7b1e75fc8d72dbb295af",
       "bytes": null,
-      "checksum_status": "user-provided",
-      "verification": "Expected SHA256 supplied by the program owner on 2026-11-19 for this extracted index file; deployment bytes not independently rehashed here."
+      "checksum_status": "measured",
+      "verification": "Expected SHA256 supplied by the program owner on 2026-11-19; the file extracted from the distributor archive was rehashed on 2026-11-20 and matched."
     },
     {
       "id": "kneaddata-host-2-bt2",
@@ -64,8 +64,8 @@
       "deployed_path": "Member of the site-selected dedicated hg39T2T directory",
       "sha256": "d3962bc9e65a7a80fd3af9f883914cb2bad804192bb1a0e448bae218cbfa00d3",
       "bytes": null,
-      "checksum_status": "user-provided",
-      "verification": "Expected SHA256 supplied by the program owner on 2026-11-19 for this extracted index file; deployment bytes not independently rehashed here."
+      "checksum_status": "measured",
+      "verification": "Expected SHA256 supplied by the program owner on 2026-11-19; the file extracted from the distributor archive was rehashed on 2026-11-20 and matched."
     },
     {
       "id": "kneaddata-host-3-bt2",
@@ -81,8 +81,8 @@
       "deployed_path": "Member of the site-selected dedicated hg39T2T directory",
       "sha256": "5cf938e8402a908b5cd5be380c7a3850a5630ee5a3f33d0a50abbf6793e3bc30",
       "bytes": null,
-      "checksum_status": "user-provided",
-      "verification": "Expected SHA256 supplied by the program owner on 2026-11-19 for this extracted index file; deployment bytes not independently rehashed here."
+      "checksum_status": "measured",
+      "verification": "Expected SHA256 supplied by the program owner on 2026-11-19; the file extracted from the distributor archive was rehashed on 2026-11-20 and matched."
     },
     {
       "id": "kneaddata-host-4-bt2",
@@ -98,8 +98,8 @@
       "deployed_path": "Member of the site-selected dedicated hg39T2T directory",
       "sha256": "aeaba4a2c9cf171e152e5e21e9679f931ffab6a110bffd85fffd396b18cd03e6",
       "bytes": null,
-      "checksum_status": "user-provided",
-      "verification": "Expected SHA256 supplied by the program owner on 2026-11-19 for this extracted index file; deployment bytes not independently rehashed here."
+      "checksum_status": "measured",
+      "verification": "Expected SHA256 supplied by the program owner on 2026-11-19; the file extracted from the distributor archive was rehashed on 2026-11-20 and matched."
     },
     {
       "id": "kneaddata-host-rev-1-bt2",
@@ -115,8 +115,8 @@
       "deployed_path": "Member of the site-selected dedicated hg39T2T directory",
       "sha256": "789f9666a2934a141ea2ea631a543c6572a25528b6e1cc159c13c665c7ac59d6",
       "bytes": null,
-      "checksum_status": "user-provided",
-      "verification": "Expected SHA256 supplied by the program owner on 2026-11-19 for this extracted index file; deployment bytes not independently rehashed here."
+      "checksum_status": "measured",
+      "verification": "Expected SHA256 supplied by the program owner on 2026-11-19; the file extracted from the distributor archive was rehashed on 2026-11-20 and matched."
     },
     {
       "id": "kneaddata-host-rev-2-bt2",
@@ -132,8 +132,8 @@
       "deployed_path": "Member of the site-selected dedicated hg39T2T directory",
       "sha256": "d531e13fa16aa719884513f71b660f99788d40fb3c0040d74e55fa27910291b5",
       "bytes": null,
-      "checksum_status": "user-provided",
-      "verification": "Expected SHA256 supplied by the program owner on 2026-11-19 for this extracted index file; deployment bytes not independently rehashed here."
+      "checksum_status": "measured",
+      "verification": "Expected SHA256 supplied by the program owner on 2026-11-19; the file extracted from the distributor archive was rehashed on 2026-11-20 and matched."
     },
     {
       "id": "metaphlan-markers",
@@ -142,12 +142,14 @@
       ],
       "name": "MetaPhlAn marker/index bundle",
       "version": "mpa_vOct22_CHOCOPhlAnSGB_202403",
-      "source": "https://github.com/biobakery/MetaPhlAn",
+      "source": "https://cmprod1.cibio.unitn.it/biobakery4/metaphlan_databases/mpa_vOct22_CHOCOPhlAnSGB_202403.tar",
       "deployed_path": "/Databases/metaphlan/mpa_vOct22_202403/mpa_vOct22_202403_default",
       "sha256": null,
-      "bytes": null,
+      "bytes": 2835056640,
       "checksum_status": "pending",
-      "verification": "Project copy uses corrected extracted indexes; hash the deployed tree, not the superseded archive."
+      "verification": "Public archive and distributor MD5 were reachable and supported ranged downloads on 2026-11-20. SHA256 and equality to the corrected neighboring deployment remain pending; hash the files actually used by the run.",
+      "source_md5_url": "https://cmprod1.cibio.unitn.it/biobakery4/metaphlan_databases/mpa_vOct22_CHOCOPhlAnSGB_202403.md5",
+      "md5": "91d57912faab6bfd3526a49d9e83da8c"
     },
     {
       "id": "humann-bundle",
@@ -171,13 +173,13 @@
         "baqlava"
       ],
       "name": "ChocoPhlAn nucleotide tree",
-      "version": "v4 alpha candidate; exact input unresolved",
+      "version": "v4 alpha; selected portable archive",
       "source": "https://huttenhower.sph.harvard.edu/humann_data/chocophlan/chocophlan.v4_alpha.tar.gz",
       "deployed_path": "/Databases/humann/chocophlan-v4-201901/chocophlan",
       "sha256": null,
       "bytes": null,
       "checksum_status": "pending",
-      "verification": "URL is listed by the pinned upstream downloader, but has not been matched to the deployed bundle."
+      "verification": "Public source from the pinned HUMAnN downloader supported ranged download on 2026-11-20. No checksum sidecar is published; equality to the neighboring local bundle remains pending."
     },
     {
       "id": "humann-uniref90",
@@ -186,13 +188,13 @@
         "baqlava"
       ],
       "name": "Annotated UniRef90 DIAMOND tree",
-      "version": "v4 alpha EC-filtered candidate; exact input unresolved",
+      "version": "v4 alpha EC-filtered; selected portable archive",
       "source": "https://huttenhower.sph.harvard.edu/humann_data/uniprot/uniref_ec_filtered/uniref90_annotated_v4_alpha_ec_filtered.tar.gz",
       "deployed_path": "/Databases/humann/chocophlan-v4-201901/uniref90_annotated",
       "sha256": null,
       "bytes": null,
       "checksum_status": "pending",
-      "verification": "URL is listed by the pinned upstream downloader, but has not been matched to the deployed bundle."
+      "verification": "Public source from the pinned HUMAnN downloader supported ranged download on 2026-11-20. No checksum sidecar is published; equality to the neighboring local bundle remains pending."
     },
     {
       "id": "humann-mappings",
@@ -202,13 +204,13 @@
         "omixer-rpm"
       ],
       "name": "HUMAnN utility mappings including UniRef90-to-KO",
-      "version": "v4 alpha candidate; exact input unresolved",
+      "version": "v4 alpha full mapping; selected portable archive",
       "source": "https://huttenhower.sph.harvard.edu/humann_data/full_mapping_v4_alpha.tar.gz",
       "deployed_path": "/Databases/humann/chocophlan-v4-201901/full_mapping",
       "sha256": null,
       "bytes": null,
       "checksum_status": "pending",
-      "verification": "Confirm the deployed full tree, including EC/KO/Pfam regrouping and naming tables."
+      "verification": "Public source from the pinned HUMAnN downloader supported ranged download on 2026-11-20. No checksum sidecar is published; verify the full tree including EC/KO/Pfam tables."
     },
     {
       "id": "baqlava-nucleotide",
@@ -245,12 +247,12 @@
       ],
       "name": "StrainPhlAn marker metadata .pkl",
       "version": "mpa_vOct22_CHOCOPhlAnSGB_202403",
-      "source": "https://github.com/biobakery/MetaPhlAn",
+      "source": "https://cmprod1.cibio.unitn.it/biobakery4/metaphlan_databases/mpa_vOct22_CHOCOPhlAnSGB_202403.tar",
       "deployed_path": "Matching .pkl in the deployed MetaPhlAn bundle",
       "sha256": null,
       "bytes": null,
       "checksum_status": "pending",
-      "verification": "The deployed .pkl must be recorded separately or covered by the same complete marker bundle manifest."
+      "verification": "Use the .pkl from the selected mpa_vOct22_CHOCOPhlAnSGB_202403 archive. Record it separately or cover it with the same complete deployed-file manifest."
     },
     {
       "id": "medi-kraken",
@@ -301,7 +303,7 @@
       ],
       "name": "BAQLaVa_metadata_ORFs.txt.gz",
       "version": "629c744a553eb534be457050ca8b7b33f177e0da",
-      "source": "https://github.com/biobakery/baqlava/blob/629c744a553eb534be457050ca8b7b33f177e0da/baqlava/utility_files/BAQLaVa_metadata_ORFs.txt.gz",
+      "source": "https://raw.githubusercontent.com/biobakery/baqlava/629c744a553eb534be457050ca8b7b33f177e0da/baqlava/utility_files/BAQLaVa_metadata_ORFs.txt.gz",
       "deployed_path": "baqlava/utility_files/BAQLaVa_metadata_ORFs.txt.gz",
       "sha256": "96d079ba765281493c640d74cc08e1f8be963bfd4367b934a2587a464281dc73",
       "bytes": 52505059,
@@ -315,7 +317,7 @@
       ],
       "name": "BAQLaVa_metadata_genomes.txt.gz",
       "version": "629c744a553eb534be457050ca8b7b33f177e0da",
-      "source": "https://github.com/biobakery/baqlava/blob/629c744a553eb534be457050ca8b7b33f177e0da/baqlava/utility_files/BAQLaVa_metadata_genomes.txt.gz",
+      "source": "https://raw.githubusercontent.com/biobakery/baqlava/629c744a553eb534be457050ca8b7b33f177e0da/baqlava/utility_files/BAQLaVa_metadata_genomes.txt.gz",
       "deployed_path": "baqlava/utility_files/BAQLaVa_metadata_genomes.txt.gz",
       "sha256": "ba7d54f467b5213cfbe86f4a889834d11eb3e3624102bfc8d16a86b87e934570",
       "bytes": 7092689,
@@ -329,7 +331,7 @@
       ],
       "name": "MGX_plasmid_VGBs.txt",
       "version": "629c744a553eb534be457050ca8b7b33f177e0da",
-      "source": "https://github.com/biobakery/baqlava/blob/629c744a553eb534be457050ca8b7b33f177e0da/baqlava/utility_files/MGX_plasmid_VGBs.txt",
+      "source": "https://raw.githubusercontent.com/biobakery/baqlava/629c744a553eb534be457050ca8b7b33f177e0da/baqlava/utility_files/MGX_plasmid_VGBs.txt",
       "deployed_path": "baqlava/utility_files/MGX_plasmid_VGBs.txt",
       "sha256": "4e83492235aeaf83047ae5df2f2567eef6e9480647e68763cf269495fe9ddba6",
       "bytes": 3791,
@@ -343,7 +345,7 @@
       ],
       "name": "MTX_plasmid_VGBs.txt",
       "version": "629c744a553eb534be457050ca8b7b33f177e0da",
-      "source": "https://github.com/biobakery/baqlava/blob/629c744a553eb534be457050ca8b7b33f177e0da/baqlava/utility_files/MTX_plasmid_VGBs.txt",
+      "source": "https://raw.githubusercontent.com/biobakery/baqlava/629c744a553eb534be457050ca8b7b33f177e0da/baqlava/utility_files/MTX_plasmid_VGBs.txt",
       "deployed_path": "baqlava/utility_files/MTX_plasmid_VGBs.txt",
       "sha256": "6b2b2bd5733a94ede10d25c2eb2fa89b5fd7d1f36d76c1c3b2b546d28164d32d",
       "bytes": 3068,
@@ -357,7 +359,7 @@
       ],
       "name": "VGB_taxonomy.txt",
       "version": "629c744a553eb534be457050ca8b7b33f177e0da",
-      "source": "https://github.com/biobakery/baqlava/blob/629c744a553eb534be457050ca8b7b33f177e0da/baqlava/utility_files/VGB_taxonomy.txt",
+      "source": "https://raw.githubusercontent.com/biobakery/baqlava/629c744a553eb534be457050ca8b7b33f177e0da/baqlava/utility_files/VGB_taxonomy.txt",
       "deployed_path": "baqlava/utility_files/VGB_taxonomy.txt",
       "sha256": "e29f6d2b3fb3af9040bff4b5308a1d6d348db076734fab566e2db3baf83c68fc",
       "bytes": 24510049,
@@ -371,7 +373,7 @@
       ],
       "name": "idmap_nucleotide_conservative.txt",
       "version": "629c744a553eb534be457050ca8b7b33f177e0da",
-      "source": "https://github.com/biobakery/baqlava/blob/629c744a553eb534be457050ca8b7b33f177e0da/baqlava/utility_files/idmap_nucleotide_conservative.txt",
+      "source": "https://raw.githubusercontent.com/biobakery/baqlava/629c744a553eb534be457050ca8b7b33f177e0da/baqlava/utility_files/idmap_nucleotide_conservative.txt",
       "deployed_path": "baqlava/utility_files/idmap_nucleotide_conservative.txt",
       "sha256": "3618f936b9260a1dfcf8a558483b1df30c24efa2ef6b31f8fd501d0d33f40b80",
       "bytes": 24165716,
@@ -385,7 +387,7 @@
       ],
       "name": "idmap_nucleotide_default.txt",
       "version": "629c744a553eb534be457050ca8b7b33f177e0da",
-      "source": "https://github.com/biobakery/baqlava/blob/629c744a553eb534be457050ca8b7b33f177e0da/baqlava/utility_files/idmap_nucleotide_default.txt",
+      "source": "https://raw.githubusercontent.com/biobakery/baqlava/629c744a553eb534be457050ca8b7b33f177e0da/baqlava/utility_files/idmap_nucleotide_default.txt",
       "deployed_path": "baqlava/utility_files/idmap_nucleotide_default.txt",
       "sha256": "075c226a1d012cd8b6512892ab33618432436c004efa0aad928c74b1ce6a6479",
       "bytes": 24387050,
@@ -399,7 +401,7 @@
       ],
       "name": "idmap_nucleotide_nofilter.txt",
       "version": "629c744a553eb534be457050ca8b7b33f177e0da",
-      "source": "https://github.com/biobakery/baqlava/blob/629c744a553eb534be457050ca8b7b33f177e0da/baqlava/utility_files/idmap_nucleotide_nofilter.txt",
+      "source": "https://raw.githubusercontent.com/biobakery/baqlava/629c744a553eb534be457050ca8b7b33f177e0da/baqlava/utility_files/idmap_nucleotide_nofilter.txt",
       "deployed_path": "baqlava/utility_files/idmap_nucleotide_nofilter.txt",
       "sha256": "f9a84cc3d179111f0a004cb7467ed7e45e17ea2ff8def5cd1e42ea2d7c6900f8",
       "bytes": 24526717,
@@ -413,7 +415,7 @@
       ],
       "name": "idmap_protein_conservative.txt",
       "version": "629c744a553eb534be457050ca8b7b33f177e0da",
-      "source": "https://github.com/biobakery/baqlava/blob/629c744a553eb534be457050ca8b7b33f177e0da/baqlava/utility_files/idmap_protein_conservative.txt",
+      "source": "https://raw.githubusercontent.com/biobakery/baqlava/629c744a553eb534be457050ca8b7b33f177e0da/baqlava/utility_files/idmap_protein_conservative.txt",
       "deployed_path": "baqlava/utility_files/idmap_protein_conservative.txt",
       "sha256": "4d4b7bd3cfc112d426adc014b84b510a5dac67384e57de6763e28ad68b30a6ad",
       "bytes": 93233081,
@@ -427,7 +429,7 @@
       ],
       "name": "idmap_protein_default.txt",
       "version": "629c744a553eb534be457050ca8b7b33f177e0da",
-      "source": "https://github.com/biobakery/baqlava/blob/629c744a553eb534be457050ca8b7b33f177e0da/baqlava/utility_files/idmap_protein_default.txt",
+      "source": "https://raw.githubusercontent.com/biobakery/baqlava/629c744a553eb534be457050ca8b7b33f177e0da/baqlava/utility_files/idmap_protein_default.txt",
       "deployed_path": "baqlava/utility_files/idmap_protein_default.txt",
       "sha256": "027f0dc03b4758d65a1ddad470cb00768f73960e36babfca0f6b3971a7c957ff",
       "bytes": 94626189,
@@ -441,7 +443,7 @@
       ],
       "name": "idmap_protein_nofilter.txt",
       "version": "629c744a553eb534be457050ca8b7b33f177e0da",
-      "source": "https://github.com/biobakery/baqlava/blob/629c744a553eb534be457050ca8b7b33f177e0da/baqlava/utility_files/idmap_protein_nofilter.txt",
+      "source": "https://raw.githubusercontent.com/biobakery/baqlava/629c744a553eb534be457050ca8b7b33f177e0da/baqlava/utility_files/idmap_protein_nofilter.txt",
       "deployed_path": "baqlava/utility_files/idmap_protein_nofilter.txt",
       "sha256": "12cdb9a45c3df8d03bc442cb52f83cf2822bc2347ac20eb81a850e89f40dc1ac",
       "bytes": 95143161,
@@ -455,7 +457,7 @@
       ],
       "name": "nucleotide_marker_reference.txt",
       "version": "629c744a553eb534be457050ca8b7b33f177e0da",
-      "source": "https://github.com/biobakery/baqlava/blob/629c744a553eb534be457050ca8b7b33f177e0da/baqlava/utility_files/nucleotide_marker_reference.txt",
+      "source": "https://raw.githubusercontent.com/biobakery/baqlava/629c744a553eb534be457050ca8b7b33f177e0da/baqlava/utility_files/nucleotide_marker_reference.txt",
       "deployed_path": "baqlava/utility_files/nucleotide_marker_reference.txt",
       "sha256": "259f3c81e01a994b09f0e6c2e94c7312bb4c8f00e1d540d0f71876d1ad2616a8",
       "bytes": 36178784,
@@ -469,7 +471,7 @@
       ],
       "name": "translated_protein_reference.txt",
       "version": "629c744a553eb534be457050ca8b7b33f177e0da",
-      "source": "https://github.com/biobakery/baqlava/blob/629c744a553eb534be457050ca8b7b33f177e0da/baqlava/utility_files/translated_protein_reference.txt",
+      "source": "https://raw.githubusercontent.com/biobakery/baqlava/629c744a553eb534be457050ca8b7b33f177e0da/baqlava/utility_files/translated_protein_reference.txt",
       "deployed_path": "baqlava/utility_files/translated_protein_reference.txt",
       "sha256": "0611d16db6cca8a2c2bb04aa8ccfb5937c51092ce65f251fe266a818f4bd47b1",
       "bytes": 50575598,

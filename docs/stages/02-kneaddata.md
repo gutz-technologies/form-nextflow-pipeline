@@ -68,7 +68,7 @@ discrepancy when comparing logs; the image tag alone does not resolve it.
 | Assembly | **GCA_009914755.4 / T2T-CHM13v2.0** |
 | Prebuilt index | **Homo_sapiens_hg39_T2T_Bowtie2_v0.2.tar.gz** |
 | Index prefix | `GCA_009914755.4_T2T` |
-| Integrity record | Six user-provided SHA256 checksums for extracted `.bt2` files |
+| Integrity record | Six program-supplied SHA256 values, independently matched against the extracted `.bt2` files on 2026-11-20 |
 
 The [host-reference page](../reference/kneaddata-host.md) contains the download
 and NCBI source links, complete checksum table, downloadable `sha256sum` manifest,
@@ -99,7 +99,7 @@ allocation instead of accidentally overriding them in that string.
 | Host input | `--reference-db <directory>` | One flag per configured reference; FORM MGX selects its host reference |
 | Output | `--output ./ --output-prefix <sample>_kneaddata` | Writes into the task working directory |
 | Task threads, single-end | `--threads ${task.cpus}` | Nested tools use the allocated CPU count; `--processes` keeps KneadData's default of 1 |
-| Task threads, paired-end | `--processes ${task.cpus}`, no `--threads` | Nested tools (Trimmomatic, Bowtie2) use KneadData's default of **1 thread**. Verified in a 2026-11-20 run: `bowtie2 ... --threads 1`. The `form_docker` profile adds `--threads 8` through `kneaddata_options` |
+| Task threads, paired-end | `--processes ${task.cpus}`, no `--threads` | Nested tools use KneadData's default of **1 thread**. The `form_docker` profile appends `--threads 8 --processes 1` to use the task allocation without multiplying it |
 | `kneaddata_bypass_trim` | `false` | `--bypass-trim` is omitted; trimming runs |
 | `kneaddata_remove_intermediate_files` | `true` | Adds `--remove-intermediate-output` |
 | `kneaddata_options` | Empty string | No additional tool options unless supplied in the YAML/site config |
@@ -118,8 +118,8 @@ kneaddata \
   --remove-intermediate-output
 ```
 
-With `-profile <site>,form_docker`, `--threads 8` is appended after these
-arguments, because `kneaddata_options` is added last.
+With `-profile local,form_docker`, `--threads 8 --processes 1` is appended after
+these arguments, because `kneaddata_options` is added last.
 
 After KneadData, the wrapper compresses FASTQ outputs using
 `pigz -p ${task.cpus}`. For paired input it concatenates the two cleaned mate
@@ -179,9 +179,9 @@ default repeat-filtering stage. Trimmomatic's `--bypass-trim` is a separate swit
 
 The TRF option sequence is `2 7 7 80 10 50 500 -h -ngs`. KneadData converts
 inputs to FASTA and invokes its `kneaddata_trf_parallel` helper with
-`--nproc <threads>`. Its outer file-job concurrency uses `--processes`, which
-the Nextflow wrapper supplies as `1`. This keeps the thread budget usable
-without multiplying it across simultaneous internal jobs.
+`--nproc <threads>`. The base paired-end wrapper requests one process per task
+CPU and one nested-tool thread. The `form_docker` override instead uses one
+process and eight nested-tool threads.
 
 ### Bowtie2 and paired-read decontamination defaults
 
@@ -193,8 +193,8 @@ Bowtie2 remains the host-search engine unless `--run-bmtagger` is explicitly set
 For paired input, `--decontaminate-pairs` defaults to **`strict`**: if either mate
 aligns to the host, the pair is removed. `lenient` removes a pair only when both
 mates align; `unpaired` treats mates independently. Single-end input uses the
-unpaired mode. `--reorder` is not enabled by default. With the wrapper's one
-internal process, multiple reference searches are serial by default.
+unpaired mode. `--reorder` is not enabled by default. Multiple reference
+searches are serial under the `form_docker` profile's one-process override.
 
 An explicit `--bowtie2-options` value replaces the default preset list; include
 the intended preset if retaining it. FastQC at the beginning/end and
@@ -203,9 +203,10 @@ TRF filtering, and Bowtie2 host depletion run without those FastQC flags.
 
 ### DNAnexus site resources and reference placement
 
-FORM will use one **`dnanexus`** profile. The inspected neighboring site settings
-supply the following execution values; the final FORM site configuration must
-carry the approved hg39T2T reference.
+The repository does not yet contain a `dnanexus` profile. The following values
+come from an inspected neighboring deployment and are planning evidence only.
+A future FORM profile must carry the approved hg39T2T reference and the locked
+Hugemiler tool versions.
 
 | Setting | Generic bioBakery default | Inspected DNAnexus site setting |
 | --- | --- | --- |
@@ -215,7 +216,7 @@ carry the approved hg39T2T reference.
 | Worker instance | Executor-dependent | `mem3_ssd2_v3_x16` |
 | Queue limit | Executor-dependent | `executor.queueSize = 50` across tasks |
 | Docker UID/GID | Site-dependent | `-u $(id -u):$(id -g)` |
-| Reference mode | `kneaddata_db_location: host` stages normal inputs | `container` uses an already visible in-task directory |
+| Reference placement | `host_genome` must be visible to the task | Neighboring deployment binds an in-task database directory; this is not a current FORM parameter |
 | Additional KneadData options | Empty | No tool-option override in the inspected site configs |
 
 The generic caps are `max_cpus: 32`, `max_memory: 128.GB`, and
@@ -272,8 +273,9 @@ KneadData `0.12.0` and Bowtie2 `2.5.5`.
 
 - [Huttenhower hg39T2T v0.2 index](https://huttenhower.sph.harvard.edu/kneadData_databases/Homo_sapiens_hg39_T2T_Bowtie2_v0.2.tar.gz)
   and [NCBI source assembly](https://www.ncbi.nlm.nih.gov/datasets/genome/GCA_009914755.4/).
-- [Expected host checksum manifest](../reference/checksums/kneaddata-hg39-t2t-v0.2.sha256),
-  supplied by the program owner; deployment-byte verification remains to be run.
+- [Host checksum manifest](../reference/checksums/kneaddata-hg39-t2t-v0.2.sha256),
+  supplied by the program owner and matched against the extracted archive on
+  2026-11-20. Rerun it for each production staging location.
 - [Installed-image defaults and workflow source hashes](../reference/kneaddata-runtime.json).
 - [Full software/image inventory](../reference/software-inventory.json).
 

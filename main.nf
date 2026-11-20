@@ -36,6 +36,12 @@ workflow {
                   "or set --form_host_check false for a non-human host."
     }
 
+    // ── MetaPhlAn reference: FORM uses the Hugemiler-supplied Oct22 build ──
+    if (params.run_taxonomic_profiling && params.form_metaphlan_index_check &&
+        params.metaphlan_index != params.form_metaphlan_index)
+        error "ERROR: FORM requires MetaPhlAn index ${params.form_metaphlan_index}; " +
+              "got ${params.metaphlan_index}. Do not use the generic vJun23 default."
+
     // ── MEDI ──────────────────────────────────────────────────────────────
     if (params.run_medi) {
         if (!(params.medi_input in ['humann', 'kneaddata']))

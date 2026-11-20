@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "decided_on": "2026-11-20",
+  "decision": "Versions supplied in the Hugemiler container set take priority over generic bioBakery defaults and inherited site profiles.",
+  "source_repository": "https://github.com/Hugemiler/biobakery-containers",
+  "source_commit": "a8d779ba245722b9806bc9431391b1c59141f279",
+  "evidence": "Tracked Hugemiler recipes use the source commit above. Locally supplied DNAnexus variants are identified by their inspected immutable image digests in software-inventory.json.",
+  "kneaddata": {
+    "conda_package": "0.12.1",
+    "cli_reported": "0.12.0",
+    "bowtie2": "2.5.5",
+    "host_reference": "GCA_009914755.4_T2T",
+    "image": "public.ecr.aws/j5i5h1i5/kneaddata@sha256:87f9fe73578cffa73d30e08c90099e1fdf69831c42778d3b2a7cd7791f8ae4b3"
+  },
+  "metaphlan": {
+    "software": "4.2.5",
+    "index": "mpa_vOct22_CHOCOPhlAnSGB_202403",
+    "cli_mode": "metaphlan_v4",
+    "image": "public.ecr.aws/j5i5h1i5/metaphlan@sha256:bcbba3807ce7bbfda6526dd8598232025c9cc9a3f7689b9ad639dab9d8c81787",
+    "archive": "https://cmprod1.cibio.unitn.it/biobakery4/metaphlan_databases/mpa_vOct22_CHOCOPhlAnSGB_202403.tar",
+    "archive_md5": "91d57912faab6bfd3526a49d9e83da8c"
+  },
+  "humann": {
+    "python_distribution": "4.0.0a2",
+    "source_commit": "9cb1a8253e11a0a8ed8f58f85f53e04a690e40a6",
+    "image": "public.ecr.aws/j5i5h1i5/humann@sha256:3d245ae23c5b5015e6ca2a16b5963c0d178fd5f0786890e7eb57fa8cf7fe2acd"
+  },
+  "baqlava": {
+    "python_distribution": "1.2.0.dev0",
+    "source_commit": "629c744a553eb534be457050ca8b7b33f177e0da",
+    "image": "public.ecr.aws/j5i5h1i5/baqlava@sha256:6070af8e5635b44a6aa8e63aee70858004db3e12b68d8d6336ec82bfce555c97"
+  },
+  "strainphlan": {
+    "software": "4.2.5",
+    "index": "mpa_vOct22_CHOCOPhlAnSGB_202403"
+  }
+}
