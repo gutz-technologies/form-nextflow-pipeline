@@ -212,7 +212,7 @@ Hugemiler tool versions.
 
 | Setting | Generic bioBakery default | Inspected DNAnexus site setting |
 | --- | --- | --- |
-| CPUs for each QC task | `8 × task.attempt`, capped by `max_cpus` | **8**, fixed; command receives `--threads 8` |
+| CPUs for each QC task | `8 × task.attempt`, capped by `max_cpus` | **8**, fixed; that neighboring site also supplies its own `--threads 8` override |
 | Memory | `16 GB × task.attempt`, capped by `max_memory` | **28 GB**, fixed |
 | Time | `8 h × task.attempt`, capped by `max_time` | Inherited from the generic QC selector |
 | Worker instance | Executor-dependent | `mem3_ssd2_v3_x16` |
