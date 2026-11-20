@@ -28,26 +28,81 @@ git submodule update --init
 `nextflow run gutz-technologies/form-nextflow-pipeline` fetches the submodule
 too (`manifest.recurseSubmodules`).
 
-## Running
+## Quick start
 
-The DNAnexus launch interface is limited to the reads folder (`readsdir`)
-and a run YAML supplied through the platform's built-in `nextflow_params_file`
-file input. `nextflow_schema.json` exposes only `readsdir`; the YAML input is
-provided by DNAnexus itself. Tool switches, database paths, containers, resource
-limits and other pipeline settings belong in the YAML or bundled defaults,
-with no separate samplesheet input.
+Use these commands only on a configured compute system. The system must have
+Nextflow, Java, the required tools, and the required databases.
 
-Everything bioBakery's MGX workflow takes works the same way (see
-`biobakery/README.md`): profiles, `--readsdir`, database params, `-params-file`.
-FORM adds MEDI, on by default:
+Select one available profile: `local`, `harvard_rc`, `tufts_hpc`, or `amazon`.
+Replace `PROFILE` in each command with that profile name.
+
+**Use the FORM host reference.** The `harvard_rc` profile selects hg38 by
+default. FORM requires hg39T2T. Always set `host_genome` to the verified
+hg39T2T index directory.
+
+### Run the standard pipeline
+
+First, create a file named `run.yaml`. Add the paths for the configured system:
+
+```yaml
+host_genome: /path/to/hg39T2T
+metaphlan_db: /path/to/metaphlan-database
+humann_db: /path/to/humann-database
+medi_db: /path/to/medi-database
+medi_food_matches: /path/to/food_matches.csv
+medi_food_contents: /path/to/food_contents.csv
+max_memory: 450.GB
+```
+
+Then run the standard pipeline with one command:
 
 ```bash
-nextflow run . -profile harvard_rc --readsdir /path/to/fastqs --outdir results \
-  --medi_db /path/to/medi-db \
-  --medi_food_matches /path/to/food_matches.csv \
-  --medi_food_contents /path/to/food_contents.csv \
-  --max_memory 450.GB
+nextflow run . -profile PROFILE -params-file run.yaml \
+  --readsdir /path/to/fastqs --outdir results
 ```
+
+This command runs the input check, KneadData, MetaPhlAn, HUMAnN, MEDI, and the
+visualization report. The command does not run BAQLaVa or StrainPhlAn.
+Set `run_viral_profiling: true` and `run_strain_profiling: true` in `run.yaml`
+to run these optional branches.
+
+The default MEDI images use ARM. For x86 workers, set `medi_container` and
+`medi_biom_container` to compatible images in `run.yaml`.
+
+The command cannot run the planned samplesheet and omixer-rpm modules.
+These modules are not implemented.
+
+### Run only KneadData
+
+Use this one command:
+
+```bash
+nextflow run . -profile PROFILE \
+  --readsdir /path/to/fastqs \
+  --outdir kneaddata-results \
+  --host_genome /path/to/hg39T2T \
+  --run_qc true \
+  --run_taxonomic_profiling false \
+  --run_functional_profiling false \
+  --run_viral_profiling false \
+  --run_strain_profiling false \
+  --run_medi false \
+  --run_vis false \
+  --run_stats false
+```
+
+This command runs the input check and KneadData. It does not run a later
+analysis stage or a visualization report. Find the output in
+`kneaddata-results/kneaddata/`.
+
+### DNAnexus launch
+
+The DNAnexus interface has two launch inputs: `readsdir` and
+`nextflow_params_file`. Put all other settings in the run YAML.
+Do not use `-profile dnanexus` yet. The repository does not contain that profile.
+See the [DNAnexus interface](docs/reference/dnanexus.md) for the deployment state.
+
+## Parameters and limits
 
 | Param | Default | Description |
 |---|---|---|
