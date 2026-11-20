@@ -224,3 +224,7 @@ __marimo__/
 .nextflow.log*
 work/
 results/
+
+# Documentation preview and generated site
+.venv-docs/
+/site/
