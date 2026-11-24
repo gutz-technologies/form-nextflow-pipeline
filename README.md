@@ -21,8 +21,13 @@ verification instructions are documented alongside the software/runtime settings
 
 ```bash
 git clone --recurse-submodules https://github.com/gutz-technologies/form-nextflow-pipeline.git
-# or, in an existing clone:
-git submodule update --init
+cd form-nextflow-pipeline
+```
+
+In an existing checkout, run:
+
+```bash
+git submodule update --init --recursive
 ```
 
 `nextflow run gutz-technologies/form-nextflow-pipeline` fetches the submodule
@@ -30,9 +35,12 @@ too (`manifest.recurseSubmodules`).
 
 ## Quick start: download hg39T2T and run KneadData
 
-This is the shortest working path. Run each command from the repository root.
-Use a Linux x86-64 system with Java 17+, Nextflow 24.04+, and either Docker
-(any workstation) or the Harvard FASRC modules.
+Run these commands in the same Bash shell from the repository root. Use
+Linux x86-64 with at least 8 CPUs and 16 GB RAM. Install
+[Docker Engine](https://docs.docker.com/engine/install/) and
+[Nextflow](https://www.nextflow.io/docs/latest/install.html) (use Nextflow 24.10
+with Java 17 or later). Run `docker info` to check that your user can access
+Docker. You'll also need `wget`, `tar`, `md5sum`, and `sha256sum`.
 
 FORM requires KneadData 0.12 or later, Bowtie2 2.5.5 or later, and the
 hg39T2T host index. The run stops if `host_genome` lacks the
@@ -60,55 +68,59 @@ not FORM runtime images.
 
 Copy and run this complete block. It downloads the 3.9 GB prebuilt Bowtie2
 index, checks the downloaded archive, extracts it, and checks all six index
-files. Keep at least 9 GB of disk space free.
+files. Keep at least 9 GB of disk space free. To store the database on an SSD
+or reuse an existing copy, set `HOST_DIR` to its absolute directory path before
+running the block. Use a path without spaces or commas.
 
 ```bash
-set -euo pipefail
-
-FORM_ROOT="$(pwd -P)"
-HOST_DIR="$FORM_ROOT/databases/kneaddata/hg39T2T"
-ARCHIVE="Homo_sapiens_hg39_T2T_Bowtie2_v0.2.tar.gz"
-URL="https://huttenhower.sph.harvard.edu/kneadData_databases/$ARCHIVE"
-
-mkdir -p "$HOST_DIR"
-cd "$HOST_DIR"
-wget -c "$URL"
-wget -O "$ARCHIVE.md5" "$URL.md5"
-md5sum --check "$ARCHIVE.md5"
-tar -xzf "$ARCHIVE"
-sha256sum --check \
-  "$FORM_ROOT/docs/reference/checksums/kneaddata-hg39-t2t-v0.2.sha256"
-cd "$FORM_ROOT"
+export HOST_DIR="${HOST_DIR:-$(pwd -P)/databases/kneaddata/hg39T2T}"
+(
+  set -eu
+  checksums="$(pwd -P)/docs/reference/checksums/kneaddata-hg39-t2t-v0.2.sha256"
+  archive=Homo_sapiens_hg39_T2T_Bowtie2_v0.2.tar.gz
+  url="https://huttenhower.sph.harvard.edu/kneadData_databases/$archive"
+  mkdir -p "$HOST_DIR"
+  cd "$HOST_DIR"
+  if ! sha256sum --check --status "$checksums" 2>/dev/null; then
+    wget -c "$url"
+    wget -O "$archive.md5" "$url.md5"
+    md5sum --check "$archive.md5"
+    tar -xzf "$archive"
+  fi
+  sha256sum --check "$checksums"
+)
 ```
 
-All six SHA256 checks must report `OK`. The pipeline host-reference path is now:
-
-```text
-<repository-root>/databases/kneaddata/hg39T2T
-```
-
-Pass the directory to `--host_genome`. Do not pass the archive or one `.bt2`
-file.
+Continue only when all six SHA256 checks report `OK`. Pass the directory
+`$HOST_DIR` to `--host_genome`, not the archive or a single `.bt2` file.
 
 ### 2. Add the reads
 
-Create `fastqs/` in the repository root. Put the compressed FASTQ files in that
-directory. Use names such as `sample_R1.fastq.gz` and `sample_R2.fastq.gz`.
+To try FORM without bringing your own reads, use the two small paired-end
+examples bundled with the bioBakery submodule:
 
 ```bash
-mkdir -p fastqs
+export READS_DIR="$(pwd -P)/biobakery/tests/data/rawfastq"
 ```
+
+For your own run, set `READS_DIR` to the absolute directory path of your
+compressed FASTQs instead. Use paired filenames such as `sample_R1.fastq.gz`
+and `sample_R2.fastq.gz`.
 
 ### 3. Run KneadData
 
-On a workstation with Docker, copy and run this command. It uses the pinned
-KneadData image:
+This block uses the pinned KneadData image and mounts the host index
+read-only, even if you keep it outside the repository.
 
 ```bash
-nextflow run . -profile local,form_docker \
-  --readsdir "$PWD/fastqs" \
+tee kneaddata-docker.config >/dev/null <<'EOF'
+docker.runOptions = '-u $(id -u):$(id -g) -e DXFUSE_ENABLED=false --mount type=bind,source=' + System.getenv('HOST_DIR') + ',target=' + System.getenv('HOST_DIR') + ',readonly'
+EOF
+
+NXF_VER=24.10.4 nextflow -c kneaddata-docker.config run . -profile local,form_docker \
+  --readsdir "$READS_DIR" \
   --outdir "$PWD/kneaddata-results" \
-  --host_genome "$PWD/databases/kneaddata/hg39T2T" \
+  --host_genome "$HOST_DIR" \
   --run_qc true \
   --run_taxonomic_profiling false \
   --run_functional_profiling false \
@@ -119,9 +131,21 @@ nextflow run . -profile local,form_docker \
   --run_stats false
 ```
 
-Find the cleaned reads in `kneaddata-results/kneaddata/` and the read counts in
-`kneaddata-results/kneaddata/merged/kneaddata_read_count_table.tsv`. The log
-must show these two lines:
+### 4. Open the results
+
+Find the cleaned reads and per-sample logs in `kneaddata-results/kneaddata/`.
+Nextflow runs `kneaddata_read_count_table` and writes a TSV. Check its header
+and first two rows:
+
+```bash
+head -n 3 kneaddata-results/kneaddata/merged/kneaddata_read_count_table.tsv
+```
+
+Expect a `Sample` column and one row per sample. For the human-reference
+alignment count and percentage, see
+[Find the host-read count and fraction](docs/stages/02-kneaddata.md#find-the-host-read-count-and-fraction).
+
+The Nextflow run log must show these two lines:
 
 ```text
 Version check: kneaddata 0.12.0 >= 0.12 (...)
