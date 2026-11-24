@@ -4,6 +4,9 @@ nextflow.enable.dsl = 2
 // Lay out KneadData task directories and collect checksums.md5.
 // Paired tasks also write files that publishDir does not keep.
 //
+// This file lives in tests/, so Nextflow uses tests/bin on PATH.
+// tests/bin/kneaddata_checksums.sh points at the repository script.
+//
 //   nextflow run tests/kneaddata_checksums.nf -c tests/stub.config --outdir <dir>
 
 include { KNEADDATA_CHECKSUMS } from '../modules/kneaddata/checksums.nf'

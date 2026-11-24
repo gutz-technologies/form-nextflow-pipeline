@@ -50,9 +50,9 @@ process kneaddata_checksums {
     path 'checksums.md5', emit: checksums
 
     script:
-    """
-    ${moduleDir}/../../bin/kneaddata_checksums.sh
-    """
+    '''
+    kneaddata_checksums.sh
+    '''
 
     stub:
     '''
