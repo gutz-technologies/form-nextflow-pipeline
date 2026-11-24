@@ -1,7 +1,8 @@
 #!/usr/bin/env nextflow
 nextflow.enable.dsl=2
-// bioBakery's tool steps send their versions to the `versions` topic.
-nextflow.preview.topic = true
+// bioBakery's tool steps send their versions to the `versions` topic. Topic
+// channels are stable from Nextflow 25.04, and 25.10 rejects the old
+// `nextflow.preview.topic` flag, so FORM needs Nextflow 25.04 or later.
 
 include { FORM }       from './workflows/form.nf'
 include { run_header } from './biobakery/modules/utils/version_log/main.nf'

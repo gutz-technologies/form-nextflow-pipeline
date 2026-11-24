@@ -1,6 +1,5 @@
 #!/usr/bin/env nextflow
 nextflow.enable.dsl = 2
-nextflow.preview.topic = true
 
 // Integration check: run with the KneadData quickstart inputs and flags.
 include { FORM } from '../workflows/form.nf'

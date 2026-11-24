@@ -38,7 +38,7 @@ too (`manifest.recurseSubmodules`).
 Run these commands in the same Bash shell from the repository root. Use
 Linux x86-64 with at least 8 CPUs and 16 GB RAM. Install
 [Docker Engine](https://docs.docker.com/engine/install/) and
-[Nextflow](https://www.nextflow.io/docs/latest/install.html) (use Nextflow 24.10
+[Nextflow](https://www.nextflow.io/docs/latest/install.html) (use Nextflow 25.10
 with Java 17 or later). Run `docker info` to check that your user can access
 Docker. You'll also need `wget`, `tar`, `md5sum`, and `sha256sum`.
 
@@ -117,7 +117,7 @@ tee kneaddata-docker.config >/dev/null <<'EOF'
 docker.runOptions = '-u $(id -u):$(id -g) -e DXFUSE_ENABLED=false --mount type=bind,source=' + System.getenv('HOST_DIR') + ',target=' + System.getenv('HOST_DIR') + ',readonly'
 EOF
 
-NXF_VER=24.10.4 nextflow -c kneaddata-docker.config run . -profile local,form_docker \
+NXF_VER=25.10.4 nextflow -c kneaddata-docker.config run . -profile local,form_docker \
   --readsdir "$READS_DIR" \
   --outdir "$PWD/kneaddata-results" \
   --host_genome "$HOST_DIR" \
