@@ -4,8 +4,7 @@ Bioinformatics pipeline for FORM: the [bioBakery](https://github.com/biobakery/b
 MGX workflow (KneadData → MetaPhlAn → HUMAnN 4), followed by
 [MEDI](https://github.com/Gibbons-Lab/medi) food DNA quantification.
 
-bioBakery is a git submodule (`biobakery/`) pinned to an upstream commit and
-used unmodified. Design and rationale: [docs/specs/0001-biobakery-dependency-and-medi.md](docs/specs/0001-biobakery-dependency-and-medi.md).
+FORM pins its bioBakery workflow revision in the `biobakery/` git submodule. Design and rationale: [docs/specs/0001-biobakery-dependency-and-medi.md](docs/specs/0001-biobakery-dependency-and-medi.md).
 
 The [documentation](docs/index.md) follows the eight FORM stages, with
 [software versions](docs/reference/versions.md),
@@ -28,6 +27,12 @@ git submodule update --init
 `nextflow run gutz-technologies/form-nextflow-pipeline` fetches the submodule
 too (`manifest.recurseSubmodules`).
 
+## Choose what to run
+
+- [Taxonomic profiles with MetaPhlAn](docs/stages/03-metaphlan.md#quickstart-run-metaphlan-with-docker): download the pinned database and run with example or host-depleted reads.
+- [Strain tree with StrainPhlAn](docs/stages/06-strainphlan.md#quickstart-build-a-strain-tree): use the same database and add two example reference genomes.
+- [Read QC and host depletion with KneadData](#quick-start-download-hg39t2t-and-run-kneaddata): download the human host index and clean raw reads.
+
 ## Quick start: download hg39T2T and run KneadData
 
 This is the shortest working path. Run each command from the repository root.
@@ -47,7 +52,7 @@ KneadData or Bowtie2.
 | MetaPhlAn image | [ECR repository](https://gallery.ecr.aws/j5i5h1i5/metaphlan): `public.ecr.aws/j5i5h1i5/metaphlan@sha256:bcbba3807ce7bbfda6526dd8598232025c9cc9a3f7689b9ad639dab9d8c81787` (MetaPhlAn 4.2.5) | set by `-profile form_docker` |
 | HUMAnN image | [ECR repository](https://gallery.ecr.aws/j5i5h1i5/humann): `public.ecr.aws/j5i5h1i5/humann@sha256:3d245ae23c5b5015e6ca2a16b5963c0d178fd5f0786890e7eb57fa8cf7fe2acd` (HUMAnN 4.0.0a2) | set by `-profile form_docker` |
 | Host index (hg39T2T) | [Homo_sapiens_hg39_T2T_Bowtie2_v0.2.tar.gz](https://huttenhower.sph.harvard.edu/kneadData_databases/Homo_sapiens_hg39_T2T_Bowtie2_v0.2.tar.gz), 3.9 GB, step 1 below | `--host_genome` |
-| MetaPhlAn database | [`mpa_vOct22_CHOCOPhlAnSGB_202403.tar`](https://cmprod1.cibio.unitn.it/biobakery4/metaphlan_databases/mpa_vOct22_CHOCOPhlAnSGB_202403.tar) and its [MD5 file](https://cmprod1.cibio.unitn.it/biobakery4/metaphlan_databases/mpa_vOct22_CHOCOPhlAnSGB_202403.md5) | `--metaphlan_db` |
+| MetaPhlAn database | [Both required archives and checksums](docs/stages/03-metaphlan.md#databases-and-sources) | `--metaphlan_db` |
 | HUMAnN 4 databases | Direct v4-alpha ChocoPhlAn, EC-filtered UniRef90, and utility-mapping archives in [MGX databases](#download-the-mgx-databases) | `--humann_db` |
 
 The image versions come from the Hugemiler container set recorded in the
@@ -207,7 +212,8 @@ nextflow run . -profile local,form_docker \
 ```
 
 This route uses MetaPhlAn 4.2.5 with
-`mpa_vOct22_CHOCOPhlAnSGB_202403` and HUMAnN 4.0.0a2.
+`mpa_vOct22_CHOCOPhlAnSGB_202403` and HUMAnN 4.0.0a2. To add a strain tree,
+see the [StrainPhlAn quickstart](docs/stages/06-strainphlan.md#quickstart-build-a-strain-tree).
 
 ## Full FORM pipeline with MEDI
 
