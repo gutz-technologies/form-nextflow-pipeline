@@ -10,6 +10,18 @@ below were inspected in the existing candidate DNAnexus image and neighboring
 workflow sources. They do not establish that the pending FORM deployment has
 already adopted T2T or completed its validation.
 
+## Get the read-count table
+
+Run the [KneadData quickstart](https://github.com/gutz-technologies/form-nextflow-pipeline#quick-start-download-hg39t2t-and-run-kneaddata)
+with your own reads or the bundled example. When QC runs, Nextflow calls
+`kneaddata_read_count_table` on the sample logs and publishes one TSV at
+`<outdir>/kneaddata/merged/kneaddata_read_count_table.tsv`. You do not need to
+run the command yourself or enable visualization reports.
+
+If you include the named `FORM` workflow in another Nextflow pipeline, consume
+`FORM.out.read_count_table`. This channel emits the same TSV for downstream
+processes. It is empty with `--run_qc false` or `--check_inputs_only true`.
+
 ## Find the host-read count and fraction
 
 For an MGX run, open `<outdir>/kneaddata/<sample>_kneaddata.log`. You can use

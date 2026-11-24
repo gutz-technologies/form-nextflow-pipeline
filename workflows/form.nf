@@ -36,6 +36,9 @@ workflow FORM {
             : MGX.out.unaligned_reads
         MEDI(medi_reads, '')
     }
+
+    emit:
+    read_count_table = MGX.out.read_counts
 }
 
 // True when version `got` is older than `min`. Compares the leading numeric
