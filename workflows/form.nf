@@ -3,6 +3,7 @@ nextflow.enable.dsl=2
 
 include { MGX  } from '../biobakery/workflows/mgx.nf'
 include { MEDI } from '../subworkflows/medi.nf'
+include { KNEADDATA_CHECKSUMS } from '../modules/kneaddata/checksums.nf'
 
 // bioBakery MGX, unmodified, then MEDI on the reads MGX hands back.
 workflow FORM {
@@ -27,6 +28,15 @@ workflow FORM {
             }
     }
 
+    // One checksum file for the FASTQ files KneadData publishes under
+    // kneaddata/. The cleaned channel is not that set: paired reads arrive
+    // as the concatenated FASTQ, and publishDir does not keep that file.
+    checksums = Channel.empty()
+    if (params.run_qc && !params.check_inputs_only) {
+        KNEADDATA_CHECKSUMS(MGX.out.cleaned)
+        checksums = KNEADDATA_CHECKSUMS.out.checksums
+    }
+
     // ── Food DNA quantification (MEDI) ────────────────────────────────────
     if (params.run_medi && !params.check_inputs_only) {
         // humann: HUMAnN's nucleotide-unaligned reads (a small FASTA, but MEDI
@@ -39,6 +49,7 @@ workflow FORM {
 
     emit:
     read_count_table = MGX.out.read_counts
+    checksums
 }
 
 // True when version `got` is older than `min`. Compares the leading numeric

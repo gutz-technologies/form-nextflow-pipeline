@@ -145,6 +145,23 @@ Expect a `Sample` column and one row per sample. For the human-reference
 alignment count and percentage, see
 [Find the host-read count and fraction](docs/stages/02-kneaddata.md#find-the-host-read-count-and-fraction).
 
+Nextflow writes one `checksums.md5` file in `kneaddata-results/kneaddata/`.
+The file has the MD5 checksum of each `*.fastq.gz` file in that directory.
+Each line has the hash, two spaces, and the file name.
+Nextflow sorts the lines by file name.
+The file names are relative to this directory.
+Nextflow does not put the concatenated FASTQ in this directory.
+`checksums.md5` does not list that file.
+
+Go to the KneadData directory.
+Run the check below.
+Confirm that each line shows `OK`.
+
+```bash
+cd kneaddata-results/kneaddata
+md5sum -c checksums.md5
+```
+
 The Nextflow run log must show these two lines:
 
 ```text

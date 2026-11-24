@@ -22,6 +22,30 @@ If you include the named `FORM` workflow in another Nextflow pipeline, consume
 `FORM.out.read_count_table`. This channel emits the same TSV for downstream
 processes. It is empty with `--run_qc false` or `--check_inputs_only true`.
 
+## Check the published FASTQ files
+
+Each run that executes KneadData writes one `checksums.md5` file.
+Nextflow puts this file in `<outdir>/kneaddata/`.
+The file has the MD5 checksum of each `*.fastq.gz` file in that directory.
+Each line has the hash, two spaces, and the file name.
+Nextflow sorts the lines by file name.
+The file names are relative to the `kneaddata` directory.
+Nextflow does not put the concatenated FASTQ in this directory.
+`checksums.md5` does not list that file.
+
+`FORM.out.checksums` carries this file.
+The channel is empty with `--run_qc false`.
+The channel is empty with `--check_inputs_only true`.
+
+Go to the KneadData output directory.
+Run the check below.
+Confirm that each line shows `OK`.
+
+```bash
+cd <outdir>/kneaddata
+md5sum -c checksums.md5
+```
+
 ## Find the host-read count and fraction
 
 For an MGX run, open `<outdir>/kneaddata/<sample>_kneaddata.log`. You can use
