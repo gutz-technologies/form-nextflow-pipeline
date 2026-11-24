@@ -120,8 +120,11 @@ nextflow run . -profile local,form_docker \
 ```
 
 Find the cleaned reads in `kneaddata-results/kneaddata/` and the read counts in
-`kneaddata-results/kneaddata/merged/kneaddata_read_count_table.tsv`. The log
-must show these two lines:
+`kneaddata-results/kneaddata/merged/kneaddata_read_count_table.tsv`.
+For the human-reference alignment count and percentage, see
+[Find the host-read count and fraction](docs/stages/02-kneaddata.md#find-the-host-read-count-and-fraction).
+
+The Nextflow run log must show these two lines:
 
 ```text
 Version check: kneaddata 0.12.0 >= 0.12 (...)

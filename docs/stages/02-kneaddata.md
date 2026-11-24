@@ -10,6 +10,35 @@ below were inspected in the existing candidate DNAnexus image and neighboring
 workflow sources. They do not establish that the pending FORM deployment has
 already adopted T2T or completed its validation.
 
+## Find the host-read count and fraction
+
+For an MGX run, open `<outdir>/kneaddata/<sample>_kneaddata.log`. You can use
+an existing log; there is no need to rerun KneadData. For the README quickstart,
+replace `SAMPLE` with your sample ID and run:
+
+```bash
+rg -n 'Running bowtie2| -x |overall alignment rate' \
+  kneaddata-results/kneaddata/SAMPLE_kneaddata.log
+```
+
+If the log contains more than one Bowtie2 search, use the one whose `-x`
+argument names the human index (`GCA_009914755.4_T2T` for hg39T2T).
+
+- **Host-aligned read count:** In the default Bowtie2 log, add the reads
+  that `aligned exactly 1 time` and `aligned >1 times`. Count individual reads,
+  not read pairs.
+- **Host-aligned fraction:** Read `overall alignment rate`. Its denominator
+  is the reads that reached the human-reference screen, after any trimming
+  and repeat filtering. It is not the fraction of all raw reads.
+
+For example, in the FORM `SIM01` test log, 2,815 reads aligned once and 1,138
+aligned more than once: **3,953 of 7,953 screened reads (49.70%)**.
+
+The merged table at `kneaddata/merged/kneaddata_read_count_table.tsv` reports
+reads remaining at each step, not a dedicated host-aligned count or fraction.
+Do not subtract final reads from raw reads: that also counts losses from
+other QC steps.
+
 ## Software and major dependencies
 
 | Component | Installed version | Evidence / role |
