@@ -33,7 +33,7 @@ workflow FORM {
         // waits for HUMAnN). kneaddata: the full cleaned reads, straight after QC.
         medi_reads = params.medi_input == 'kneaddata'
             ? MGX.out.cleaned.map { meta, r -> tuple(meta.id, r) }
-            : MGX.out.unaligned_reads
+            : MGX.out.unaligned_reads.map { db, sample, fa -> tuple(sample, fa) }
         MEDI(medi_reads, '')
     }
 
