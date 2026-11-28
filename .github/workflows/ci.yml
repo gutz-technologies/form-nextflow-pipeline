@@ -24,7 +24,7 @@ jobs:
 
       - uses: nf-core/setup-nextflow@v2
         with:
-          version: '24.10.4'
+          version: '25.10.4'
 
       - name: Symlinks into biobakery/ are complete
         run: tests/check_links.sh

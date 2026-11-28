@@ -48,10 +48,10 @@ reference are recorded under [Public runtime image and checksum](../stages/02-kn
 | --- | --- | --- |
 | FORM | `0.1.0` | Current `manifest.version` |
 | bioBakery dependency | `4466d89aeb5131dd5a99e077d61d0020028377f4` | Gitlink currently recorded by FORM; re-pin is pending |
-| Nextflow minimum | `>=24.04.0` | FORM manifest compatibility floor, not an exact runtime pin |
-| Nextflow CI | `24.10.4` | Existing pipeline CI configuration |
+| Nextflow minimum | `>=25.04.0` | Topic channels without the preview flag; 25.10 rejects `nextflow.preview.topic` |
+| Nextflow CI | `25.10.4` | Existing pipeline CI configuration |
 | Java CI | `21` | Existing pipeline CI configuration |
-| DNAnexus Nextflow build | `25.10` release line in the neighboring build helper | Candidate setting; exact engine build must be recorded from the FORM applet/head log |
+| DNAnexus Nextflow build | `25.10` (`dx build --nextflow-version 25.10`) | DNAnexus offers 24.10 (deprecated) and 25.10 |
 | DNAnexus dx-toolkit | Not recorded | Capture the build client and worker CLI versions during deployment |
 | Zensical | **0.1.2** | Exact documentation dependency in `docs/requirements.txt` |
 | Documentation Python | **3.12** series | GitHub Actions runtime; distinct from tool-image Python versions |
