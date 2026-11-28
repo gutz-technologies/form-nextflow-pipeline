@@ -80,7 +80,11 @@ workflow.onComplete {
     def started  = workflow.start.toInstant().toEpochMilli()
     def list = file("${checkdir}/mgx_failed_samples.txt")
     if (!list.exists() || list.lastModified() < started) return
-    def failed = list.readLines().findAll { it }
+    // On DNAnexus published files are uploaded after Nextflow exits, so the
+    // list can look present yet be unreadable here; skip the summary then.
+    def failed
+    try { failed = list.readLines().findAll { it } }
+    catch (Exception e) { log.info "Input check [mgx]: summary not readable yet (${e.class.simpleName}); see ${checkdir}/mgx_failed_samples.txt"; return }
     if (!failed) {
         log.info "Input check [mgx]: no samples were left out."
         return
