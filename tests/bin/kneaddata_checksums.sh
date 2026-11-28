@@ -1,0 +1,1 @@
+../../bin/kneaddata_checksums.sh

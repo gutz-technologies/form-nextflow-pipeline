@@ -56,3 +56,6 @@ jobs:
 
       - name: MEDI stub run
         run: nextflow run tests/medi_stub.nf -stub-run -c tests/stub.config --outdir stub
+
+      - name: KneadData checksum file
+        run: tests/check_kneaddata_checksums.sh
